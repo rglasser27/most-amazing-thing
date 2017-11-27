@@ -6,6 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static com.apollowebworks.mostamazingthing.graphics.model.FullScreenImage.SCREEN_WIDTH;
+import static org.junit.Assert.assertEquals;
+
 @RunWith(MockitoJUnitRunner.class)
 public class GraphicsMathTest {
 	private static final float RELATIVE_WIDTH = 300.f;
@@ -20,7 +23,39 @@ public class GraphicsMathTest {
 
 	@Test
 	public void centeredOnScreen() throws Exception {
-		Assert.assertEquals(new TestRect(353.f, 5.f, 1146.f, 995.f), centeredOnScreen((float) IMAGE_WIDTH / IMAGE_HEIGHT));
+		assertEquals(new TestRect(353.f, 5.f, 1146.f, 995.f), centeredOnScreen((float) IMAGE_WIDTH / IMAGE_HEIGHT));
+	}
+
+	@Test
+	public void getBit() {
+		// 00 01 10 11 - 01 10 11 00
+		byte[] bytes = new byte[]{0x1b, 0x6c};
+		assertEquals(0, getBit(bytes, 0));
+		assertEquals(0, getBit(bytes, 1));
+		assertEquals(0, getBit(bytes, 2));
+		assertEquals(1, getBit(bytes, 3));
+		assertEquals(1, getBit(bytes, 4));
+		assertEquals(0, getBit(bytes, 5));
+		assertEquals(1, getBit(bytes, 6));
+		assertEquals(1, getBit(bytes, 7));
+		assertEquals(0, getBit(bytes, 8));
+		assertEquals(1, getBit(bytes, 9));
+		assertEquals(1, getBit(bytes, 10));
+		assertEquals(0, getBit(bytes, 11));
+		assertEquals(1, getBit(bytes, 12));
+		assertEquals(1, getBit(bytes, 13));
+		assertEquals(0, getBit(bytes, 14));
+		assertEquals(0, getBit(bytes, 15));
+	}
+
+	@Test
+	public void bitPairs() {
+		// 00 01 10 11 - 01 10 11 00
+		byte[] bytes = new byte[]{0x1b, 0x1c};
+	}
+
+	private int getBit(byte[] bytes, int offset) {
+		return (bytes[offset / 8] >> (8 - (offset%8) - 1)) & 1;
 	}
 
 	private TestRect centeredOnScreen(float ratio) {

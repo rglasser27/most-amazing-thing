@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import com.apollowebworks.mostamazingthing.R;
 import com.apollowebworks.mostamazingthing.controller.InSearchController;
+import com.apollowebworks.mostamazingthing.graphics.manager.ImageManager;
 
 import static com.apollowebworks.mostamazingthing.controller.InSearchController.FPS;
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 			return false;
 		}
 	};
+	private ImageManager imageManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

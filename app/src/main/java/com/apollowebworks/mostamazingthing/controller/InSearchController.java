@@ -5,8 +5,12 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
+import com.apollowebworks.mostamazingthing.R;
+import com.apollowebworks.mostamazingthing.graphics.exception.DecrunchException;
+import com.apollowebworks.mostamazingthing.graphics.manager.ImageManager;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneFactory;
+import com.apollowebworks.mostamazingthing.scene.bitmaptest.BitmapTestScene;
 import com.apollowebworks.mostamazingthing.scene.title.TitleScene;
 
 import java.util.HashSet;
@@ -23,14 +27,26 @@ public class InSearchController {
 
 	private Set<Scene> scenes;
 	private Long msSinceLastTick;
+	private final ImageManager imageManager;
 
 	public InSearchController(Resources resources, View view) {
 		this.resources = resources;
 		this.view = view;
 		activeScene = null;
 		scenes = new HashSet<>();
+
+		imageManager = new ImageManager();
+		try {
+			imageManager.readImages(resources);
+		} catch (DecrunchException e) {
+			e.printStackTrace();
+		}
+
 		activateScene(TitleScene.class);
-		msSinceLastTick = System.currentTimeMillis();
+	}
+
+	public ImageManager getImageManager() {
+		return imageManager;
 	}
 
 	public void drawScene(Canvas canvas) {
@@ -47,7 +63,7 @@ public class InSearchController {
 	}
 
 	public <S extends Scene> Scene activateScene(Class<S> sceneClass) {
-		S Scene;
+		msSinceLastTick = System.currentTimeMillis();
 		if (activeScene == null || !activeScene.getClass().isAssignableFrom(sceneClass)) {
 			boolean found = false;
 			for (Scene scene : scenes) {
@@ -61,6 +77,9 @@ public class InSearchController {
 				activeScene = SceneFactory.create(sceneClass, this);
 			}
 			redraw();
+		}
+		if (BitmapTestScene.class.isAssignableFrom(sceneClass)) {
+			activeScene.setImageManager(imageManager);
 		}
 		return activeScene;
 	}

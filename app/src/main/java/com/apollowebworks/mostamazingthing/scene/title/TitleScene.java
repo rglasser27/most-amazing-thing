@@ -5,14 +5,14 @@ import android.content.res.Resources;
 import android.graphics.*;
 import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
-import com.apollowebworks.mostamazingthing.DrawUtil;
 import com.apollowebworks.mostamazingthing.R;
 import com.apollowebworks.mostamazingthing.controller.InSearchController;
 import com.apollowebworks.mostamazingthing.scene.Scene;
+import com.apollowebworks.mostamazingthing.scene.bitmaptest.BitmapTestScene;
 import com.apollowebworks.mostamazingthing.scene.elevator.ElevatorScene;
 
-import static com.apollowebworks.mostamazingthing.DrawUtil.RELATIVE_HEIGHT;
-import static com.apollowebworks.mostamazingthing.DrawUtil.adjustToScreen;
+import static com.apollowebworks.mostamazingthing.math.DrawUtil.RELATIVE_HEIGHT;
+import static com.apollowebworks.mostamazingthing.math.DrawUtil.adjustToScreen;
 
 public class TitleScene extends Scene {
 
@@ -24,7 +24,7 @@ public class TitleScene extends Scene {
 
 	@Override
 	public void draw(Canvas canvas, Resources resources, Context context) {
-		drawBlackBackground(canvas);
+		drawBackground(canvas);
 
 		// load image
 		// Instead of passing in context, consider moving a resource manager in here?

@@ -1,4 +1,4 @@
-package com.apollowebworks.mostamazingthing.model;
+package com.apollowebworks.mostamazingthing.world.model;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;

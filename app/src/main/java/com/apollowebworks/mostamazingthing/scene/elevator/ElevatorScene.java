@@ -6,16 +6,16 @@ import android.graphics.*;
 import android.util.Log;
 import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.controller.InSearchController;
-import com.apollowebworks.mostamazingthing.model.Elevator;
+import com.apollowebworks.mostamazingthing.world.model.Elevator;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 
-import static com.apollowebworks.mostamazingthing.DrawUtil.getVirtualPoint;
+import static com.apollowebworks.mostamazingthing.math.DrawUtil.getVirtualPoint;
 
 public class ElevatorScene extends Scene {
 
 	private static final String TAG = ElevatorScene.class.getName();
 
-	private static final float SHAFT_CENTER = 0;
+	private static final float SHAFT_CENTER = -10;
 	private static final int ELEVATOR_START_Y = 60;
 	private static final float ELEVATOR_SPEED = 1f;
 
@@ -27,12 +27,13 @@ public class ElevatorScene extends Scene {
 	public ElevatorScene(InSearchController inSearchController) {
 		super(inSearchController);
 		this.elevator = new Elevator(new PointF(SHAFT_CENTER, ELEVATOR_START_Y));
+		this.setBackgroundImage(inSearchController.getImageManager().getImage("elevpic"));
 		moving = false;
 	}
 
 	@Override
 	public void draw(Canvas canvas, Resources resources, Context context) {
-		drawBlackBackground(canvas);
+		drawBackground(canvas);
 		elevator.draw(canvas, resources);
 	}
 

@@ -1,13 +1,12 @@
-package com.apollowebworks.mostamazingthing.model;
+package com.apollowebworks.mostamazingthing.world.model;
 
 import android.content.res.Resources;
 import android.graphics.*;
-import android.util.Log;
-import com.apollowebworks.mostamazingthing.DrawUtil;
+import com.apollowebworks.mostamazingthing.math.DrawUtil;
 
 public class Elevator extends WorldObject {
 
-	private static final float WIDTH = 8.f;
+	private static final float WIDTH = 6.f;
 	private static final float HEIGHT = 16.f;
 
 	private final Paint elevatorCarPaint;

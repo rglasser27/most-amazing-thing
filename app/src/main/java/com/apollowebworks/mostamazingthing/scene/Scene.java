@@ -5,11 +5,15 @@ import android.content.res.Resources;
 import android.graphics.*;
 import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.controller.InSearchController;
+import com.apollowebworks.mostamazingthing.graphics.manager.ImageManager;
+import com.apollowebworks.mostamazingthing.graphics.model.FullScreenImage;
 
 public abstract class Scene {
 
 	protected InSearchController inSearchController;
 	private Paint backgroundPaint;
+	protected ImageManager imageManager;
+	private FullScreenImage backgroundImage;
 
 	public Scene(InSearchController inSearchController) {
 		this.inSearchController = inSearchController;
@@ -40,10 +44,24 @@ public abstract class Scene {
 		return false;
 	}
 
-	protected void drawBlackBackground(Canvas canvas) {
+
+	protected void drawBackground(Canvas canvas) {
+		drawBlackBackground(canvas);
+		if (backgroundImage != null) {
+			backgroundImage.draw(canvas);
+		}
+	}
+
+	private void drawBlackBackground(Canvas canvas) {
 		// Fill with black
 		canvas.drawRect(canvas.getClipBounds(), backgroundPaint);
 	}
 
+	public void setImageManager(ImageManager imageManager) {
+		this.imageManager = imageManager;
+	}
 
+	public void setBackgroundImage(FullScreenImage image) {
+		this.backgroundImage = image;
+	}
 }

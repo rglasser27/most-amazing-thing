@@ -1,6 +1,10 @@
-package com.apollowebworks.mostamazingthing;
+package com.apollowebworks.mostamazingthing.math;
 
 import android.graphics.*;
+import com.apollowebworks.mostamazingthing.graphics.model.RgbColor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DrawUtil {
 	/**
@@ -9,8 +13,11 @@ public class DrawUtil {
 	 * -150., 100. is the top left.
 	 * 150., -100. is the bottom right.
 	 */
-	private static final float RELATIVE_WIDTH = 300.f;
+	public static final float RELATIVE_WIDTH = 320.f;
 	public static final float RELATIVE_HEIGHT = 200.f;
+
+	public static Map<RgbColor, Paint> PAINT_MAP = createPaintMap();
+
 
 	public static Point getScreenPoint(float x, float y, Rect clipBounds) {
 		return new Point(getScreenX(x, clipBounds.right), getScreenY(y, clipBounds.bottom));
@@ -29,7 +36,7 @@ public class DrawUtil {
 	}
 
 	/**
-	 * @param x virtual screen position
+	 * @param x           virtual screen position
 	 * @param screenWidth screen pixel width
 	 * @return actual x on screen
 	 */
@@ -41,7 +48,7 @@ public class DrawUtil {
 	}
 
 	/**
-	 * @param y virtual screen position
+	 * @param y            virtual screen position
 	 * @param screenHeight screen pixel height
 	 * @return actual y on screen
 	 */
@@ -54,7 +61,7 @@ public class DrawUtil {
 	}
 
 	/**
-	 * @param x actual x on screen
+	 * @param x           actual x on screen
 	 * @param screenWidth screen pixel width
 	 * @return virtual screen position
 	 */
@@ -66,7 +73,7 @@ public class DrawUtil {
 	}
 
 	/**
-	 * @param y actual y on screen
+	 * @param y            actual y on screen
 	 * @param screenHeight screen pixel height
 	 * @return virtual screen position
 	 */
@@ -76,4 +83,23 @@ public class DrawUtil {
 		// Center the point
 		return (RELATIVE_HEIGHT / 2.f) - newY;
 	}
+
+	private static Map<RgbColor, Paint> createPaintMap() {
+		HashMap<RgbColor, Paint> map = new HashMap<>();
+		map.put(RgbColor.BLACK, createPaint(Color.BLACK));
+		map.put(RgbColor.WHITE, createPaint(Color.WHITE));
+		map.put(RgbColor.MAGENTA, createPaint(Color.MAGENTA));
+		map.put(RgbColor.CYAN, createPaint(Color.CYAN));
+		return map;
+	}
+
+	private static Paint createPaint(int color) {
+		Paint paint = new Paint(color);
+		paint.setColor(color);
+		paint.setStyle(Paint.Style.FILL);
+//		paint.setStrokeWidth(10);
+//		paint.setStyle(Paint.Style.STROKE);
+		return paint;
+	}
+
 }
