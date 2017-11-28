@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.controller.InSearchController;
 import com.apollowebworks.mostamazingthing.graphics.model.FullScreenImage;
 import com.apollowebworks.mostamazingthing.scene.Scene;
+import com.apollowebworks.mostamazingthing.scene.SceneId;
 
 import static com.apollowebworks.mostamazingthing.math.DrawUtil.RELATIVE_HEIGHT;
 import static com.apollowebworks.mostamazingthing.math.DrawUtil.adjustToScreen;
@@ -29,6 +30,11 @@ public class BitmapTestScene extends Scene {
 
 	public boolean onTouch(MotionEvent motionEvent, Rect clipBounds) {
 		return false;
+	}
+
+	@Override
+	public SceneId getId() {
+		return SceneId.BITMAP_TEST;
 	}
 
 	Rect centeredOnScreen(Canvas canvas, float ratio) {

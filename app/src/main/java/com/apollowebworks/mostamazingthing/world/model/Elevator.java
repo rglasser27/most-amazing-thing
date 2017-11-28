@@ -6,11 +6,10 @@ import com.apollowebworks.mostamazingthing.math.DrawUtil;
 
 public class Elevator extends WorldObject {
 
-	private static final float WIDTH = 6.f;
-	private static final float HEIGHT = 16.f;
+	private static final float WIDTH = 8f;
+	private static final float HEIGHT = 11.f;
 
 	private final Paint elevatorCarPaint;
-
 
 	public Elevator(PointF position) {
 		super(position);
@@ -18,7 +17,7 @@ public class Elevator extends WorldObject {
 		elevatorCarPaint = new Paint();
 		elevatorCarPaint.setStrokeWidth(10);
 		elevatorCarPaint.setColor(Color.WHITE);
-		elevatorCarPaint.setStyle(Paint.Style.STROKE);
+		elevatorCarPaint.setStyle(Paint.Style.FILL);
 	}
 
 	@Override

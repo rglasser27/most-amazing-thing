@@ -2,12 +2,15 @@ package com.apollowebworks.mostamazingthing.scene.elevator;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.*;
+import android.graphics.Canvas;
+import android.graphics.PointF;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.controller.InSearchController;
-import com.apollowebworks.mostamazingthing.world.model.Elevator;
 import com.apollowebworks.mostamazingthing.scene.Scene;
+import com.apollowebworks.mostamazingthing.scene.SceneId;
+import com.apollowebworks.mostamazingthing.world.model.Elevator;
 
 import static com.apollowebworks.mostamazingthing.math.DrawUtil.getVirtualPoint;
 
@@ -15,9 +18,9 @@ public class ElevatorScene extends Scene {
 
 	private static final String TAG = ElevatorScene.class.getName();
 
-	private static final float SHAFT_CENTER = -10;
+	private static final float SHAFT_CENTER = 147;
 	private static final int ELEVATOR_START_Y = 60;
-	private static final float ELEVATOR_SPEED = 1f;
+	private static final float ELEVATOR_SPEED = .5f;
 
 	private boolean moving;
 	private PointF lastTouched;
@@ -27,7 +30,7 @@ public class ElevatorScene extends Scene {
 	public ElevatorScene(InSearchController inSearchController) {
 		super(inSearchController);
 		this.elevator = new Elevator(new PointF(SHAFT_CENTER, ELEVATOR_START_Y));
-		this.setBackgroundImage(inSearchController.getImageManager().getImage("elevpic"));
+		this.setBackgroundImage(inSearchController.getImageManager().getBitmap("elevpic"));
 		moving = false;
 	}
 
@@ -49,15 +52,19 @@ public class ElevatorScene extends Scene {
 			case MotionEvent.ACTION_UP:
 				break;
 		}
-		inSearchController.redraw();
 		return true;
+	}
+
+	@Override
+	public SceneId getId() {
+		return SceneId.ELEVATOR;
 	}
 
 	@Override
 	public boolean tick(Long msElapsed) {
 		boolean wasMoving = moving;
 		if (moving) {
-			moving = !elevator.moveToward(new PointF(SHAFT_CENTER, lastTouched.y), 1f, msElapsed);
+			moving = !elevator.moveToward(new PointF(SHAFT_CENTER, lastTouched.y), ELEVATOR_SPEED, msElapsed);
 		}
 		return wasMoving;
 	}

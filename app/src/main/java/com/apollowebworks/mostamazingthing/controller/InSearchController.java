@@ -5,16 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
-import com.apollowebworks.mostamazingthing.R;
 import com.apollowebworks.mostamazingthing.graphics.exception.DecrunchException;
 import com.apollowebworks.mostamazingthing.graphics.manager.ImageManager;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneFactory;
-import com.apollowebworks.mostamazingthing.scene.bitmaptest.BitmapTestScene;
-import com.apollowebworks.mostamazingthing.scene.title.TitleScene;
-
-import java.util.HashSet;
-import java.util.Set;
+import com.apollowebworks.mostamazingthing.scene.SceneId;
 
 public class InSearchController {
 
@@ -25,7 +20,6 @@ public class InSearchController {
 	private View view;
 	private Rect clipBounds;
 
-	private Set<Scene> scenes;
 	private Long msSinceLastTick;
 	private final ImageManager imageManager;
 
@@ -33,7 +27,6 @@ public class InSearchController {
 		this.resources = resources;
 		this.view = view;
 		activeScene = null;
-		scenes = new HashSet<>();
 
 		imageManager = new ImageManager();
 		try {
@@ -42,7 +35,7 @@ public class InSearchController {
 			e.printStackTrace();
 		}
 
-		activateScene(TitleScene.class);
+		activateScene(SceneId.TITLE);
 	}
 
 	public ImageManager getImageManager() {
@@ -62,32 +55,15 @@ public class InSearchController {
 		return clipBounds != null && activeScene.onTouch(motionEvent, clipBounds);
 	}
 
-	public <S extends Scene> Scene activateScene(Class<S> sceneClass) {
+	public void activateScene(SceneId sceneId) {
 		msSinceLastTick = System.currentTimeMillis();
-		if (activeScene == null || !activeScene.getClass().isAssignableFrom(sceneClass)) {
-			boolean found = false;
-			for (Scene scene : scenes) {
-				if (scene.getClass().isAssignableFrom(sceneClass)) {
-					activeScene = scene;
-					found = true;
-					break;
-				}
-			}
-			if (!found) {
-				activeScene = SceneFactory.create(sceneClass, this);
-			}
-			redraw();
-		}
-		if (BitmapTestScene.class.isAssignableFrom(sceneClass)) {
-			activeScene.setImageManager(imageManager);
-		}
-		return activeScene;
+		activeScene = SceneFactory.create(sceneId, this);
+		redraw();
 	}
 
-	public void redraw() {
+	private void redraw() {
 		view.invalidate();
 	}
-
 
 	public void tick() {
 		if (activeScene != null) {

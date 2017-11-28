@@ -1,6 +1,7 @@
 package com.apollowebworks.mostamazingthing.graphics.manager;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import com.apollowebworks.mostamazingthing.R;
 import com.apollowebworks.mostamazingthing.graphics.exception.DecrunchException;
 import com.apollowebworks.mostamazingthing.graphics.model.FullScreenImage;
@@ -22,6 +23,7 @@ public class ImageManager {
 	// 4 pixels represented per byte
 	private static final int BUFFER_SIZE = 16399;
 	private Map<String, FullScreenImage> imageMap = new HashMap<>();
+	private Map<String, Bitmap> bitmaps = new HashMap<>();
 
 	public void readImages(Resources resources) throws DecrunchException {
 		readCrunchImage("auction", resources.openRawResource(R.raw.auction));
@@ -31,6 +33,24 @@ public class ImageManager {
 		readCrunchImage("smoke", resources.openRawResource(R.raw.smoke));
 		readCrunchImage("store", resources.openRawResource(R.raw.store));
 		readCrunchImage("table", resources.openRawResource(R.raw.table));
+	}
+
+	public FullScreenImage getImage(String name) {
+		return imageMap.get(name);
+	}
+
+	public Bitmap getBitmap(String name) {
+		return bitmaps.get(name);
+	}
+
+	private Bitmap getImageAsBitmap(FullScreenImage image) {
+		Bitmap bitmap = Bitmap.createBitmap(SCREEN_WIDTH, SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
+		for (int y = 0; y < SCREEN_HEIGHT; y ++) {
+			for (int x = 0; x < SCREEN_WIDTH; x++) {
+				bitmap.setPixel(x, y, image.getPixel(x, y).getColorInt());
+			}
+		}
+		return bitmap;
 	}
 
 	private void readCrunchImage(String name, InputStream stream) throws DecrunchException {
@@ -47,6 +67,7 @@ public class ImageManager {
 			throw new DecrunchException("IOException caught while reading file");
 		}
 		imageMap.put(name, image);
+		bitmaps.put(name, getImageAsBitmap(image));
 	}
 
 	private void scanLines(byte[] bytes, FullScreenImage image, int startY, int offset) throws IOException {
@@ -84,58 +105,6 @@ public class ImageManager {
 	}
 
 	private RgbColor readBytePartAsColor(int code) {
-		switch (code) {
-			case 0:
-				return RgbColor.BLACK;
-			case 1:
-				return RgbColor.CYAN;
-			case 2:
-				return RgbColor.MAGENTA;
-			default:
-				return RgbColor.WHITE;
-		}
+		return RgbColor.get(code);
 	}
-
-	private int bytesToInt(byte... bytes) {
-		int result = 0;
-		for (byte aByte : bytes) {
-			result <<= 2;
-			result |= ((int) aByte) & 0xff;
-		}
-		return result;
-	}
-
-	/**
-	 * For testing purposes
-	 */
-	public FullScreenImage makeAnImage() {
-		FullScreenImage image = new FullScreenImage();
-
-		image.setPixel(80, 60, RgbColor.MAGENTA);
-		image.setPixel(80, 61, RgbColor.WHITE);
-		image.setPixel(81, 60, RgbColor.CYAN);
-		image.setPixel(81, 61, RgbColor.MAGENTA);
-
-		image.setRect(SCREEN_WIDTH / 2,
-				0,
-				SCREEN_WIDTH / 2,
-				FullScreenImage.SCREEN_HEIGHT / 2,
-				RgbColor.CYAN);
-		image.setRect(0,
-				FullScreenImage.SCREEN_HEIGHT / 2,
-				SCREEN_WIDTH / 2,
-				FullScreenImage.SCREEN_HEIGHT / 2,
-				RgbColor.MAGENTA);
-		image.setRect(SCREEN_WIDTH / 2,
-				FullScreenImage.SCREEN_HEIGHT / 2,
-				SCREEN_WIDTH / 2,
-				FullScreenImage.SCREEN_HEIGHT / 2,
-				RgbColor.WHITE);
-		return image;
-	}
-
-	public FullScreenImage getImage(String name) {
-		return imageMap.get(name);
-	}
-
 }

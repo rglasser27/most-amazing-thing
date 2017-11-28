@@ -19,10 +19,6 @@ public class DrawUtil {
 	public static Map<RgbColor, Paint> PAINT_MAP = createPaintMap();
 
 
-	public static Point getScreenPoint(float x, float y, Rect clipBounds) {
-		return new Point(getScreenX(x, clipBounds.right), getScreenY(y, clipBounds.bottom));
-	}
-
 	public static PointF getVirtualPoint(int x, int y, Rect clipBounds) {
 		return new PointF(getRelativeX(x, clipBounds.right), getRelativeY(y, clipBounds.bottom));
 	}
@@ -42,9 +38,9 @@ public class DrawUtil {
 	 */
 	private static int getScreenX(float x, int screenWidth) {
 		// The point starts out centered, so move it left
-		float newX = x + (RELATIVE_WIDTH / 2.f);
+//		float newX = x + (RELATIVE_WIDTH);
 		// Change from relative width to actual screen width
-		return (int) (newX * screenWidth / RELATIVE_WIDTH);
+		return (int) (x * screenWidth / RELATIVE_WIDTH);
 	}
 
 	/**
@@ -55,9 +51,9 @@ public class DrawUtil {
 	private static int getScreenY(float y, int screenHeight) {
 		// Positive y goes up instead of down in the relative notation, so invert it.
 		// Also the point starts out centered, so move it up
-		float newY = (RELATIVE_HEIGHT / 2.f) - y;
+//		float newY = RELATIVE_HEIGHT - y;
 		// Change from relative width to actual screen width
-		return (int) (newY * screenHeight / RELATIVE_HEIGHT);
+		return (int) (y * screenHeight / RELATIVE_HEIGHT);
 	}
 
 	/**
@@ -66,10 +62,7 @@ public class DrawUtil {
 	 * @return virtual screen position
 	 */
 	private static float getRelativeX(int x, int screenWidth) {
-		// Change from actual screen width to relative width
-		float newX = x * RELATIVE_WIDTH / screenWidth;
-		// Center the point
-		return newX - (RELATIVE_WIDTH / 2.f);
+		return x * RELATIVE_WIDTH / screenWidth;
 	}
 
 	/**
@@ -78,10 +71,7 @@ public class DrawUtil {
 	 * @return virtual screen position
 	 */
 	private static float getRelativeY(int y, int screenHeight) {
-		// Change from actual screen height to relative height
-		float newY = y * RELATIVE_HEIGHT / screenHeight;
-		// Center the point
-		return (RELATIVE_HEIGHT / 2.f) - newY;
+		return y * RELATIVE_HEIGHT / screenHeight;
 	}
 
 	private static Map<RgbColor, Paint> createPaintMap() {

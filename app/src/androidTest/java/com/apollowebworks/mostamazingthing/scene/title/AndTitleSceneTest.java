@@ -60,7 +60,7 @@ public class AndTitleSceneTest {
 		canvas = new Canvas(bitmap);
 
 		inSearchController = mainActivity.getInSearchController();
-		titleScene = inSearchController.activateScene(TitleScene.class);
+//		titleScene = inSearchController.activateScene(SceneId.TITLE);
 		view = mainActivity.findViewById(R.id.fullscreen_content);
 	}
 

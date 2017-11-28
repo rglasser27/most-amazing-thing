@@ -8,11 +8,9 @@ import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.R;
 import com.apollowebworks.mostamazingthing.controller.InSearchController;
 import com.apollowebworks.mostamazingthing.scene.Scene;
-import com.apollowebworks.mostamazingthing.scene.bitmaptest.BitmapTestScene;
-import com.apollowebworks.mostamazingthing.scene.elevator.ElevatorScene;
+import com.apollowebworks.mostamazingthing.scene.SceneId;
 
-import static com.apollowebworks.mostamazingthing.math.DrawUtil.RELATIVE_HEIGHT;
-import static com.apollowebworks.mostamazingthing.math.DrawUtil.adjustToScreen;
+import static com.apollowebworks.mostamazingthing.math.DrawUtil.*;
 
 public class TitleScene extends Scene {
 
@@ -39,17 +37,22 @@ public class TitleScene extends Scene {
 	}
 
 	public boolean onTouch(MotionEvent motionEvent, Rect clipBounds) {
-		inSearchController.activateScene(ElevatorScene.class);
+		inSearchController.activateScene(SceneId.ELEVATOR);
 		return true;
+	}
+
+	@Override
+	public SceneId getId() {
+		return SceneId.TITLE;
 	}
 
 	Rect centeredOnScreen(Canvas canvas, float ratio) {
 		float newHeight = RELATIVE_HEIGHT - MARGIN * 2;
 		float newWidth = newHeight * ratio;
-		RectF relativeSize = new RectF(-newWidth/2.f,
-				newHeight/2.f,
-				newWidth/2.f,
-				-newHeight/2.f);
+		RectF relativeSize = new RectF((RELATIVE_WIDTH-newWidth)/2.f,
+				MARGIN,
+				(RELATIVE_WIDTH+newWidth)/2.f,
+				MARGIN+newHeight);
 		return adjustToScreen(relativeSize, canvas);
 	}
 }

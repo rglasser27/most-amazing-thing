@@ -6,23 +6,20 @@ import android.graphics.*;
 import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.controller.InSearchController;
 import com.apollowebworks.mostamazingthing.graphics.manager.ImageManager;
-import com.apollowebworks.mostamazingthing.graphics.model.FullScreenImage;
 
 public abstract class Scene {
 
 	protected InSearchController inSearchController;
-	private Paint backgroundPaint;
 	protected ImageManager imageManager;
-	private FullScreenImage backgroundImage;
+	private Bitmap backgroundImage;
 
 	public Scene(InSearchController inSearchController) {
 		this.inSearchController = inSearchController;
-		backgroundPaint = new Paint();
-		backgroundPaint.setARGB(255, 0, 0, 0);
 	}
 
 	/**
 	 * Make time elapse in the scene
+	 *
 	 * @param msElapsed The number of milliseconds that have elapsed since the last tick
 	 * @return true if anything changed
 	 */
@@ -35,8 +32,9 @@ public abstract class Scene {
 
 	/**
 	 * Handle a touch event from the app
+	 *
 	 * @param motionEvent the event
-	 * @param clipBounds last known screen size
+	 * @param clipBounds  last known screen size
 	 * @return true if anything changed and needs to be redrawn
 	 */
 	public boolean onTouch(MotionEvent motionEvent, Rect clipBounds) {
@@ -48,20 +46,17 @@ public abstract class Scene {
 	protected void drawBackground(Canvas canvas) {
 		drawBlackBackground(canvas);
 		if (backgroundImage != null) {
-			backgroundImage.draw(canvas);
+			canvas.drawBitmap(backgroundImage, new Rect(0, 0, 320, 200), canvas.getClipBounds(), null);
 		}
 	}
 
 	private void drawBlackBackground(Canvas canvas) {
-		// Fill with black
-		canvas.drawRect(canvas.getClipBounds(), backgroundPaint);
+		canvas.drawColor(Color.BLACK);
 	}
 
-	public void setImageManager(ImageManager imageManager) {
-		this.imageManager = imageManager;
-	}
-
-	public void setBackgroundImage(FullScreenImage image) {
+	protected void setBackgroundImage(Bitmap image) {
 		this.backgroundImage = image;
 	}
+
+	abstract public SceneId getId();
 }
