@@ -1,0 +1,10 @@
+10 SCREEN 1:CLS
+100 LOCATE 6:PRINT"Do you want to see a demonstration or"
+110 PRINT:PRINT"play a real game?"
+120 PRINT:PRINT:PRINT"D = demonstration"
+130 PRINT:PRINT"P = play game"
+140 A$=INKEY$:IF A$="" THEN 140
+150 IF A$<>"d" AND A$<>"D" THEN 190
+185 RUN"demo
+190 IF A$<>"p" AND A$<>"P" THEN 140
+200 RUN"logo

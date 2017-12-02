@@ -1,8 +1,7 @@
 package com.apollowebworks.mostamazingthing.controller;
 
 import android.content.res.Resources;
-import android.graphics.Canvas;
-import android.graphics.Rect;
+import android.graphics.*;
 import android.view.MotionEvent;
 import android.view.View;
 import com.apollowebworks.mostamazingthing.graphics.exception.DecrunchException;
@@ -14,6 +13,8 @@ import com.apollowebworks.mostamazingthing.scene.SceneId;
 public class InSearchController {
 
 	public static final int FPS = 30;
+	private static final SceneId STARTING_SCENE = SceneId.CAREXT;
+	private final Paint textPaint;
 
 	private Scene activeScene;
 	private Resources resources;
@@ -35,7 +36,13 @@ public class InSearchController {
 			e.printStackTrace();
 		}
 
-		activateScene(SceneId.TITLE);
+		Typeface tf = Typeface.createFromAsset(resources.getAssets(), "fonts/Px437_IBM_BIOS.ttf");
+		textPaint = new Paint();
+		textPaint.setColor(Color.WHITE);
+		textPaint.setTypeface(tf);
+		textPaint.setTextSize(8);
+
+		activateScene(STARTING_SCENE);
 	}
 
 	public ImageManager getImageManager() {
@@ -71,5 +78,9 @@ public class InSearchController {
 				redraw();
 			}
 		}
+	}
+
+	public Paint getTextPaint() {
+		return textPaint;
 	}
 }

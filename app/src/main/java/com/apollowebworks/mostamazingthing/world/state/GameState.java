@@ -1,4 +1,4 @@
-package com.apollowebworks.mostamazingthing.world.model;
+package com.apollowebworks.mostamazingthing.world.state;
 
 public class GameState {
 	private int hungry;

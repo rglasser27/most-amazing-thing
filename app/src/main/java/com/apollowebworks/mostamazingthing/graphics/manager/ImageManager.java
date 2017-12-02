@@ -107,4 +107,5 @@ public class ImageManager {
 	private RgbColor readBytePartAsColor(int code) {
 		return RgbColor.get(code);
 	}
+
 }

@@ -1,10 +1,8 @@
 package com.apollowebworks.mostamazingthing.world.model;
 
-import android.content.res.Resources;
 import android.graphics.*;
-import com.apollowebworks.mostamazingthing.math.DrawUtil;
 
-public class Elevator extends WorldObject {
+public class Elevator extends MoveableObject {
 
 	private static final float WIDTH = 8f;
 	private static final float HEIGHT = 11.f;
@@ -21,11 +19,11 @@ public class Elevator extends WorldObject {
 	}
 
 	@Override
-	public void draw(Canvas canvas, Resources resources) {
+	public void draw(Canvas canvas) {
 		RectF rect = new RectF(position.x - WIDTH / 2,
 				position.y + HEIGHT / 2,
 				position.x + WIDTH / 2,
 				position.y - HEIGHT / 2);
-		canvas.drawRect(DrawUtil.adjustToScreen(rect, canvas), elevatorCarPaint);
+		canvas.drawRect(rect, elevatorCarPaint);
 	}
 }

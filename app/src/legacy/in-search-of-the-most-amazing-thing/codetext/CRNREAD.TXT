@@ -1,0 +1,263 @@
+0 REM This is a hacky way of converting compressed "crunch" images to Basic bitmaps. Update files on lines 1005 and 1008.
+1 DIM CH(3):GOSUB 25500:KEY(1) ON:ON KEY(1) GOSUB 25450:DEF FNR(X)=INT(RND(1)*X+1):DIM BOXX(2,2),BOXY(2,2),BALLOON%(160),PRICE(28),EQUIP$(28):SCREEN 1:GOSUB 19:GOSUB 20040:C1=1:C29=29:C170=170:C143=143:C800=800:C2=2:GOTO 1005
+2 A$=INKEY$:IF A$="" THEN 2
+3 IF A$=" " THEN DUMMY=FRE(""):GOTO 1150
+4 IF A$="8" THEN OY=OY-C1:IF OY<C29 THEN OY=C29
+5 IF A$="2" THEN OY=OY+C1:IF OY>C170 THEN OY=C170
+6 PUT(C143,OY),BALLOON%,PSET:SOUND C800-OY*C2,C1
+7 GOTO 2
+10 REM                                                                                 keyboard scan
+11 A$=INKEY$
+12 DEF SEG=&H40:POKE &H17,&H60:DEF SEG
+13 RETURN
+14 REM                                                                               build inkeyed word
+15 Q=FRE(""):B$="":Q=CSRLIN:QQ=POS(0)
+16 GOSUB 10:IF A$="" THEN 16 ELSE IF A$=CHR$(13) THEN RETURN ELSE IF A$=CHR$(8) AND LEN(B$)>0 THEN B$=LEFT$(B$,LEN(B$)-1) ELSE IF P=1 AND ASC(A$)<48 OR ASC(A$)>57 THEN 16 ELSE B$=B$+A$
+17 LOCATE Q,QQ:PRINT B$;" ";:IF LEN(B$)=L THEN RETURN ELSE 16
+18 REM                                                                               clear buffer
+19 DEF SEG=0: POKE 1050,PEEK(1052):RETURN
+1005 GOSUB 25450:GOSUB 19:B$="carext.CRN":GOSUB 25280:GOSUB 25260
+1007 DEF SEG=&HB800
+1008 BSAVE "carext.ucr",0,16384
+1009 STOP
+
+
+
+
+
+1010 LOCATE 10,11:PRINT"Store":LOCATE 8,22:PRINT"Smoke":LOCATE 18,21:PRINT"Auction"
+1020 PRESET(143,OY+1):DRAW"c3r6d10l6u10":LINE(146,29)-(146,OY):PAINT(144,OY+2),3,3
+1030 GET(143,OY)-STEP(6,12),BALLOON%
+1040 DRAW"bm155,29u1l1u2e3u2r2d2f3d2l1d1u1l5":PSET(157,25):PSET(159,25)
+1050 KEY OFF:LOCATE 1,8:PRINT"Press SPACEBAR to choose";:LOCATE 25,14:PRINT CHR$(24);"=up ";CHR$(25);"=down";
+1060 GOTO 2
+1150 IF OY=29 THEN CLS:LOCATE 10,12:PRINT"Stepping outside...":BRANCH=2:GOSUB 25550:RUN"ground.bas
+1160 IF OY>47 AND OY<51 THEN GOTO 5000
+1170 IF OY>67 AND OY<71 THEN GOTO 4000
+1180 IF OY>132 AND OY<136 THEN GOTO 6000
+1190 GOTO 1060
+4000 REM shopping
+4010 SCREEN 1:CLS:LOCATE 14,15:PRINT"Galactic Store";:LOCATE 17,15:PRINT"(See Catalogue)";:ANGRY=0
+4015 REM get store pic
+4020 MX=159:MY=180:TX=MX:TY=MY: B$="store.crn":GOSUB 25280:GOSUB 25260:LOCATE 1,6:PRINT" Use arrows to move your cart.";:REM GOSUB 4130
+4030 INC=INT((MY-91)/4):IF INC<2 THEN INC=2
+4040 TX=MX:TY=MY:C=0:GOSUB 4330
+4045 REM      move in store
+4050 GOSUB 11:IF A$="" THEN 4050
+4060 IF A$="8" THEN DF=88:TY=MY-INC:GOSUB 4300:GOSUB 4190:IF LA<0 THEN 4120 ELSE IF OK=1 THEN GOSUB 4320:MY=TY:MX=TX
+4070 IF A$="2" THEN DF=75:TY=MY+INC:GOSUB 4300:GOSUB 4190:IF LA<0 THEN 4120 ELSE IF OK=1 THEN GOSUB 4320:MY=TY:MX=TX
+4080 IF A$="6" THEN TX=MX+INC:GOSUB 4190:IF OK=1 THEN GOSUB 4320:MX=TX
+4090 IF A$="4" THEN TX=MX-INC:GOSUB 4190:IF OK=1 THEN GOSUB 4320:MX=TX
+4100 INC=INT((MY-91)/4):IF INC<2 THEN INC=2
+4110 C=0:GOSUB 4330:GOTO 4050
+4120 GOTO 1000
+4190 LA=0:IF TY<109 OR TY>195 THEN LA=-1:GOTO 4250
+4200 IF TX<(-TY+204)*13/10 THEN 4230
+4210 IF TX>(-TY-42)*-13/10 THEN 4240
+4220 OK=1:RETURN
+4230 GOSUB 4270:GOTO 4250
+4240 GOSUB 4270:LA=LA+7
+4248 REM                                                                             get text file on 4 items in aisle la (for now EQUIP$ is in data)
+4250 IF LA>0 THEN GOSUB 4340
+4260 OK=0:RETURN
+4270 LA=1:YY=120
+4280 YY=.8*YY:IF MY-80<YY THEN LA=LA+1:GOTO 4280
+4290 RETURN
+4299  REM draw moving box
+4300 IF MX=160 THEN RETURN
+4310 M=(-DF+MY)/(160-MX):B=-DF-160*M:TX=INT((-TY-B)/M):RETURN
+4320 C=3
+4330 X1=MX-INT(INC/2):Y1=MY-INT(INC/2):X2=X1+INC:Y2=Y1+INC:LINE (X1,Y1)-(X2,Y2),C,B:RETURN
+4340 REM an aisle
+4350 OLDKX=100
+4360 CLS:FOR X=1 TO 4:LINE (0,X*24+12)-(315,X*24+12):LINE -(300,X*24-1):LINE -(15,X*24-1):LINE -(0,X*24+12):PAINT (2,X*24+11),2,3:NEXT
+4370 LINE (0,170)-(319,170):PAINT (319,0),3:LINE (15,24)-(15,128),0:LINE (300,24)-(300,128),0:LINE (0,128)-(319,128),0
+4380 GOSUB 4520
+4390 B$=" EXIT ":LOCATE 1,16:PRINT" Aisle ";LA;:IF LA>7 THEN KX=10:L=1:P=17:GOSUB 4510:GOTO 4440
+4400 KX=260:L=40:P=17:GOSUB 4510:LOCATE 24,7:PRINT"Choose an item with spacebar.";:GOTO 4440
+4410 GOSUB 11:IF A$="" THEN 4410 ELSE IF A$=" " THEN 4460 :REM item description
+4420 IF A$="4" THEN KX=KX-10:IF KX<10 THEN IF LA<8 THEN KX=10 ELSE 4450
+4430 IF A$="6" THEN KX=KX+10:IF KX>260 THEN IF LA>7 THEN KX=260 ELSE 4450
+4440 PRESET (OLDKX,140):LIGHT=3:DRAW CART$:PRESET (KX,140):LIGHT=0:DRAW CART$:OLDKX=KX:GOTO 4410
+4450 CLS:GOSUB 25260:RETURN
+4459 REM check product to see if purchased & enough money
+4460 FOR X=1 TO 2:IF KX+20>BOXX(X,1) AND KX+20<BOXX(X,2) THEN 4463
+4462 NEXT:P=24:L=24:GOSUB 25320:LOCATE 24,6:PRINT"Put your cart under an item.";:GOTO 4410
+4463 IT=LA*2+X-3:IF IT<8 THEN IF (EQUIP\2^IT)MOD 2=0 THEN 4467
+4464 IF IT>8 AND IT<14 THEN IF (SOFT\2^(IT-9))MOD 2=0 THEN 4467
+4465 IF IT>13 THEN 4467
+4466 P=24:L=24:GOSUB 25320:LOCATE 24,6:PRINT"The B-liner already has one.";:GOTO 4410
+4467 IF CH(1)>=PRICE(LA*2+X-3) THEN 4475
+4468 P=24:L=24:GOSUB 25320:LOCATE 24,6:PRINT"You don't have enough chips.";:GOTO 4410
+4472 REM                                                                             buy box
+4475 L=24:P=24:GOSUB 25320:LOCATE 24,7:PRINT"Buy the "EQUIP$(LA*2+X-3)"? (Y or N)";:GOSUB 19
+4476 GOSUB 11:IF A$="" THEN GOTO 4476
+4477 IF A$ <>"Y" THEN P=24:L=24:GOSUB 25320:GOTO 4410
+4480 GET(BOXX(X,1),BOXY(X,1))-(BOXX(X,2)-1,BOXY(X,2)-1),BALLOON%
+4490 LINE (BOXX(X,1),BOXY(X,1))-(BOXX(X,2),BOXY(X,2)),2,BF:FOR Y=BOXY(X,1) TO 131 STEP 2:PUT (BOXX(X,1),Y),BALLOON%:PUT (BOXX(X,1),Y),BALLOON%:NEXT:PUT (BOXX(X,1),Y),BALLOON%,PSET:FOR XXTMR=1 TO 2000:NEXT:LINE (BOXX(X,1),132)-(BOXX(X,2),139),3,BF
+4494 REM                                                                        adjust wt and money
+4495 CH(1)=CH(1)-PRICE(LA*2+X-3):LOCATE 24,1:PRINT"You now have";CH(1);:PRINT"green chips to spend.";
+4496 IT=LA*2+X-3:IF IT<8 THEN EQUIP=EQUIP OR 2^IT
+4497 IF IT<17 AND IT>8 THEN SOFT=SOFT OR 2^(IT-9)
+4498 IF IT=GIFT THEN SOFT=SOFT OR 128
+4500 GOTO 4410
+4510 FOR Q=1 TO LEN(B$):LOCATE P+Q-1,L:PRINT MID$(B$,Q,1):NEXT:RETURN
+4520 REM items on shelves
+4530  FOR X9=1 TO 2: Q=2*X9-FNR(2)+1:Y=3*FNR(4)+1:X=(Q-1)*9+3:BOXX(X9,1)=(X-1)*8:BOXY(X9,1)=(Y-1)*8:LOCATE Y,X:PRINT EQUIP$(LA*2+X9-3);:BOXX(X9,2)=BOXX(X9,1)+56:BOXY(X9,2)=BOXY(X9,1)+8:NEXT
+4540 RETURN
+5000 REM house 2
+5100 REM       smoke graphics
+5120 CLS:GOSUB 25040:SCREEN 1:LOCATE 10,11:PRINT"Smoke Bailey's Place";:LOCATE 14,3:PRINT"Press any key to wake him... slowly.";:B$="smoke.crn":GOSUB 25280:GOSUB 25260:REM  bload crn.smoke
+5140 LOCATE 25,10:PRINT"L = leave Smoke's house";
+5141 IF TRADE=1 THEN P=20:GOSUB 25070:GOSUB 5830:B$="Oh Kiddo;you are Amazing.;Now hold on a minute...":GOSUB 5800:KILL"savegame."+CHR$(ASC("1")+((SOFT\64)MOD 2)):GOTO 9000
+5142 REM                                                                             smoke eyes timer
+5145 GOSUB 19: NAP=1000+FNR(2000):X8=FNR(6)+2:X9=1
+5150 X7=FRE(""):GOSUB 11:C=C+1:IF C>NAP THEN 5170
+5152 IF A$="" THEN 5150
+5155 IF A$="L" THEN :GOTO 1000
+5157 LOCATE 18,4:PRINT"Hey, Smoke!";:P=2:GOSUB 25070:LOCATE 18,4:PRINT"           ";:NAP=NAP-FNR(2000):ZZ=ZZ+1:IF ZZ>X8 THEN ANGRY=1:B$="Now you went too far;tryin' to wake me.;Next time;don't push so hard.":GOSUB 5800:NAP=10000:ZZ=0:X8=4:GOSUB 19
+5160 GOTO 5150
+5169  REM  choose what he does when he wakes
+5170 Y=0:GOSUB 5820:ON X9 GOTO 5250,5300
+5249 REM       general advice
+5250 C=0:IF ADVICE>=45 THEN X=FNR(ADVICE):B$="Sorry to be;repeatin' myself;but...":GOSUB 5800:GOTO 5280
+5252 ADVICE=ADVICE+1:X=ADVICE
+5279 REM    get advice file,eyes
+5280 P=X:L=60:B$="advice":GOSUB 25150:GOSUB 5800:GOSUB 5830:X9=2:ZZ=0:NAP=1200:GOSUB 19:GOTO 5150
+5299 REM    decide on gift (random)
+5300 IF ITEM<>0 THEN B$="Until you sell that;thing I gave you,;I don't want to;do much talkin'.":GOSUB 5800:ZZ=0:NAP=9000:GOSUB 19:X9=1:GOTO 5150
+5310 Y1=FNR(44):IF MID$(ITEM$,Y1,1)="0" AND ITEM=0 THEN ITEM=Y1:MID$(ITEM$,Y1,1)="1":B$=SMOKE$(FNR(3)):GOSUB 5800:P=Y1:L=60:B$="ITEMS":GOSUB 25150:B$="Go auction;this "+B$:GOSUB 5800
+5320 ZZ=0:NAP=4000:GOSUB 19:X9=2:GOTO 5150
+5799 REM one word at a time/ semicolon separates phrazes
+5800 P=8:GOSUB 5820:LOCATE 1,9:FOR XX= 1 TO LEN(B$):A$=MID$(B$,XX,1):IF A$=";" THEN A$="":GOSUB 5818:FOR XXTMR= 1 TO 2400:NEXT:LOCATE 1,6:PRINT"                              ";:FOR XXTMR= 1 TO 150:NEXT:LOCATE 1,9
+5810 SOUND 9000,.1:PRINT A$;:FOR Z=1 TO 75:NEXT:NEXT:P=21:GOSUB 25070:LOCATE 1,9:PRINT"                               ";:P=15:GOSUB 5830:RETURN
+5817 REM open or close eyes:x= eye pos.   y=color of eye
+5818 IF FNR(6)=1 THEN P=1:GOSUB 5830:GOSUB 25070:GOSUB 5820:RETURN: REM blink or not
+5819 RETURN
+5820 CC=0:GOSUB 5825:CC=3:GOSUB 5827:PSET(166,82),3:PSET(176,83),3:RETURN
+5825 DRAW"C=CC;BM165,82R2BM175,83R2":RETURN
+5827 DRAW"C=CC;BM164,82U1BE1R1BM178,83U1H1L1":RETURN
+5829 REM                                                                                   close Smoke's eyes
+5830 P=FNR(3):GOSUB 25070:CC=0:GOSUB 5827:CC=3:GOSUB 5825:RETURN
+6000 REM house 3
+6010 ANGRY=0:X9=0:VALUE=FNR(8)+1
+6020 GOSUB 25040:CLS:SCREEN 1: LOCATE 10,12:PRINT"The Local Trade Post";:B$="auction.crn":GOSUB 25280:GOSUB 25260:REM   load auction graphics
+6035 REM  get auction item and parse out the name and display
+6038 IF ITEM=0 THEN FOR X= 1 TO FNR(3)+1:X8=4+FNR(14):X7=FNR(40):LOCATE 1,X8-3:PRINT"Nothing to sell!";:GOSUB 6800:P=9:GOSUB 25070:LOCATE 1,X8-3:PRINT"                ";:GOSUB 6800:NEXT:GOTO 1000
+6040 L=60:P=ITEM:B$="items":GOSUB 25150:FOR X=1 TO LEN(B$):IF MID$(B$,X,1)<>";" THEN NEXT
+6050 LOCATE 23,2:PRINT"For sale from from Smoke's travels:";:P=13:GOSUB 25070:LOCATE 25,10:PRINT LEFT$(B$,X-1);:P=43:GOSUB 25070
+6199 REM  quiet down and get bid
+6200 P=23:L=25:GOSUB 25320:LOCATE 23,1:PRINT"1=Get crowd reaction  2=set final price";
+6202 GOSUB 11:IF A$<>"1" AND A$<>"2" THEN 6202
+6203 LOCATE 24,10:PRINT A$;:IF A$="2" THEN 6500
+6205 P=23:L=25:GOSUB 25320:P=2:GOSUB 25070:SOUND 2000,10:GOSUB 25070:LOCATE 23,12:PRINT"Fellow Metallicans!";:P=10:GOSUB 25070:P=23:L=25:GOSUB 25320:LOCATE 23,8:PRINT"  How do you like this price:    CHIPS?";
+6210 GOSUB 19:LOCATE 24,31:L=1:P=0:GOSUB 15:SOUND 2000,5:GOSUB 19
+6400 PRICE=VAL(B$):DIFF=VALUE-PRICE:X1=FNR(5)+3:REM  # of responses
+6402 IF DIFF>49 THEN DIFF=49
+6403 IF DIFF<-50 THEN DIFF=-50
+6405 X2=INT((5+DIFF)/2.5)+1
+6408 FOR X= 1 TO X1
+6410 X3=FNR(3)+X2-2:IF X3<1 OR X3>4 THEN 6410:REM  type for crowd$
+6489  REM  loop through the crowd responses
+6490 X7=FNR(40):X8=FNR(18):X4=FNR(5)*15-14:LOCATE 1,X8:P$=MID$(CROWD$(X3),X4,15):PRINT P$;:GOSUB 6800:GOSUB 15000:P=9:GOSUB 25070:LOCATE 1,X8:PRINT"               ":GOSUB 6800:P=2:GOSUB 25070:NEXT
+6498 GOSUB 19:GOTO 6200
+6499 REM   buy or not
+6500 ITEM=0:P=23:L=25:GOSUB 25320:LOCATE 23,2:PRINT"My final selling price is    chips.";:LOCATE 23,28:L=1:GOSUB 15
+6510 PRICE=VAL(B$):IF PRICE<=VALUE+1 THEN P$="Fizpa wizh?":FOR X= 1 TO FNR(2)+2:GOSUB 6590:NEXT:P$="I'll take it!":CH(1)=CH(1)+PRICE:GOSUB 6590:CLS:LOCATE 12,1:PRINT"You just made "PRICE" green chips.";:P=29:GOSUB 25070:GOTO 1000
+6515 P$="Fizpa wizh?":FOR X= 1 TO FNR(5)+2:GOSUB 6590:NEXT:P$="No deal..":GOSUB 6590:CLS:LOCATE 12,2:PRINT"You lost that old object...";:P=29:GOSUB 25070:GOTO 1000
+6590 X7=FNR(40):X8=FNR(18):X4=FNR(5)*15-14:LOCATE 1,X8:PRINT P$;:GOSUB 6800:GOSUB 15000:P=15:GOSUB 25070:LOCATE 1,X8:PRINT"              ":GOSUB 6800:P=2:GOSUB 25070:RETURN
+6799  REM  draw talk bubble lines
+6800 X9=3-X9:LINE(X8*8-8,11)-(X8*8+90,11),X9:LINE(X8*8+40,11)-(X8*8+20+X7,33),X9:RETURN
+9000 CLS:LOCATE 2:PRINT"There is no doubt now that the ultimate "
+9001 PRINT"Secret of the Universe is YOU!  Yes, YOU"
+9002 PRINT"are The Most Amazing Thing.  Your search"
+9003 PRINT"has taken a lot of skill and patience."
+9004 PRINT:PRINT"You've made many decisions and have come"
+9005 PRINT"up with some creative solutions.  You've"
+9006 PRINT"had to think in new ways and learn from "
+9007 PRINT"your mistakes.  You've discovered that"
+9008 PRINT:PRINT"YOU possess many amazing powers.  And"
+9009 PRINT:PRINT"the best part of all is that in time you"
+9010 PRINT"will discover many more amazing things"
+9011 PRINT:PRINT"about yourself.";
+9012 FOR X=1 TO 50000!:NEXT:CLS:NEW
+11000 REM trading posts
+11001 GOTO 1900
+12000 REM                                                                                                                                                             WORLD
+15000 REM sound talking for auction and trade
+15005 O=60:Y4=0
+15020 Y4=Y4+1:W$="":FOR Y4= Y4 TO LEN(P$):WW$=MID$(P$,Y4,1):IF WW$ <>" " THEN W$=W$+WW$:NEXT
+15030 W(0)=LEN(W$)
+15040 W$=W$+"pdqa"
+15045 IF W$="pdqa" THEN RETURN
+15050 FOR Y5= 1 TO 4:W(Y5)=ASC(MID$(W$,Y5,1)):NEXT
+15060 A=W(1)
+15070 F=W(2)*.0007
+15080 O=O+100
+15090 L=W(0)*1.2
+15100 S=(W(4)-77)/F
+15110 FOR Y5=1 TO L:SOUND (SIN(Y5*F+S)+1)*A+O,1 :NEXT
+15120 FOR Y5=1 TO 10 :NEXT
+15130 GOTO 15020
+20040 REM
+20080 OY=35
+20090 DEF SEG=&H40:POKE &H17,&H60:DEF SEG:REM caps lock and num lock
+20100 FOR X=1 TO 3:FOR Y=1 TO 2:READ HOUSE(X,Y):NEXT:NEXT
+20110 DATA 180,150,20,15,100,50
+20170 CART$="C=light;A0F15R30U10E5L5D5U5L45F15D10U2L2G2D2F2R2E2U2H2D2R30U2L2G2D2F2R2E2U2H2U8"
+20195 ITEM$=STRING$(45,"0")
+20200 FOR X=1 TO 3: READ SMOKE$(X):NEXT:DATA "I have a;little somethin';for you ...","You'll need;plenty of chips;at the store.","You're gonna;need more chips;to buy things;for the B-liner."
+20210 FOR X=1 TO 4:READ CROWD$(X):NEXT:DATA "Terrible price.Too high!      That's a lot!  Way too much!  Ridiculous!    ","Looks average..A fair deal..  I'm not sure.. Good enough..  Seems O.K."
+20212 DATA "Hey, not bad.. Good stuff...  Pretty good..  I like that..  That looks good","Truly superb!  Excellent!!    What a deal!   Great price!   Fantastic!
+20220 FOR X=0 TO 28:READ PRICE(X):NEXT:DATA 10,7,9,8,6,10,8,9,25,8,8,8,9,9,18,19,29,23,22,21,24,23,28,26,22,21,20,19,24
+20230 FOR X=0 TO 28:READ EQUIP$(X):NEXT
+20232 DATA "DIR-?","High?","HOME1","Storm","Fuelo","AutoP","Radar","Hut 1","Posix","Map-H","Cults","Dicto","Musix","Trac4","Hovak","Essex","LIFT5","Windg","XXX-2","Gasex","Namex","Turbo","AbcdE","Takom","Zener","Fazer","Yukal","Plaxi","Namek"
+24999 RETURN
+25000 REM
+25030 REM                                                                            clear local variables                                                      .
+25040 X=0:Y=0:Z=0:XX=0:YY=0:ZZ=0:H=0:C=0:RETURN
+25050 REM
+25060 REM                                                                             timer                                                                      .
+25070 FOR Q=1 TO P*100:NEXT:RETURN
+25080 REM
+25140 REM                                                                             get a random file                                                          .
+25150 OPEN B$ AS 1 LEN=L:FIELD #1,L AS R$:GET #1,P:CLOSE:B$=R$:FOR Q=L TO 1 STEP -1:IF MID$(B$,Q,1)=" " THEN NEXT
+25160 B$=LEFT$(B$,Q):RETURN
+25170 REM                                                                            printer routine
+25180 FOR Q=1 TO LEN(B$)-1:IF MID$(B$,Q,1)=" " THEN R=R+1:L1=Q
+25190 IF R>1 AND Q>LT THEN Q=L1:R=Q:GOTO 25210
+25200 NEXT Q:B$=B$+".":R=LEN(B$)-1:QQ=1
+25210 LOCATE VT,HT:PRINT LEFT$(B$,R);:VT=VT+1:B$=RIGHT$(B$,LEN(B$)-R):R=0:IF QQ=1 THEN QQ=0:RETURN
+25220 GOTO 25180
+25230 REM                                                                            crunch
+25240 DEF SEG=&H4DF1:INTVAR=0:CALL CRUNCH:PIC$=B$:RETURN
+25250 REM                                                                            decrunch
+25260 DEF SEG=&H4FFA:CLS:INTVAR=0:CALL DECRUNCH:RETURN
+25270 REM                                                                            bload a crunched disk file
+25280 PIC$=B$:DEF SEG=&H4DF1:BLOAD B$,&H80:RETURN
+25290 REM                                                                            bload crunch object files
+25300 DEF SEG=&H4DF1:CRUNCH=0:BLOAD"crunch",0:DEF SEG=&H4FFA:DECRUNCH=0:BLOAD"decrunch",0:RETURN
+25310 REM                                                                                                                                                            line clearer
+25320 FOR Q=P TO L:LOCATE Q,1:PRINT STRING$(39," ");:NEXT:RETURN
+25330 REM                                                                            bsave a crn pic
+25340 DEF SEG=&H4DF1:Q=(PEEK(&H81)*256)+PEEK(&H80):BSAVE B$,&H80,Q:RETURN
+25349 REM                                                                           save game
+25449 REM                                                                            save game
+25450 OPEN "savegame."+CHR$(ASC("1")+((SOFT\64)MOD 2)) FOR OUTPUT AS #2
+25460 WRITE#2,HUNGRY;SLEEP;FUEL;CH(1);CH(2);CH(3);XCOORD;YCOORD;EQUIP;SOFT;CX;CY;XC;YC;WEIGHT;ITEM;ADVICE;BRANCH;TYP;ALT;BURNER;HIGH;VEL;VENT;VOLUME;GIFT;TRADE;CLUECULT;CLUECHIPS;CLUECOLOR;FLAGS
+25470 CLOSE #2:RETURN
+25480 REM                                                                                store numerical value in a word
+25490 POKE (LOWB+1),INT(NUM/256):POKE LOWB,(NUM MOD 256):RETURN
+25499 REM                                                                            get common variables
+25500 DEF SEG=&H4DEE:GIFT=PEEK(0):SLEEP=PEEK(1)+256*PEEK(2):FUEL=PEEK(3):CH(1)=PEEK(4)+256*PEEK(5):CH(2)=PEEK(6)+256*PEEK(7):CH(3)=PEEK(8)+256*PEEK(9):XCOORD=PEEK(10)+256*PEEK(11):YCOORD=PEEK(12)+256*PEEK(13):CX=PEEK(14)+256*PEEK(15):CY=PEEK(16)
+25510 ITEM=PEEK(17):ADVICE=PEEK(18):BRANCH=PEEK(19):TYP=PEEK(20):ALT=PEEK(21)+256*PEEK(22):BURNER=PEEK(23):HIGH=PEEK(24):VEL=PEEK(25):VENT=PEEK(26):VOLUME=PEEK(27):TRADE=PEEK(28)+256*PEEK(29):EQUIP=PEEK(30):SOFT=PEEK(31)
+25520 HUNGRY=PEEK(32)+256*PEEK(33):CLUECULT=PEEK(34):CLUECHIPS=PEEK(35)+256*PEEK(36):CLUECOLOR=PEEK(37):FLAGS=PEEK(38):YC=PEEK(39):XC=PEEK(40)+256*PEEK(41)
+25530 DEF SEG:RETURN
+25549 REM                                                                            save common variables
+25550 DEF SEG=&H4DEE:POKE 0,GIFT:POKE 1,SLEEP MOD 256:POKE 2,SLEEP\256:POKE 3,FUEL:POKE 4,CH(1) MOD 256:POKE 5,CH(1)\256:POKE 6,CH(2) MOD 256:POKE 7,CH(2)\256:POKE 8,CH(3) MOD 256:POKE 9,CH(3)\256:POKE 10,XCOORD MOD 256:POKE 11,XCOORD\256
+25560 POKE 12,YCOORD MOD 256:POKE 13,YCOORD\256:POKE 14,CX MOD 256:POKE 15,CX\256:POKE 16,CY:POKE 17,ITEM:POKE 18,ADVICE:POKE 19,BRANCH:POKE 20,TYP:POKE 21,ALT MOD 256:POKE 22,ALT\256:POKE 23,BURNER:POKE 24,HIGH:POKE 25,VEL
+25570 POKE 26,VENT:POKE 27,VOLUME:POKE 28,TRADE MOD 256:POKE 29,TRADE\256:POKE 30,EQUIP:POKE 31,SOFT:POKE 32,HUNGRY MOD 256:POKE 33,HUNGRY\256:POKE 34,CLUECULT:POKE 35,CLUECHIPS MOD 256:POKE 36,CLUECHIPS\256:POKE 37,CLUECOLOR:POKE 38,FLAGS
+25580 POKE 39,YC:POKE 40,XC MOD 256:POKE 41,XC\256
+25590 DEF SEG:RETURN
+29010 CLS:SCREEN 0:WIDTH 80
+

@@ -34,4 +34,8 @@ public enum RgbColor {
 			default: return Color.BLACK;
 		}
 	}
+
+	public int getValue() {
+		return value;
+	}
 }

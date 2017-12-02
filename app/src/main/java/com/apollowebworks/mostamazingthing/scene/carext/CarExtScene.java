@@ -1,4 +1,4 @@
-package com.apollowebworks.mostamazingthing.scene.elevator;
+package com.apollowebworks.mostamazingthing.scene.carext;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -8,15 +8,17 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.controller.InSearchController;
+import com.apollowebworks.mostamazingthing.graphics.Turtle;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
 import com.apollowebworks.mostamazingthing.world.model.Elevator;
+import com.apollowebworks.mostamazingthing.world.model.PopberryTree;
 
 import static com.apollowebworks.mostamazingthing.math.DrawUtil.getVirtualPoint;
 
-public class ElevatorScene extends Scene {
+public class CarExtScene extends Scene {
 
-	private static final String TAG = ElevatorScene.class.getName();
+	private static final String TAG = CarExtScene.class.getName();
 
 	private static final float SHAFT_CENTER = 147;
 	private static final int ELEVATOR_START_Y = 60;
@@ -24,28 +26,25 @@ public class ElevatorScene extends Scene {
 
 	private boolean moving;
 	private PointF lastTouched;
+	private PopberryTree tree;
 
-	private Elevator elevator;
-
-	public ElevatorScene(InSearchController inSearchController) {
+	public CarExtScene(InSearchController inSearchController) {
 		super(inSearchController);
-		this.elevator = new Elevator(new PointF(SHAFT_CENTER, ELEVATOR_START_Y));
-		this.setBackgroundImage(inSearchController.getImageManager().getBitmap("elevpic"));
+		this.setBackgroundImage(inSearchController.getImageManager().getBitmap("carext"));
 		moving = false;
+		tree = new PopberryTree();
 	}
 
 	@Override
 	public SceneId getId() {
-		return SceneId.ELEVATOR;
+		return SceneId.CAREXT;
 	}
+
 
 	@Override
 	public void draw(Canvas canvas, Resources resources, Context context) {
 		newFrame();
-		elevator.draw(tempCanvas);
-		drawText(10, 11, "Store");
-		drawText(8, 22, "Smoke");
-		drawText(18, 21, "Auction");
+		tree.draw(tempCanvas);
 		drawFinalFrame(canvas);
 	}
 
@@ -64,12 +63,4 @@ public class ElevatorScene extends Scene {
 		return true;
 	}
 
-	@Override
-	public boolean tick(Long msElapsed) {
-		boolean wasMoving = moving;
-		if (moving) {
-			moving = !elevator.moveToward(new PointF(SHAFT_CENTER, lastTouched.y), ELEVATOR_SPEED, msElapsed);
-		}
-		return wasMoving;
-	}
 }
