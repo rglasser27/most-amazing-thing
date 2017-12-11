@@ -1,30 +1,29 @@
 package com.apollowebworks.mostamazingthing.scene.bitmaptest;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.MotionEvent;
-import com.apollowebworks.mostamazingthing.controller.InSearchController;
-import com.apollowebworks.mostamazingthing.graphics.model.FullScreenImage;
+import com.apollowebworks.mostamazingthing.controller.SceneController;
+import com.apollowebworks.mostamazingthing.ui.model.DosBitmap;
+import com.apollowebworks.mostamazingthing.ui.model.FullScreenBitmap;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
 
-import static com.apollowebworks.mostamazingthing.math.DrawUtil.RELATIVE_HEIGHT;
-import static com.apollowebworks.mostamazingthing.math.DrawUtil.adjustToScreen;
+import static com.apollowebworks.mostamazingthing.util.DrawUtil.RELATIVE_HEIGHT;
+import static com.apollowebworks.mostamazingthing.util.DrawUtil.adjustToScreen;
 
 public class BitmapTestScene extends Scene {
 
 	private static final float MARGIN = 2.f;
 
-	public BitmapTestScene(InSearchController inSearchController) {
-		super(inSearchController);
+	public BitmapTestScene(SceneController sceneController) {
+		super(sceneController);
 	}
 
 	@Override
-	public void draw(Canvas canvas, Resources resources, Context context) {
-		FullScreenImage image = imageManager.getImage("auction");
+	public void drawToBuffer(Canvas canvas) {
+		DosBitmap image = imageManager.getImage("auction");
 		image.draw(canvas);
 	}
 

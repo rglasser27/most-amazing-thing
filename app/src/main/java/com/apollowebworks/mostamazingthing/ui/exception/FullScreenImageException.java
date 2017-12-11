@@ -1,4 +1,4 @@
-package com.apollowebworks.mostamazingthing.graphics.exception;
+package com.apollowebworks.mostamazingthing.ui.exception;
 
 public class FullScreenImageException extends RuntimeException {
 	public FullScreenImageException(String msg) {

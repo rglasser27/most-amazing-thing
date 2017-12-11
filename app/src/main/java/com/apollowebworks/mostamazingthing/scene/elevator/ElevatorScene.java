@@ -7,12 +7,12 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
-import com.apollowebworks.mostamazingthing.controller.InSearchController;
+import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
 import com.apollowebworks.mostamazingthing.world.model.Elevator;
 
-import static com.apollowebworks.mostamazingthing.math.DrawUtil.getVirtualPoint;
+import static com.apollowebworks.mostamazingthing.util.DrawUtil.getVirtualPoint;
 
 public class ElevatorScene extends Scene {
 
@@ -27,10 +27,10 @@ public class ElevatorScene extends Scene {
 
 	private Elevator elevator;
 
-	public ElevatorScene(InSearchController inSearchController) {
-		super(inSearchController);
+	public ElevatorScene(SceneController sceneController) {
+		super(sceneController);
 		this.elevator = new Elevator(new PointF(SHAFT_CENTER, ELEVATOR_START_Y));
-		this.setBackgroundImage(inSearchController.getImageManager().getBitmap("elevpic"));
+		this.setBackgroundImage(sceneController.getImageManager().getBitmap("elevpic"));
 		moving = false;
 	}
 
@@ -40,13 +40,11 @@ public class ElevatorScene extends Scene {
 	}
 
 	@Override
-	public void draw(Canvas canvas, Resources resources, Context context) {
-		newFrame();
-		elevator.draw(tempCanvas);
+	public void drawToBuffer(Canvas canvas) {
+		elevator.draw(canvas);
 		drawText(10, 11, "Store");
 		drawText(8, 22, "Smoke");
 		drawText(18, 21, "Auction");
-		drawFinalFrame(canvas);
 	}
 
 	@Override

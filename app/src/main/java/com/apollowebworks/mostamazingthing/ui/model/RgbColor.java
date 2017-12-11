@@ -1,4 +1,4 @@
-package com.apollowebworks.mostamazingthing.graphics.model;
+package com.apollowebworks.mostamazingthing.ui.model;
 
 import android.graphics.Color;
 import android.util.SparseArray;

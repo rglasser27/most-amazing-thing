@@ -3,6 +3,8 @@ package com.apollowebworks.mostamazingthing.world.model;
 import android.graphics.Canvas;
 import android.graphics.PointF;
 
+import static com.apollowebworks.mostamazingthing.util.DrawUtil.findDistanceToTarget;
+
 abstract class MoveableObject implements WorldObject {
 	PointF position;
 
@@ -24,7 +26,7 @@ abstract class MoveableObject implements WorldObject {
 		// If more than one second has elapsed, limit the movement
 		float boundedMs = msElapsed > 1000 ? 1000 : msElapsed;
 		float unitsMoved = speed * 1000.f / boundedMs;
-		float distance = findDistanceToTarget(targetPosition);
+		float distance = findDistanceToTarget(position, targetPosition);
 		if (distance <= speed) {
 			position = targetPosition;
 			return true;
@@ -35,11 +37,5 @@ abstract class MoveableObject implements WorldObject {
 		float newY = position.y + yMove;
 		position = new PointF(newX, newY);
 		return false;
-	}
-
-	private float findDistanceToTarget(PointF targetPosition) {
-		float xDist = targetPosition.x - position.x;
-		float yDist = targetPosition.y - position.y;
-		return (float) Math.sqrt(xDist * xDist + yDist * yDist);
 	}
 }

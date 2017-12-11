@@ -1,10 +1,10 @@
-package com.apollowebworks.mostamazingthing.graphics;
+package com.apollowebworks.mostamazingthing.ui;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.Log;
-import com.apollowebworks.mostamazingthing.graphics.model.RgbColor;
+import com.apollowebworks.mostamazingthing.ui.model.RgbColor;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,6 +63,7 @@ public class Turtle {
 	public Turtle(Canvas canvas) {
 		this.canvas = canvas;
 		paint = new Paint();
+		paint.setAntiAlias(false);
 		updatePaint(3);
 		String moveString = "m(\\d+)\\,(\\d+)";
 		String singleValueString = "([udlrefhcsag])(\\d+)";
@@ -78,17 +79,21 @@ public class Turtle {
 	}
 
 	public void draw(String commandLine) {
-		Matcher matcher = drawPattern.matcher(commandLine);
+		Matcher matcher = drawPattern.matcher(commandLine.toLowerCase());
 		while (matcher.find()) {
 			String command = matcher.group(0);
 			if (command.equals("c")) {
 				updatePaint(Integer.parseInt(matcher.group(1)));
 			} else if (command.equals("b")) {
-				penDown = false;
+				penUp();
 			} else {
 				handleMovementCommand(command);
 			}
 		}
+	}
+
+	public void penUp() {
+		penDown = false;
 	}
 
 	private void handleMovementCommand(String command) {
@@ -105,7 +110,7 @@ public class Turtle {
 		}
 	}
 
-	private void moveTo(int newX, int newY) {
+	public void moveTo(int newX, int newY) {
 		if (penDown) {
 			canvas.drawLine(x, y, newX, newY, paint);
 			path.lineTo(newX, newY);
@@ -123,6 +128,9 @@ public class Turtle {
 		switch (command) {
 			case "c":
 				updatePaint(magnitude);
+			case "s":
+				scale = magnitude;
+				break;
 			case "u":
 				scaledMove(magnitude, 0, -1);
 				break;

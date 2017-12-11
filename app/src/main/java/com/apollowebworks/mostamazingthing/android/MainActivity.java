@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import com.apollowebworks.mostamazingthing.R;
-import com.apollowebworks.mostamazingthing.controller.InSearchController;
-import com.apollowebworks.mostamazingthing.graphics.manager.ImageManager;
+import com.apollowebworks.mostamazingthing.controller.SceneController;
+import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
 
-import static com.apollowebworks.mostamazingthing.controller.InSearchController.FPS;
+import static com.apollowebworks.mostamazingthing.controller.SceneController.FPS;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -16,7 +16,7 @@ import static com.apollowebworks.mostamazingthing.controller.InSearchController.
  */
 public class MainActivity extends AppCompatActivity {
 
-	private InSearchController inSearchController;
+	private SceneController sceneController;
 
 	/**
 	 * Touch listener to use for in-layout UI controls to delay hiding the
@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
 	private final View.OnTouchListener controllerOnTouchListener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View view, MotionEvent motionEvent) {
-			if (inSearchController != null) {
-				inSearchController.onTouch(motionEvent);
+			if (sceneController != null) {
+				sceneController.onTouch(motionEvent);
 			}
 			return false;
 		}
@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_fullscreen);
 		MainView mContentView = findViewById(R.id.fullscreen_content);
 
-		inSearchController = new InSearchController(getResources(), mContentView);
-		mContentView.setInSearchController(inSearchController);
+		sceneController = new SceneController(getResources(), mContentView);
+		mContentView.setSceneController(sceneController);
 
 		new MainThread().start();
 	}
@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
 	/**
 	 * for tests
 	 */
-	public InSearchController getInSearchController() {
-		return inSearchController;
+	public SceneController getSceneController() {
+		return sceneController;
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 							runOnUiThread(new Runnable() {
 								@Override
 								public void run() {
-									inSearchController.tick();
+									sceneController.tick();
 								}
 							});
 						}

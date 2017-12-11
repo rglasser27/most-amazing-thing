@@ -1,4 +1,4 @@
-package com.apollowebworks.mostamazingthing.math;
+package com.apollowebworks.mostamazingthing.util;
 
 import java.util.Objects;
 

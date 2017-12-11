@@ -1,30 +1,28 @@
 package com.apollowebworks.mostamazingthing.scene;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.*;
 import android.view.MotionEvent;
-import com.apollowebworks.mostamazingthing.controller.InSearchController;
-import com.apollowebworks.mostamazingthing.graphics.Turtle;
-import com.apollowebworks.mostamazingthing.graphics.manager.ImageManager;
+import com.apollowebworks.mostamazingthing.controller.SceneController;
+import com.apollowebworks.mostamazingthing.ui.Turtle;
+import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
 
-import static com.apollowebworks.mostamazingthing.graphics.model.FullScreenImage.SCREEN_HEIGHT;
-import static com.apollowebworks.mostamazingthing.graphics.model.FullScreenImage.SCREEN_WIDTH;
+import static com.apollowebworks.mostamazingthing.ui.model.FullScreenBitmap.SCREEN_HEIGHT;
+import static com.apollowebworks.mostamazingthing.ui.model.FullScreenBitmap.SCREEN_WIDTH;
 
 public abstract class Scene {
 
-	protected InSearchController inSearchController;
+	protected SceneController sceneController;
 	protected ImageManager imageManager;
 	private Bitmap backgroundImage;
-	protected Canvas tempCanvas;
+	private Canvas tempCanvas;
 	private Bitmap tempBitmap;
 	private Paint textPaint;
 
-	public Scene(InSearchController inSearchController) {
-		this.inSearchController = inSearchController;
+	public Scene(SceneController sceneController) {
+		this.sceneController = sceneController;
 		backgroundImage = Bitmap.createBitmap(SCREEN_WIDTH, SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
 		drawBlackBackground(new Canvas(backgroundImage));
-		textPaint = inSearchController.getTextPaint();
+		textPaint = sceneController.getTextPaint();
 	}
 
 	abstract public SceneId getId();
@@ -40,7 +38,15 @@ public abstract class Scene {
 		return false;
 	}
 
-	public abstract void draw(Canvas canvas, Resources resources, Context context);
+	protected abstract void drawToBuffer(Canvas canvas);
+
+	public void draw(Canvas canvas) {
+		tempBitmap = backgroundImage.copy(backgroundImage.getConfig(), true);
+		tempCanvas = new Canvas(tempBitmap);
+		drawToBuffer(tempCanvas);
+		canvas.drawBitmap(tempBitmap, new Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), canvas.getClipBounds(), null);
+	}
+
 
 	/**
 	 * Handle a touch event from the app
@@ -57,13 +63,10 @@ public abstract class Scene {
 	protected void drawBackground(Canvas canvas) {
 		drawBlackBackground(canvas);
 		if (backgroundImage != null) {
-			canvas.drawBitmap(backgroundImage, new Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), canvas.getClipBounds(), null);
+			Paint backgroundPaint = new Paint();
+			backgroundPaint.setAntiAlias(false);
+			canvas.drawBitmap(backgroundImage, new Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), canvas.getClipBounds(), backgroundPaint);
 		}
-	}
-
-	protected void newFrame() {
-		tempBitmap = backgroundImage.copy(backgroundImage.getConfig(), true);
-		tempCanvas = new Canvas(tempBitmap);
 	}
 
 	private void drawBlackBackground(Canvas canvas) {
@@ -75,12 +78,8 @@ public abstract class Scene {
 		tempCanvas = new Canvas(image);
 	}
 
-	protected void drawFinalFrame(Canvas canvas) {
-		canvas.drawBitmap(tempBitmap, new Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), canvas.getClipBounds(), null);
-	}
-
 	protected void drawText(int y, int x, String text) {
-		tempCanvas.drawText(text, x * 8 - 5, y * 8 - 1, textPaint);
+		tempCanvas.drawText(text, x * 8 - 7, y * 8, textPaint);
 	}
 
 	protected void turtleDraw(String str) {

@@ -1,12 +1,9 @@
-package com.apollowebworks.mostamazingthing.math;
+package com.apollowebworks.mostamazingthing.util;
 
-import com.apollowebworks.mostamazingthing.math.TestRect;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static com.apollowebworks.mostamazingthing.graphics.model.FullScreenImage.SCREEN_WIDTH;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)

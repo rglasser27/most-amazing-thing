@@ -4,10 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
-import com.apollowebworks.mostamazingthing.controller.InSearchController;
+import com.apollowebworks.mostamazingthing.controller.SceneController;
 
 public class MainView extends View {
-	private InSearchController inSearchController;
+	private SceneController sceneController;
 	private Context context;
 
 	public MainView(Context context) {
@@ -23,20 +23,20 @@ public class MainView extends View {
 		super(context, attrs, defStyleAttr);
 	}
 
-	public void setInSearchController(final InSearchController inSearchController) {
-		this.inSearchController = inSearchController;
-		MainListeners listeners = new MainListeners(inSearchController);
+	public void setSceneController(final SceneController sceneController) {
+		this.sceneController = sceneController;
+		MainListeners listeners = new MainListeners(sceneController);
 		setOnTouchListener(listeners);
 	}
 
-	public InSearchController getInSearchController() {
-		return inSearchController;
+	public SceneController getSceneController() {
+		return sceneController;
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		if (inSearchController != null) {
-			inSearchController.drawScene(canvas);
+		if (sceneController != null) {
+			sceneController.drawScene(canvas);
 		}
 	}
 

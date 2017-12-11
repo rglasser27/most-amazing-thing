@@ -16,6 +16,7 @@ public class Elevator extends MoveableObject {
 		elevatorCarPaint.setStrokeWidth(10);
 		elevatorCarPaint.setColor(Color.WHITE);
 		elevatorCarPaint.setStyle(Paint.Style.FILL);
+		elevatorCarPaint.setAntiAlias(false);
 	}
 
 	@Override

@@ -12,7 +12,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.apollowebworks.mostamazingthing.R;
 import com.apollowebworks.mostamazingthing.android.MainActivity;
 import com.apollowebworks.mostamazingthing.android.MainView;
-import com.apollowebworks.mostamazingthing.controller.InSearchController;
+import com.apollowebworks.mostamazingthing.controller.SceneController;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -33,7 +33,7 @@ public class AndTitleSceneTest {
 	private Canvas canvas;
 	private Resources resources;
 	private Drawable drawable;
-	private InSearchController inSearchController;
+	private SceneController sceneController;
 	private MainActivity mainActivity;
 	private MainView view;
 
@@ -41,7 +41,7 @@ public class AndTitleSceneTest {
 	public void setUp() throws Exception {
 		Context appContext = InstrumentationRegistry.getTargetContext();
 		mainActivity = mActivityRule.getActivity();
-//		InSearchController inSearchController =
+//		SceneController sceneController =
 //				assertEquals("hello", appContext.getResources());
 //		canvas = new Canvas.class);
 //		drawable = mock(Drawable.class);
@@ -59,13 +59,13 @@ public class AndTitleSceneTest {
 		Bitmap bitmap = Bitmap.createBitmap(CWIDTH, CHEIGHT, Bitmap.Config.ARGB_8888);
 		canvas = new Canvas(bitmap);
 
-		inSearchController = mainActivity.getInSearchController();
-//		titleScene = inSearchController.activateScene(SceneId.TITLE);
+		sceneController = mainActivity.getSceneController();
+//		titleScene = sceneController.activateScene(SceneId.TITLE);
 		view = mainActivity.findViewById(R.id.fullscreen_content);
 	}
 
 //	@Test
-	public void draw() throws Exception {
+	public void drawToBuffer() throws Exception {
 
 		view.draw(canvas);
 //		titleScene.draw(canvas, resources);

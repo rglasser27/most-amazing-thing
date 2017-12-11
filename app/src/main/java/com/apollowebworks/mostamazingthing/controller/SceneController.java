@@ -1,16 +1,17 @@
 package com.apollowebworks.mostamazingthing.controller;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.*;
 import android.view.MotionEvent;
 import android.view.View;
-import com.apollowebworks.mostamazingthing.graphics.exception.DecrunchException;
-import com.apollowebworks.mostamazingthing.graphics.manager.ImageManager;
+import com.apollowebworks.mostamazingthing.ui.exception.DecrunchException;
+import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneFactory;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
 
-public class InSearchController {
+public class SceneController {
 
 	public static final int FPS = 30;
 	private static final SceneId STARTING_SCENE = SceneId.CAREXT;
@@ -23,8 +24,9 @@ public class InSearchController {
 
 	private Long msSinceLastTick;
 	private final ImageManager imageManager;
+	private Context context;
 
-	public InSearchController(Resources resources, View view) {
+	public SceneController(Resources resources, View view) {
 		this.resources = resources;
 		this.view = view;
 		activeScene = null;
@@ -36,11 +38,12 @@ public class InSearchController {
 			e.printStackTrace();
 		}
 
-		Typeface tf = Typeface.createFromAsset(resources.getAssets(), "fonts/Px437_IBM_BIOS.ttf");
+		Typeface typeFace = Typeface.createFromAsset(resources.getAssets(), "fonts/Px437_IBM_BIOS.ttf");
 		textPaint = new Paint();
 		textPaint.setColor(Color.WHITE);
-		textPaint.setTypeface(tf);
+		textPaint.setTypeface(typeFace);
 		textPaint.setTextSize(8);
+		textPaint.setAntiAlias(false);
 
 		activateScene(STARTING_SCENE);
 	}
@@ -54,12 +57,16 @@ public class InSearchController {
 			clipBounds = canvas.getClipBounds();
 		}
 		if (activeScene != null) {
-			activeScene.draw(canvas, resources, view.getContext());
+			activeScene.draw(canvas);
 		}
 	}
 
 	public boolean onTouch(MotionEvent motionEvent) {
-		return clipBounds != null && activeScene.onTouch(motionEvent, clipBounds);
+		if (clipBounds != null && activeScene.onTouch(motionEvent, clipBounds)) {
+			redraw();
+			return true;
+		}
+		return false;
 	}
 
 	public void activateScene(SceneId sceneId) {
@@ -82,5 +89,13 @@ public class InSearchController {
 
 	public Paint getTextPaint() {
 		return textPaint;
+	}
+
+	public Resources getResources() {
+		return resources;
+	}
+
+	public Context getContext() {
+		return context;
 	}
 }

@@ -1,0 +1,249 @@
+1 GOTO 30000
+5 ON ERROR GOTO 0
+10 CLEAR,25000
+20 SCREEN 1:CLS:KEY OFF
+25 DIM BALLOON%(160),ML%(37),MR%(37),L%(33),R%(33),P%(2),X2%(9),Y2%(9),F%(3),CAR%(16),SONG%(102,1),SOFF%(500)
+26 GET(1,1)-STEP(9,9),CAR%:FOR X=0 TO 16:READ CAR%(X):NEXT:DATA 20,10,-1021,3840,255,-21698,-1344,-3926,-21766,-1296,-3926,-21766,16112,-16213,-241,768,252
+27 GET(1,1)-STEP(14,17),ML%:GET(1,1)-STEP(14,17),MR%:GET(1,1)-STEP(11,20),L%:GET(1,1)-STEP(11,20),R%:GET(1,1)-STEP(0,0),P%:GET(1,1)-STEP(3,3),F%
+28 FOR Z4=0 TO 37:READ ML%(Z4):NEXT:DATA 30,18,3840,192,3840,240,4092,252,1020,240,-769,192,-1009,0,-241,0,-241,192,-253,240,-256,240,16128,252,3840,207,768,-16189,768,-3904,0,15600,0,3132,0,3084,0,12
+29 FOR Z4=0 TO 37:READ MR%(Z4):NEXT:DATA 30,18,3840,192,16128,192,-256,-832,16128,-1024,3072,-769,0,-16129,768,-16129,3840,-16129,16128,255,16128,252,-256,240,-12541,192,3855,0,3900,0,15600,0,-3904,0,-16192,0,-16384,0
+30 FOR Z4=0 TO 33:READ L%(Z4):NEXT:DATA 24,21,12288,0,252,-1024,0,3120,-1024,831,-1,-253,1023,16383,-253,768,255,-253,768,255,-1024,768,252,15375,15360,60,15420,15360,15,828,12480,-16384,192,192
+31 FOR Z4=0 TO 33:READ R%(Z4):NEXT:DATA 24,21,3072,0,63,16128,12288,12,16380,-256,-16129,-1,-832,-16129,-256,192,-16129,-256,192,-16129,16128,0,-16321,15360,240,15420,15360,60,15600,-16381,828,3072,3,3
+32 FOR Z4=0 TO 2:READ P%(Z4):NEXT:DATA 2,1,192
+39 GOSUB 25300
+40 KEY(1) ON:ON KEY(1) GOSUB 25450
+1000 CLS:LOCATE 8:PRINT"Hit the F1 function key at any time"
+1010 PRINT:PRINT"during the demonstration to stop it."
+1015 LOCATE 17,11:PRINT"Copyright 1983":PRINT:PRINT"  Spinnaker Software Corporation"
+1020 FOR X=1 TO 12000:NEXT
+2000 CLS:PRINT"              Welcome to"
+2010 PRINT:PRINT"  IN SEARCH OF THE MOST AMAZING THING"
+2020 PRINT:PRINT:PRINT"Your Uncle Smoke Bailey has called you
+2030 PRINT:PRINT"to the underground city of Metallica in"
+2040 PRINT:PRINT"the far off land of Darksome Mire.  Long"
+2050 PRINT"ago Smoke found The Most Amazing Thing,"
+2060 PRINT:PRINT"a mysterious object that holds the"
+2070 PRINT:PRINT"secret of the universe, but then he lost"
+2080 PRINT"it somewhere out in the Mire.  Now Smoke"
+2090 PRINT"wants you to take up the search and"
+2100 PRINT:PRINT"bring The Most Amazing Thing back to"
+2110 PRINT:PRINT"him.";
+2120 FOR X=1 TO 22000:NEXT
+2140 CLS:PRINT"Smoke has given you the B-Liner, a"
+2150 PRINT:PRINT"combination hot air balloon and dune"
+2160 PRINT:PRINT"buggy, that will fly or drive you across"
+2170 PRINT"Darksome Mire.  But before leaving"
+2180 PRINT:PRINT"Metallica, you must get some advice from"
+2190 PRINT"Smoke and buy equipment for the B-Liner."
+2200 PRINT"Then you will travel around the Mire,"
+2210 PRINT:PRINT"learning to fly the B-Liner and visiting"
+2220 PRINT"the different cultures of Mire People."
+2230 PRINT:PRINT"You will trade with them to get chips"
+2240 PRINT:PRINT"and to collect important clues about the"
+2250 PRINT"location of The Most Amazing Thing."
+2260 FOR X=1 TO 22000:NEXT
+2280 CLS:LOCATE 3:PRINT"But beware of fierce storms and those"
+2290 PRINT:PRINT"nasty Mire Crabs!  And remember to take "
+2300 PRINT"time out to get fuel for the B-Liner and"
+2310 PRINT"eat food from the Popberry Trees."
+2320 PRINT:PRINT:PRINT:PRINT"It won't be easy to find The Most"
+2330 PRINT:PRINT"Amazing Thing, but your Uncle Smoke is"
+2340 PRINT:PRINT"counting on you."
+2350 PRINT:PRINT:PRINT"         Good luck and good flying!"
+2360 FOR X=1 TO 19000:NEXT
+2380 CLS:LOCATE 6:PRINT"The elevator will take you down to"
+2390 PRINT:PRINT"important places in the underground city"
+2400 PRINT"of Metallica..."
+2410 FOR X=1 TO 8000:NEXT
+2430 B$="elevpic.crn":GOSUB 25280:GOSUB 25260
+2440 LOCATE 10,11:PRINT"Store":LOCATE 8,22:PRINT"Smoke":LOCATE 18,21:PRINT"Auction"
+2450 OY=29:PRESET(143,OY+1):DRAW"c3r6d10l6u10":LINE(146,29)-(146,OY):PAINT(144,OY+2),3,3
+2460 GET(143,OY)-STEP(6,12),BALLOON%
+2470 DRAW"bm155,29u1l1u2e3u2r2d2f3d2l1d1u1l5":PSET(157,25):PSET(159,25)
+2480 FOR X=1 TO 2000:NEXT
+2490 FOR OY=29 TO 49:PUT(143,OY),BALLOON%,PSET:SOUND 800-OY*2,1:NEXT
+2500 FOR X=1 TO 2000:NEXT
+2510 CLS:LOCATE 6:PRINT"Your Uncle Smoke Bailey will give you"
+2520 PRINT:PRINT"lots of advice and items from his"
+2530 PRINT:PRINT"travels to sell at the Metallican"
+2540 PRINT:PRINT"auction."
+2550 FOR X=1 TO 8000:NEXT
+2560 B$="smoke.crn":GOSUB 25280:GOSUB 25260:REM  bload crn.smoke
+2570 FOR X=1 TO 6000:NEXT
+2580 B$="elevpic.crn":GOSUB 25280:GOSUB 25260
+2590 LOCATE 10,11:PRINT"Store":LOCATE 8,22:PRINT"Smoke":LOCATE 18,21:PRINT"Auction"
+2600 OY=49:PRESET(143,OY+1):DRAW"c3r6d10l6u10":LINE(146,29)-(146,OY):PAINT(144,OY+2),3,3
+2610 DRAW"bm155,29u1l1u2e3u2r2d2f3d2l1d1u1l5":PSET(157,25):PSET(159,25)
+2620 FOR X=1 TO 2000:NEXT
+2630 FOR OY=49 TO 134:PUT(143,OY),BALLOON%,PSET:SOUND 800-OY*2,1:NEXT
+2640 FOR X=1 TO 2000:NEXT
+2650 CLS:LOCATE 6:PRINT"The Metallicans at the auction will give"
+2660 PRINT"you green chips in exchange for Uncle"
+2670 PRINT:PRINT"Smoke's items--if they like your price."
+2680 FOR X=1 TO 8000:NEXT
+2690 B$="auction.crn":GOSUB 25280:GOSUB 25260:REM   load auction graphics
+2700 FOR X=1 TO 6000:NEXT
+2710 B$="elevpic.crn":GOSUB 25280:GOSUB 25260
+2720 LOCATE 10,11:PRINT"Store":LOCATE 8,22:PRINT"Smoke":LOCATE 18,21:PRINT"Auction"
+2730 OY=134:PRESET(143,OY+1):DRAW"c3r6d10l6u10":LINE(146,29)-(146,OY):PAINT(144,OY+2),3,3
+2740 DRAW"bm155,29u1l1u2e3u2r2d2f3d2l1d1u1l5":PSET(157,25):PSET(159,25)
+2750 FOR X=1 TO 2000:NEXT
+2760 FOR OY=134 TO 69 STEP -1:PUT(143,OY),BALLOON%,PSET:SOUND 800-OY*2,1:NEXT
+2770 FOR X=1 TO 2000:NEXT
+2780 CLS:LOCATE 6:PRINT"You will move your shopping cart down"
+2790 PRINT:PRINT"the aisles of the Galactic Store to see "
+2800 PRINT"all the gizmos for sale.  You will use"
+2810 PRINT:PRINT"your green chips here to buy equipment"
+2815 PRINT:PRINT"for the B-Liner."
+2820 FOR X=1 TO 9000:NEXT
+2830 B$="store.crn":GOSUB 25280:GOSUB 25260
+2840 FOR X=1 TO 6000:NEXT
+2850 B$="elevpic.crn":GOSUB 25280:GOSUB 25260
+2860 LOCATE 10,11:PRINT"Store":LOCATE 8,22:PRINT"Smoke":LOCATE 18,21:PRINT"Auction"
+2870 OY=69:PRESET(143,OY+1):DRAW"c3r6d10l6u10":LINE(146,29)-(146,OY):PAINT(144,OY+2),3,3
+2880 DRAW"bm155,29u1l1u2e3u2r2d2f3d2l1d1u1l5":PSET(157,25):PSET(159,25)
+2890 FOR X=1 TO 2000:NEXT
+2900 FOR OY=69 TO 29 STEP -1:PUT(143,OY),BALLOON%,PSET:SOUND 800-OY*2,1:NEXT
+2910 FOR X=1 TO 2000:NEXT
+4000 CLS:LOCATE 6:PRINT"Your jet pack will fly you short"
+4001 PRINT:PRINT"distances over the Mire.  You will use"
+4002 PRINT:PRINT"the round hatchway to enter and leave"
+4003 PRINT:PRINT"the B-Liner.  You will stand on the"
+4004 PRINT:PRINT"drill platform to drill for fuel."
+4075 FOR X=1 TO 10000:NEXT
+4080 B$="carext.crn":GOSUB 25280:GOSUB 25260:LOCATE 19,21:PRINT">>B-Liner";:LOCATE 19,33:PRINT">>>";
+4090 DRAW"C3BM78,160M72,145U18NM78,154R48NM112,154D18M112,160":LINE(78,154)-(112,160),3,BF:PAINT(73,145),3,3:PAINT(119,145),3,3:LINE(79,155)-(79,159) ,0:LINE(113,155)-(113,159) ,0
+4100 PAINT (96,142),2,3
+4110 FOR Z4=0 TO 9:X2%(Z4)=0:Y2%(Z4)=0:NEXT:XC=95:YC=100:Z1=3:Z2=2:H=0:V=1:Z3=0:S=-2:AB=-10:Z0=50
+4120 ON Z1 GOSUB 4370,4380,4390,4400:Z2=Z1
+4130 RESTORE 4130:DATA 0,0,6,0,0,0,4,0,0,8,0,0,0,0,0,0,0
+4140 FOR TI=1 TO 86
+4150 Z3=(Z3+1)MOD 10:AB=AB+1:IF TI MOD 5 > 0 THEN 4210
+4160 READ A
+4170 IF A=4 AND Z1>1 THEN Z1=Z1-1
+4180 IF A=6 AND Z1<4 THEN Z1=Z1+1
+4190 IF A=2 THEN V=V+1:IF V>2 THEN V=2
+4200 IF A=8 THEN V=V-1:IF V<-2 THEN V=-2
+4210 IF Z1=1 AND YC<170 THEN Z1=1:H=H-.2:IF H<-5 THEN H=-5
+4220 IF Z1=4 AND YC<170 THEN Z1=4:H=H+.2:IF H>5 THEN H=5
+4230 IF H<0 THEN H=H+.04
+4240 IF H>0 THEN H=H-.04
+4250 ON Z2 GOSUB 4370,4380,4390,4400
+4260 YC=YC+V
+4270 IF YC<170 THEN XC=XC+H:GOTO 4310
+4280 YC=170:V=0:H=0
+4290 IF Z1=4 THEN Z1=3
+4300 IF Z1=1 THEN Z1=2
+4310 IF YC<5 THEN YC=5:V=0
+4320 ON Z1 GOSUB 4370,4380,4390,4400
+4330 ON Z1 GOSUB 4410,4420,4430,4440:Z2=Z1
+4340 IF AB>0 THEN PUT(X2%(Z3),Y2%(Z3)),P%
+4350 X2%(Z3)=RND*3+X5:Y2%(Z3)=RND*3+Y5:PUT(X2%(Z3),Y2%(Z3)),P%
+4360 NEXT
+4365 FOR X=1 TO 2000:NEXT:GOTO 5000
+4370 PUT(XC,YC),ML%:RETURN
+4380 PUT(XC,YC),L%:RETURN
+4390 PUT(XC,YC),R%:RETURN
+4400 PUT(XC,YC),MR%:RETURN
+4410 X5=XC+9:Y5=YC+4:RETURN
+4420 X5=XC+9:Y5=YC+8:RETURN
+4430 X5=XC-1:Y5=YC+8:RETURN
+4440 X5=XC+2:Y5=YC+4:RETURN
+5000 CLS:LOCATE 6:PRINT"As you drive the B-Liner on the surface "
+5010 PRINT"of Darksome Mire, you'll see Popberry"
+5020 PRINT:PRINT"Trees and Night Rocks.  Shake a Popberry"
+5030 PRINT"Tree to get food and drill beside a"
+5040 PRINT:PRINT"Night Rock to get fuel.  But watch out--"
+5050 PRINT"a Night Rock may be a dangerous Mire"
+5060 PRINT:PRINT"Crab in disguise!"
+5070 FOR X=1 TO 10000:NEXT
+5080 CLS:DRAW"bm100,100s9c3a0e1u5h2u1h1u1e1u1e1r1f1e1f1f1r1f1d1g1d1g1l1g1d5f1r1l6s4
+5090 DRAW"bm190,50c3a0u2e1d1e2u1e2d2r1e1r2f1d1r1f1r1d1r1f1d1l1d1g1l11h2"
+5110 PUT(150,150),CAR%
+5120 FOR X=1 TO 25:PUT(150,150),CAR%:PUT(150,150),CAR%:SOUND 37,0:SOUND 250,.1:FOR Y=1 TO 300:NEXT:NEXT
+6000 CLS:LOCATE 6:PRINT"On the inside of the B-Liner you'll find"
+6010 PRINT"an on-board computer, a bunkbed, a"
+6020 PRINT:PRINT"flight control panel, drive sticks, and "
+6030 PRINT"the exit hatchway."
+6040 FOR X=1 TO 8000:NEXT
+6050 B$="carint.crn":GOSUB 25280:GOSUB 25260
+6060 FOR X=1 TO 9000:NEXT
+7000 CLS:LOCATE 6:PRINT"While flying across Darksome Mire, you"
+7010 PRINT:PRINT"can pass the time by writing a song with"
+7020 PRINT"your on-board computer software called"
+7030 PRINT:PRINT"Musix.  A Musix song will also come in"
+7040 PRINT:PRINT"handy when trading with the Mire People."
+7050 FOR X=1 TO 9000:NEXT
+7100 X=0:Y=1
+7110 CLS:LINE(40,15)-(280,151),3,B:LINE(35,9)-(285,157),3,B:PAINT(50,156),2,3:LINE(39,14)-(281,152),0,B
+7120 PAINT(50,149),1,3
+7140 OPEN "song" FOR INPUT AS #1:INPUT #1,RATING,CUR:FOR Z1=0 TO CUR:FOR Z2=X TO Y:INPUT #1,SONG%(Z1,Z2):NEXT:NEXT:CLOSE #1
+7150 PSET(SONG%(0,X),SONG%(0,Y)),0:FOR Z1=1 TO CUR-1:LINE -(SONG%(Z1,X),SONG%(Z1,Y)),0:SOUND 2000-5*(SONG%(Z1,Y)),3:NEXT
+7160 FOR X=1 TO 4000:NEXT
+8000 CLS:LOCATE 6:PRINT"The control panel has many switches and "
+8010 PRINT"meters to help you fly the B-Liner."
+8020 FOR X=1 TO 7000:NEXT
+9000 CLS
+9010 PSET(32,8):DRAW "r256 d172 l256 u172":PSET(88,69):DRAW "r45 u16 r54 d16 r45 d96 l144 u96"
+9020 FOR Y1=75 TO 147 STEP 24:PSET(37,Y1):DRAW"r46 d16 l46 u16":NEXT
+9030 FOR Y1=75 TO 147 STEP 24:PSET(237,Y1):DRAW"r46 d16 l46 u16":NEXT
+9040 LOCATE 11,6:PRINT "DIR-?";:LOCATE 14,6:PRINT "High?";:LOCATE 17,6:PRINT "Home1";:LOCATE 20,6:PRINT"Storm";:LOCATE 11,31: PRINT"Fuelo";:LOCATE 14,31:PRINT"AutoP";:LOCATE 17,31:PRINT"Radar";:LOCATE 20,31:PRINT"Hut 1";
+9050 PSET(139,43):DRAW"l6 u16 r56 d16 l6":PSET(145,36):DRAW"d10 r30 u10 l30":PSET(135,41):DRAW"u12 r52 d12":LINE(135,29)-(145,36):LINE(135,41)-(145,46):LINE(185,29)-(175,36):LINE(185,41)-(175,46):GET(133,24)-(189,46),SOFF%
+9060 PUT(50,24),SOFF%:PUT(216,24),SOFF%
+9070 LOCATE 3,8:PRINT"BURNER     DROP      WHERE";
+9080 FOR X=1 TO 6000:NEXT
+9090 CLS:PRINT"A NOTE TO PARENTS AND EDUCATORS"
+9100 PRINT:PRINT:PRINT"In Search of The Most Amazing Thing"
+9110 PRINT:PRINT"provides educational, creative, and"
+9120 PRINT:PRINT"entertaining experiences for players"
+9130 PRINT:PRINT"from the ages of 10 years old on up."
+9140 PRINT:PRINT"The many facets of the game can be a"
+9150 PRINT:PRINT"terrific opportunity for members of a"
+9160 PRINT:PRINT"family to work together as a team."
+9170 FOR X=1 TO 17000:NEXT
+9180 CLS:PRINT"A player:"
+9190 PRINT:PRINT:PRINT"* explores challenging areas of learning"
+9200 PRINT"  within a risk-free environment."
+9210 PRINT:PRINT:PRINT"* constantly uses his or her own"
+9220 PRINT:PRINT"  judgment to decide the best plan of"
+9230 PRINT:PRINT"  action under each new set of circum-"
+9240 PRINT:PRINT"  stances."
+9250 PRINT:PRINT:PRINT"* learns to take careful notes about the"
+9260 PRINT"  different Mire Cultures in order to"
+9270 PRINT:PRINT"  negotiate effectively with them."
+9275 FOR X=1 TO 19000:NEXT
+9280 CLS:PRINT"* uses a map coordinate system to"
+9290 PRINT:PRINT"  navigate across Darksome Mire."
+9310 PRINT:PRINT:PRINT"* deals with different chip exchange"
+9320 PRINT:PRINT"  rates when trading with the Mire"
+9325 PRINT:PRINT"  People."
+9330 PRINT:PRINT:PRINT"* writes song-pictures to trade with the"
+9340 PRINT"  Mire People for valuable clues."
+9345 FOR X=1 TO 19000:NEXT
+9350 CLS:LOCATE 6:PRINT"Once The Most Amazing Thing is found,"
+9360 PRINT:PRINT"its location changes and new clues are"
+9370 PRINT:PRINT"created; this allows a player to set out"
+9380 PRINT"on the search again and again."
+9390 FOR X=1 TO 17000:NEXT
+10000 GOTO 1000
+10010 DEF SEG=0:POKE 1050,PEEK(1052)
+10020 A$=INKEY$:IF A$="" THEN 10020
+10030 RETURN
+25250 REM                                                                            decrunch
+25260 DEF SEG=&H4FFA:CLS:INTVAR=0:CALL DECRUNCH:RETURN
+25270 REM                                                                            bload a crunched disk file
+25280 PIC$=B$:DEF SEG=&H4DF1:BLOAD B$,&H80:RETURN
+25290 REM                                                                            bload crunch object files
+25300 DEF SEG=&H4DF1:CRUNCH=0:BLOAD"crunch",0:DEF SEG=&H4FFA:DECRUNCH=0:BLOAD"decrunch",0:RETURN
+25450 RUN"intro
+30000 GOTO 5
+30010 OPEN "I",#1,"BLINER.BAS"
+30020 CLOSE #1
+30030 ON ERROR GOTO 30100
+30040 OPEN "I",#1,"MAN.BAS"
+30050 CLOSE #1
+30060 CLS:PRINT "A>Internal Error" :SYSTEM
+30100 CLOSE #1
+30110 IF ERR=72 THEN RESUME 5
+30120 GOTO 30060
+

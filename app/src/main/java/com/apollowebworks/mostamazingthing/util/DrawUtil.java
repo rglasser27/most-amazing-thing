@@ -1,7 +1,7 @@
-package com.apollowebworks.mostamazingthing.math;
+package com.apollowebworks.mostamazingthing.util;
 
 import android.graphics.*;
-import com.apollowebworks.mostamazingthing.graphics.model.RgbColor;
+import com.apollowebworks.mostamazingthing.ui.model.RgbColor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,6 @@ public class DrawUtil {
 
 	public static Map<RgbColor, Paint> PAINT_MAP = createPaintMap();
 
-
 	public static PointF getVirtualPoint(int x, int y, Rect clipBounds) {
 		return new PointF(getRelativeX(x, clipBounds.right), getRelativeY(y, clipBounds.bottom));
 	}
@@ -31,6 +30,32 @@ public class DrawUtil {
 		return new Rect(left, top, right, bottom);
 	}
 
+	public static float findDistanceToTarget(PointF position, PointF targetPosition) {
+		float xDist = targetPosition.x - position.x;
+		float yDist = targetPosition.y - position.y;
+		return (float) Math.sqrt(xDist * xDist + yDist * yDist);
+	}
+
+	public static float magnitude(PointF p) {
+		return (float) Math.sqrt(p.x * p.x + p.y * p.y);
+	}
+
+	public static PointF normalize(PointF p) {
+		return multiply(p, 1 / magnitude(p));
+	}
+
+	public static PointF multiply(PointF vector, float speed) {
+		return new PointF(vector.x * speed, vector.y * speed);
+	}
+
+	public static PointF add(PointF p1, PointF p2) {
+		return new PointF(p1.x + p2.x, p1.y + p2.y);
+	}
+
+	public static PointF subtract(PointF p1, PointF p2) {
+		return new PointF(p1.x - p2.x, p1.y - p2.y);
+	}
+
 	/**
 	 * @param x           virtual screen position
 	 * @param screenWidth screen pixel width
@@ -38,8 +63,6 @@ public class DrawUtil {
 	 */
 	private static int getScreenX(float x, int screenWidth) {
 		// The point starts out centered, so move it left
-//		float newX = x + (RELATIVE_WIDTH);
-		// Change from relative width to actual screen width
 		return (int) (x * screenWidth / RELATIVE_WIDTH);
 	}
 
@@ -87,9 +110,7 @@ public class DrawUtil {
 		Paint paint = new Paint(color);
 		paint.setColor(color);
 		paint.setStyle(Paint.Style.FILL);
-//		paint.setStrokeWidth(10);
-//		paint.setStyle(Paint.Style.STROKE);
+		paint.setAntiAlias(false);
 		return paint;
 	}
-
 }

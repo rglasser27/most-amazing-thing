@@ -1,8 +1,8 @@
 package com.apollowebworks.mostamazingthing.world.model;
 
 import android.graphics.*;
-import com.apollowebworks.mostamazingthing.graphics.Turtle;
-import com.apollowebworks.mostamazingthing.graphics.model.RgbColor;
+import com.apollowebworks.mostamazingthing.ui.Turtle;
+import com.apollowebworks.mostamazingthing.ui.model.RgbColor;
 
 public class PopberryTree implements WorldObject {
 	private static final int SPIKES_PER_BRANCH = 50;
@@ -43,4 +43,5 @@ public class PopberryTree implements WorldObject {
 			}
 		}
 	}
+
 }
