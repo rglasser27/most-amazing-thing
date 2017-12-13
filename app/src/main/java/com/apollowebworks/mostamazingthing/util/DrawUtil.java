@@ -18,8 +18,8 @@ public class DrawUtil {
 
 	public static Map<RgbColor, Paint> PAINT_MAP = createPaintMap();
 
-	public static PointF getVirtualPoint(int x, int y, Rect clipBounds) {
-		return new PointF(getRelativeX(x, clipBounds.right), getRelativeY(y, clipBounds.bottom));
+	public static PointF getVirtualPoint(float x, float y, Rect clipBounds) {
+		return new PointF(getRelativeX((int) x, clipBounds.right), getRelativeY((int) y, clipBounds.bottom));
 	}
 
 	public static Rect adjustToScreen(RectF rect, Canvas canvas) {

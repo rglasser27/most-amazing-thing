@@ -14,7 +14,7 @@ import com.apollowebworks.mostamazingthing.scene.SceneId;
 public class SceneController {
 
 	public static final int FPS = 30;
-	private static final SceneId STARTING_SCENE = SceneId.CAREXT;
+	private static final SceneId STARTING_SCENE = SceneId.CARINT;
 	private final Paint textPaint;
 
 	private Scene activeScene;

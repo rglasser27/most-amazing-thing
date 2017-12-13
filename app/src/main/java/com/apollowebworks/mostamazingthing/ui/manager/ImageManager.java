@@ -2,6 +2,7 @@ package com.apollowebworks.mostamazingthing.ui.manager;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.ColorSpace;
 import com.apollowebworks.mostamazingthing.R;
 import com.apollowebworks.mostamazingthing.ui.exception.DecrunchException;
 import com.apollowebworks.mostamazingthing.ui.model.DosBitmap;
@@ -110,7 +111,11 @@ public class ImageManager {
 					List<RgbColor> row = new ArrayList<>();
 					for (String value : values) {
 						if (!value.isEmpty()) {
-							row.add(RgbColor.get(Integer.parseInt(value)));
+							RgbColor color = RgbColor.get(Integer.parseInt(value));
+//							if (color == RgbColor.BLACK) {
+//								color = RgbColor.TRANSPARENT;
+//							}
+							row.add(color);
 						}
 					}
 					if (row.size() > 0) {
@@ -119,10 +124,10 @@ public class ImageManager {
 					}
 				}
 			}
-
 			image = new DosBitmap(lines);
+			Bitmap bitmap = getImageAsBitmap(image);
 			imageMap.put(name, image);
-			bitmaps.put(name, getImageAsBitmap(image));
+			bitmaps.put(name, bitmap);
 		} catch (IOException e) {
 			throw new DecrunchException("IOException caught while reading file");
 		}

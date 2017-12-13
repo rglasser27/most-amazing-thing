@@ -7,6 +7,7 @@ public enum SceneId {
 	ELEVATOR,
 	BITMAP_TEST,
 	CAREXT,
+	CARINT,
 	MAP,
 	SMOKE
 }

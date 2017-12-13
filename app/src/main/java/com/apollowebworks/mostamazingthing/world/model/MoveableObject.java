@@ -12,6 +12,10 @@ abstract class MoveableObject implements WorldObject {
 		this.position = position;
 	}
 
+	public PointF getPosition() {
+		return position;
+	}
+
 	public void moveTo(PointF position) {
 		this.position = position;
 	}

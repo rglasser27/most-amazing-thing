@@ -52,7 +52,7 @@ public class ElevatorScene extends Scene {
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				moving = true;
-				lastTouched = getVirtualPoint((int) event.getX(), (int) event.getY(), clipBounds);
+				lastTouched = getVirtualPoint(event.getX(), event.getY(), clipBounds);
 				Log.d(TAG, "Touched a point on the screen (" +
 						event.getX() + ", " + event.getY() + ")");
 				break;

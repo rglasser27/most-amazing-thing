@@ -46,12 +46,12 @@ public class IntroScene extends Scene {
 			case MotionEvent.ACTION_MOVE:
 				demonstrationButton.setPressing(false);
 				playButton.setPressing(false);
-				PointF point = getVirtualPoint((int) event.getX(), (int) event.getY(), clipBounds);
+				PointF point = getVirtualPoint(event.getX(), event.getY(), clipBounds);
 				demonstrationButton.checkPressing((int) point.x, (int) point.y);
 				playButton.checkPressing((int) point.x, (int) point.y);
 				break;
 			case MotionEvent.ACTION_UP:
-				point = getVirtualPoint((int) event.getX(), (int) event.getY(), clipBounds);
+				point = getVirtualPoint(event.getX(), event.getY(), clipBounds);
 				if (demonstrationButton.checkPressing((int) point.x, (int) point.y)) {
 					Log.d(TAG, "Clicked demonstration button");
 				} else if (playButton.checkPressing((int) point.x, (int) point.y)) {

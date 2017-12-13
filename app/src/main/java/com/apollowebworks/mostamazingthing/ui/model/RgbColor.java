@@ -7,7 +7,8 @@ public enum RgbColor {
 	BLACK(0),
 	CYAN(1),
 	MAGENTA(2),
-	WHITE(3);
+	WHITE(3),
+	TRANSPARENT(4);
 
 	private final int value;
 	static SparseArray<RgbColor> map;
@@ -31,7 +32,8 @@ public enum RgbColor {
 			case WHITE: return Color.WHITE;
 			case MAGENTA: return Color.MAGENTA;
 			case CYAN: return Color.CYAN;
-			default: return Color.BLACK;
+			case BLACK: return Color.BLACK;
+			default: return 0x00000000;
 		}
 	}
 

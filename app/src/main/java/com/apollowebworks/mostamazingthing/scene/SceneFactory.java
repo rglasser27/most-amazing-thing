@@ -1,7 +1,9 @@
 package com.apollowebworks.mostamazingthing.scene;
 
 import com.apollowebworks.mostamazingthing.controller.SceneController;
+import com.apollowebworks.mostamazingthing.scene.bitmaptest.BitmapTestScene;
 import com.apollowebworks.mostamazingthing.scene.carext.CarExtScene;
+import com.apollowebworks.mostamazingthing.scene.carint.CarIntScene;
 import com.apollowebworks.mostamazingthing.scene.elevator.ElevatorScene;
 import com.apollowebworks.mostamazingthing.scene.intro.IntroScene;
 import com.apollowebworks.mostamazingthing.scene.misc.MarqueeScene;
@@ -24,8 +26,12 @@ public class SceneFactory {
 				return new MarqueeScene(controller);
 			case CAREXT:
 				return new CarExtScene(controller);
+			case CARINT:
+				return new CarIntScene(controller);
 			case MAP:
 				return new MapScene(controller);
+			case BITMAP_TEST:
+				return new BitmapTestScene(controller);
 			default:
 				throw (new UnsupportedOperationException());
 		}

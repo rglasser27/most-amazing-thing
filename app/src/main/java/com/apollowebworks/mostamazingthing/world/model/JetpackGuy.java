@@ -10,6 +10,8 @@ import static com.apollowebworks.mostamazingthing.util.DrawUtil.*;
 
 /**
  * Displaying the jetpack guy on the screen
+ * TODO: Need to find the original logic for how he moves and update the behavior
+ * Also screen boundaries
  */
 public class JetpackGuy extends MoveableObject {
 
@@ -34,13 +36,14 @@ public class JetpackGuy extends MoveableObject {
 	public void draw(Canvas canvas) {
 		canvas.drawBitmap(frame,
 						  new Rect(0, 0, frame.getWidth(), frame.getHeight()),
-						  new Rect((int) position.x, (int) position.y, (int) position.x + frame.getWidth(), (int) position.y + frame.getHeight()),
+						  new Rect((int) position.x - frame.getWidth() / 2, (int) position.y - frame.getHeight() / 2,
+								   (int) position.x + frame.getWidth() / 2, (int) position.y + frame.getHeight() / 2),
 						  null);
 	}
 
 	public boolean move(Long msElapsed) {
 		// If more than one second has elapsed, limit the movement
-			float boundedMs = msElapsed > 1000 ? 1000 : msElapsed;
+		float boundedMs = msElapsed > 1000 ? 1000 : msElapsed;
 
 		// update frame image, depending on speed
 		float xMagnitude = direction.x * speed;
@@ -49,13 +52,13 @@ public class JetpackGuy extends MoveableObject {
 		} else if (xMagnitude >= SPEED_UPDATE / 5) {
 			facingLeft = false;
 		}
-		if (xMagnitude < -SPEED_UPDATE*2) {
+		if (xMagnitude < -SPEED_UPDATE * 2) {
 			frame = frames[1];
-		} else if (xMagnitude < -SPEED_UPDATE/5) {
+		} else if (xMagnitude < -SPEED_UPDATE / 5) {
 			frame = frames[0];
-		} else if (xMagnitude < SPEED_UPDATE*2) {
+		} else if (xMagnitude < SPEED_UPDATE * 2) {
 			frame = facingLeft ? frames[0] : frames[2];
-		} else if (xMagnitude > SPEED_UPDATE/5) {
+		} else if (xMagnitude > SPEED_UPDATE / 5) {
 			frame = frames[3];
 		} else {
 			frame = frames[2];
@@ -74,5 +77,9 @@ public class JetpackGuy extends MoveableObject {
 		speed = magnitude(finalVel);
 		direction = multiply(finalVel, 1 / speed);
 		return true;
+	}
+
+	public void stop() {
+		speed = 0;
 	}
 }
