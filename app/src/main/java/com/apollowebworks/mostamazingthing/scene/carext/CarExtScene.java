@@ -24,10 +24,16 @@ public class CarExtScene extends Scene {
 	private final RectF doorArea;
 	private List<WorldObject> objectsInScene;
 	private final JetpackGuy jetpackGuy;
+	private int distanceFromCar = 0;
+	private final Bitmap carBackground;
+	private final Bitmap blankBackground;
+	private int switchedLocations;
 
 	public CarExtScene(SceneController sceneController) {
 		super(sceneController);
-		this.setBackgroundImage(sceneController.getImageManager().getBitmap(ImageManager.CAREXT));
+		carBackground = sceneController.getImageManager().getBitmap(ImageManager.CAREXT);
+		blankBackground = createBlankBackground();
+		this.setBackgroundImage(carBackground);
 		PopberryTree tree = new PopberryTree();
 		NightRock rock = new NightRock();
 		Bitmap[] jetpackFrames = new Bitmap[]{
@@ -38,7 +44,7 @@ public class CarExtScene extends Scene {
 		};
 		jetpackGuy = new JetpackGuy(new PointF(250, 150), jetpackFrames);
 		objectsInScene = Arrays.asList(tree, jetpackGuy);
-		doorArea = new RectF(237, 145, 254, 161);
+		doorArea = new RectF(227, 135, 264, 171);
 	}
 
 	@Override
@@ -48,16 +54,30 @@ public class CarExtScene extends Scene {
 
 	@Override
 	public void drawToBuffer(Canvas canvas) {
-		drawText(19, 21, ">>B-Liner");
-		drawText(19, 33, ">>>");
-		for (WorldObject o : objectsInScene) {
-			o.draw(canvas);
+		if (distanceFromCar == 0) {
+			drawText(19, 21, ">>B-Liner");
+			drawText(19, 33, ">>>");
+			for (WorldObject o : objectsInScene) {
+				o.draw(canvas);
+			}
+		} else {
+			canvas.drawColor(Color.BLACK);
+			jetpackGuy.draw(canvas);
 		}
-//		Paint paint = new Paint();
-//		paint.setColor(Color.WHITE);
-//		paint.setAlpha(0x88);
-//		canvas.drawCircle((doorArea.left+doorArea.right)/2, (doorArea.top+doorArea.bottom)/2, 5, paint);
-//		canvas.drawRect(doorArea, paint);
+	}
+
+	@Override
+	protected void drawBackground(Canvas canvas) {
+		setBackgroundImage(distanceFromCar == 0 ? carBackground : blankBackground);
+		super.drawBackground(canvas);
+	}
+
+	@Override
+	public void draw(Canvas canvas) {
+		if (switchedLocations != 0) {
+			setBackgroundImage(distanceFromCar == 0 ? carBackground : blankBackground);
+		}
+		super.draw(canvas);
 	}
 
 	@Override
@@ -70,8 +90,9 @@ public class CarExtScene extends Scene {
 						&& doorArea.contains(jetpackGuy.getPosition().x, jetpackGuy.getPosition().y)) {
 					jetpackGuy.stop();
 					sceneController.activateScene(SceneId.CARINT);
+				} else {
+					return jetpackGuy.handleTouch(virtualPoint);
 				}
-				return jetpackGuy.handleTouch(virtualPoint);
 			case MotionEvent.ACTION_UP:
 				break;
 		}
@@ -80,6 +101,14 @@ public class CarExtScene extends Scene {
 
 	@Override
 	public boolean tick(Long msElapsed) {
-		return jetpackGuy.move(msElapsed);
+		boolean jetpackGuyMoved = jetpackGuy.move(msElapsed);
+		if (jetpackGuyMoved) {
+			switchedLocations = jetpackGuy.checkSides();
+			if (switchedLocations != 0) {
+				this.distanceFromCar += switchedLocations;
+			}
+		}
+
+		return jetpackGuyMoved;
 	}
 }

@@ -1,9 +1,6 @@
 package com.apollowebworks.mostamazingthing.world.model;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.PointF;
-import android.graphics.Rect;
+import android.graphics.*;
 import com.apollowebworks.mostamazingthing.util.DrawUtil;
 
 import static com.apollowebworks.mostamazingthing.util.DrawUtil.*;
@@ -45,13 +42,29 @@ public class JetpackGuy extends MoveableObject {
 		// If more than one second has elapsed, limit the movement
 		float boundedMs = msElapsed > 1000 ? 1000 : msElapsed;
 
-		// update frame image, depending on speed
+
+		if (speed > 0) {
+			float unitsMoved = speed * 1000.f / boundedMs;
+			position = add(position, multiply(direction, unitsMoved));
+			checkTopBound();
+			checkBottomBound();
+			updateFrame();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * update frame image, depending on speed
+	 */
+	private void updateFrame() {
 		float xMagnitude = direction.x * speed;
 		if (xMagnitude <= -SPEED_UPDATE / 5) {
 			facingLeft = true;
 		} else if (xMagnitude >= SPEED_UPDATE / 5) {
 			facingLeft = false;
 		}
+
 		if (xMagnitude < -SPEED_UPDATE * 2) {
 			frame = frames[1];
 		} else if (xMagnitude < -SPEED_UPDATE / 5) {
@@ -63,10 +76,39 @@ public class JetpackGuy extends MoveableObject {
 		} else {
 			frame = frames[2];
 		}
+	}
 
-		float unitsMoved = speed * 1000.f / boundedMs;
-		position = add(position, multiply(direction, unitsMoved));
-		return true;
+	private void checkTopBound() {
+		if (position.y < 0) {
+			position.y = 0;
+			if (direction.x == 0) {
+				speed = 0;
+			} else {
+//				PointF vector = DrawUtil.multiply(direction, 1 / speed);
+//				speed = direction.x > 0 ? vector.x : -vector.x;
+				direction.y = 0;
+				direction.x = direction.x > 0 ? 1 : -1;
+			}
+		}
+	}
+
+	private void checkBottomBound() {
+		float bottom = 180;
+		if (position.y > bottom) {
+			position.y = bottom;
+			speed = 0;
+		}
+	}
+
+	public int checkSides() {
+		if (position.x < 0) {
+			position.x = RELATIVE_WIDTH;
+			return -1;
+		} else if (position.x > RELATIVE_WIDTH) {
+			position.x = 0;
+			return 1;
+		}
+		return 0;
 	}
 
 	public boolean handleTouch(PointF virtualPoint) {

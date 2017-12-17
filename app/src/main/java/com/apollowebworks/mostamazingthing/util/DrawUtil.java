@@ -72,9 +72,6 @@ public class DrawUtil {
 	 * @return actual y on screen
 	 */
 	private static int getScreenY(float y, int screenHeight) {
-		// Positive y goes up instead of down in the relative notation, so invert it.
-		// Also the point starts out centered, so move it up
-//		float newY = RELATIVE_HEIGHT - y;
 		// Change from relative width to actual screen width
 		return (int) (y * screenHeight / RELATIVE_HEIGHT);
 	}

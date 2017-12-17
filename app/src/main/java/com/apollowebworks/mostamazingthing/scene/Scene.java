@@ -33,6 +33,12 @@ public abstract class Scene {
 		moarDots = new ArrayList<>();
 	}
 
+	protected Bitmap createBlankBackground() {
+		Bitmap bitmap = Bitmap.createBitmap(SCREEN_WIDTH, SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
+		drawBlackBackground(new Canvas(backgroundImage));
+		return bitmap;
+	}
+
 	abstract public SceneId getId();
 
 	/**
@@ -86,7 +92,6 @@ public abstract class Scene {
 			}
 		}
 	}
-
 
 	protected void drawBackground(Canvas canvas) {
 		drawBlackBackground(canvas);
