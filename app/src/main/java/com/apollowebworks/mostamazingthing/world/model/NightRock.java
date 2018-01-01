@@ -10,9 +10,6 @@ public class NightRock implements WorldObject {
 	public NightRock() {
 	}
 
-	private void randomizeSpikes(RectF[] spikes, int first, int last, int centerX, int centerY) {
-	}
-
 	/**
 	 * 4820 DRAW "s32bm10,150"+ROCKMAN$+"s4":PAINT(50,150),1,3:RETURN
 	 */
@@ -22,9 +19,7 @@ public class NightRock implements WorldObject {
 		turtle.setColor(RgbColor.WHITE);
 		String rockMan = "c3a0u2e1d1e2u1e2d2r1e1r2f1d1r1f1r1d1r1f1d1l1d1g1l11h2";
 		String drawCommand = "s32bm10,150"+rockMan+"s4";
-//		turtle.fillPath(RgbColor.WHITE);
 		// draw it a second time to redisplay the outline
-//		turtle.draw(drawCommand);
 		turtle.draw("C3BM78,160M72,145U18NM78,154R48NM112,154D18M112,160");
 	}
 }

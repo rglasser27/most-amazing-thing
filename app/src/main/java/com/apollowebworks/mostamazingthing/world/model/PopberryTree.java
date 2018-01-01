@@ -32,8 +32,6 @@ public class PopberryTree implements WorldObject {
 		String drawCommand = "bm40,180e10u50h10r5f5u40h5r5f5d50e30r5g35d40f10l25";
 		turtle.draw(drawCommand);
 		turtle.fillPath(RgbColor.CYAN);
-		// draw it a second time to redisplay the outline
-		turtle.draw(drawCommand);
 
 		Paint paint = new Paint();
 		paint.setColor(Color.WHITE);

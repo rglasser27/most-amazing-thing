@@ -16,7 +16,7 @@ import static com.apollowebworks.mostamazingthing.util.DrawUtil.getVirtualPoint;
 
 public abstract class Scene {
 
-	private static final boolean DEBUG_TOUCH = false;
+	private static final boolean DEBUG_TOUCH = true;
 	private static final String TAG = "Scene";
 
 	protected SceneController sceneController;
@@ -67,7 +67,6 @@ public abstract class Scene {
 		}
 		canvas.drawBitmap(tempBitmap, new Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), canvas.getClipBounds(), null);
 	}
-
 
 	/**
 	 * Handle a touch event from the app

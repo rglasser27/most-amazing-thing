@@ -1,91 +1,122 @@
 package com.apollowebworks.mostamazingthing.world.model;
 
-import android.graphics.*;
-import com.apollowebworks.mostamazingthing.util.DrawUtil;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.PointF;
+import android.graphics.Rect;
 
-import static com.apollowebworks.mostamazingthing.util.DrawUtil.*;
+import static com.apollowebworks.mostamazingthing.util.DrawUtil.RELATIVE_WIDTH;
+import static com.apollowebworks.mostamazingthing.util.DrawUtil.subtract;
 
 /**
  * Displaying the jetpack guy on the screen
- * TODO: Need to find the original logic for how he moves and update the behavior
- * Also screen boundaries
+ * TODO: Add dots for fumes
  */
 public class JetpackGuy extends MoveableObject {
 
+	/**
+	 * Acceleration, in pixels / s^2
+	 */
+	private static final int MIN_DISTANCE_FOR_TOUCH = 20;
+
+	private static final float MAX_VELOCITY_X = 70;
+	private static final float ACCELERATION_X = MAX_VELOCITY_X / 3;
+	private static final float DECELERATION_X = ACCELERATION_X / 4;
+
+	private static final float SPEED_CHANGE_Y = 10;
+	private static final float MAX_VELOCITY_Y = 2 * SPEED_CHANGE_Y;
+
+	private static final int MOVING_LEFT = 0;
+	private static final int FACING_LEFT = 1;
+	private static final int FACING_RIGHT = 2;
+	private static final int MOVING_RIGHT = 3;
+
 	private Bitmap[] frames;
-	private Bitmap frame;
+	private int frame;
 	private PointF direction;
-	private float speed;
-	private static final float SPEED_UPDATE = .2f;
-	private static final float MAX_RESTING_SPEED = .5f;
-	private boolean facingLeft;
+	private PointF velocity;
+	private static final float BOTTOM = 180;
 
 	public JetpackGuy(PointF position, Bitmap[] frames) {
 		super(position);
 		this.frames = frames;
 		direction = new PointF(0, 1);
-		speed = 0;
-		facingLeft = true;
-		frame = frames[0];
+		velocity = new PointF(0, 0);
+		frame = FACING_LEFT;
 	}
 
 	@Override
 	public void draw(Canvas canvas) {
-		canvas.drawBitmap(frame,
-						  new Rect(0, 0, frame.getWidth(), frame.getHeight()),
-						  new Rect((int) position.x - frame.getWidth() / 2, (int) position.y - frame.getHeight() / 2,
-								   (int) position.x + frame.getWidth() / 2, (int) position.y + frame.getHeight() / 2),
+		Bitmap f = frames[frame];
+		canvas.drawBitmap(f,
+						  new Rect(0, 0, f.getWidth(), f.getHeight()),
+						  new Rect((int) position.x - f.getWidth() / 2, (int) position.y - f.getHeight() / 2,
+								   (int) position.x + f.getWidth() / 2, (int) position.y + f.getHeight() / 2),
 						  null);
 	}
 
 	public boolean move(Long msElapsed) {
 		// If more than one second has elapsed, limit the movement
 		float boundedMs = msElapsed > 1000 ? 1000 : msElapsed;
+		updateXVelocity(boundedMs);
 
-
-		if (speed > 0) {
-			float unitsMoved = speed * 1000.f / boundedMs;
-			position = add(position, multiply(direction, unitsMoved));
-			checkTopBound();
-			checkBottomBound();
-			updateFrame();
-			return true;
+		// Update position
+		if (velocity.x == 0 && velocity.y == 0) {
+			return false;
 		}
-		return false;
+
+		position.x += velocity.x * boundedMs / 1000;
+		position.y += velocity.y * boundedMs / 1000;
+		checkTopBound();
+		checkBottomBound();
+		return true;
+	}
+
+	private void updateXVelocity(float boundedMs) {
+		if (frame == MOVING_LEFT) {
+			velocity.x -= ACCELERATION_X * boundedMs / 1000;
+		} else if (frame == MOVING_RIGHT) {
+			velocity.x += ACCELERATION_X * boundedMs / 1000;
+		} else if (velocity.x < 0) {
+			velocity.x += DECELERATION_X * boundedMs / 1000;
+			if (velocity.x > 0) {
+				velocity.x = 0;
+			}
+		} else {
+			velocity.x -= DECELERATION_X * boundedMs / 1000;
+			if (velocity.x < 0) {
+				velocity.x = 0;
+			}
+		}
+		if (velocity.x > MAX_VELOCITY_X) {
+			velocity.x = MAX_VELOCITY_X;
+		}
+		if (velocity.x < -MAX_VELOCITY_X) {
+			velocity.x = -MAX_VELOCITY_X;
+		}
 	}
 
 	/**
 	 * update frame image, depending on speed
 	 */
-	private void updateFrame() {
-		float xMagnitude = direction.x * speed;
-		if (xMagnitude <= -SPEED_UPDATE / 5) {
-			facingLeft = true;
-		} else if (xMagnitude >= SPEED_UPDATE / 5) {
-			facingLeft = false;
-		}
-
-		if (xMagnitude < -SPEED_UPDATE * 2) {
-			frame = frames[1];
-		} else if (xMagnitude < -SPEED_UPDATE / 5) {
-			frame = frames[0];
-		} else if (xMagnitude < SPEED_UPDATE * 2) {
-			frame = facingLeft ? frames[0] : frames[2];
-		} else if (xMagnitude > SPEED_UPDATE / 5) {
-			frame = frames[3];
+	private void updateFrame(int dir) {
+		if (dir > 0) {
+			frame++;
+			if (frame > 3) {
+				frame = 3;
+			}
 		} else {
-			frame = frames[2];
+			frame--;
+			if (frame < 0) {
+				frame = 0;
+			}
 		}
 	}
 
 	private void checkTopBound() {
 		if (position.y < 0) {
 			position.y = 0;
-			if (direction.x == 0) {
-				speed = 0;
-			} else {
-//				PointF vector = DrawUtil.multiply(direction, 1 / speed);
-//				speed = direction.x > 0 ? vector.x : -vector.x;
+			if (direction.x != 0) {
 				direction.y = 0;
 				direction.x = direction.x > 0 ? 1 : -1;
 			}
@@ -93,10 +124,9 @@ public class JetpackGuy extends MoveableObject {
 	}
 
 	private void checkBottomBound() {
-		float bottom = 180;
-		if (position.y > bottom) {
-			position.y = bottom;
-			speed = 0;
+		if (position.y >= BOTTOM) {
+			position.y = BOTTOM;
+			stop();
 		}
 	}
 
@@ -112,16 +142,34 @@ public class JetpackGuy extends MoveableObject {
 	}
 
 	public boolean handleTouch(PointF virtualPoint) {
-		PointF newTarget = subtract(virtualPoint, position);
-		PointF oldVel = multiply(direction, speed);
-		PointF newVel = multiply(normalize(newTarget), SPEED_UPDATE);
-		PointF finalVel = DrawUtil.add(oldVel, newVel);
-		speed = magnitude(finalVel);
-		direction = multiply(finalVel, 1 / speed);
+		PointF distanceFromGuy = subtract(virtualPoint, position);
+		if (distanceFromGuy.x > 10) {
+			updateFrame(1);
+		} else if (distanceFromGuy.x < -10) {
+			updateFrame(-1);
+		}
+
+		if (distanceFromGuy.y > MIN_DISTANCE_FOR_TOUCH) {
+			velocity.y += SPEED_CHANGE_Y;
+		} else if (distanceFromGuy.y < -MIN_DISTANCE_FOR_TOUCH) {
+			velocity.y -= SPEED_CHANGE_Y;
+		}
+		if (velocity.y > MAX_VELOCITY_Y) {
+			velocity.y = MAX_VELOCITY_Y;
+		} else if (velocity.y < -MAX_VELOCITY_Y) {
+			velocity.y = -MAX_VELOCITY_Y;
+		}
+
 		return true;
 	}
 
 	public void stop() {
-		speed = 0;
+		velocity.x = 0;
+		velocity.y = 0;
+		if (frame <= FACING_LEFT) {
+			frame = FACING_LEFT;
+		} else {
+			frame = FACING_RIGHT;
+		}
 	}
 }

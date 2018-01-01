@@ -1,20 +1,19 @@
 package com.apollowebworks.mostamazingthing.controller;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.*;
 import android.view.MotionEvent;
 import android.view.View;
-import com.apollowebworks.mostamazingthing.ui.exception.DecrunchException;
-import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneFactory;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
+import com.apollowebworks.mostamazingthing.ui.exception.DecrunchException;
+import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
 
 public class SceneController {
 
 	public static final int FPS = 30;
-	private static final SceneId STARTING_SCENE = SceneId.CARINT;
+	private static final SceneId STARTING_SCENE = SceneId.CAREXT;
 	private final Paint textPaint;
 
 	private Scene activeScene;
@@ -22,9 +21,8 @@ public class SceneController {
 	private View view;
 	private Rect clipBounds;
 
-	private Long msSinceLastTick;
+	private Long lastTickTime;
 	private final ImageManager imageManager;
-	private Context context;
 
 	public SceneController(Resources resources, View view) {
 		this.resources = resources;
@@ -70,7 +68,7 @@ public class SceneController {
 	}
 
 	public void activateScene(SceneId sceneId) {
-		msSinceLastTick = System.currentTimeMillis();
+		lastTickTime = System.currentTimeMillis();
 		activeScene = SceneFactory.create(sceneId, this);
 		redraw();
 	}
@@ -80,8 +78,11 @@ public class SceneController {
 	}
 
 	public void tick() {
+		Long currentTime = System.currentTimeMillis();
+		Long elapsed = currentTime - lastTickTime;
+		lastTickTime = currentTime;
 		if (activeScene != null) {
-			if (activeScene.tick(msSinceLastTick)) {
+			if (activeScene.tick(elapsed)) {
 				redraw();
 			}
 		}
@@ -93,9 +94,5 @@ public class SceneController {
 
 	public Resources getResources() {
 		return resources;
-	}
-
-	public Context getContext() {
-		return context;
 	}
 }

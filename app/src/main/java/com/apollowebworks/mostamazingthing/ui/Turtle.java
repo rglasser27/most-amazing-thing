@@ -3,6 +3,7 @@ package com.apollowebworks.mostamazingthing.ui;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.util.Log;
 import com.apollowebworks.mostamazingthing.ui.model.RgbColor;
 
@@ -16,12 +17,15 @@ import java.util.regex.Pattern;
  * "m+10,-20" -> move relative to current position
  * "u1" = up 1
  * "l1" = left 1
+ * <p>
+ * u = up
  * d = down
+ * l = left
  * r = right
  * e = up/right
+ * f = down/right
  * h = up/left
  * g = down/left
- * f = down/right
  * c[0-4] = pick a new color
  * s9; = change step size, i.e., multiply moves by a number
  * a = rotate directions like this:
@@ -53,25 +57,41 @@ public class Turtle {
 	private Paint paint;
 
 	// Starting position is at the center of the screen
-	private int x = 160;
-	private int y = 100;
-	private int scale = 1;
-	private boolean penDown = false;
-	// Save the path in case it needs to be filed
+	private Point position;
+	private Point returnTo;
+	private int scale;
+	private boolean penDown;
+
+	// Save the path in case it needs to be filled
 	private Path path;
+	private Paint fillPaint;
 
 	public Turtle(Canvas canvas) {
+		position = new Point(160, 100);
 		this.canvas = canvas;
+
 		paint = new Paint();
 		paint.setAntiAlias(false);
 		updatePaint(3);
-		String moveString = "m(\\d+)\\,(\\d+)";
+
+		fillPaint = new Paint();
+		fillPaint.setAntiAlias(false);
+		fillPaint.setStyle(Paint.Style.FILL);
+
+		String moveString = "m(\\d+),(\\d+)";
 		String singleValueString = "([udlrefhcsag])(\\d+)";
 		movePattern = Pattern.compile(moveString);
 		singleValuePattern = Pattern.compile(singleValueString);
-		drawPattern = Pattern.compile("b" + "|" + moveString + "|" + singleValueString);
+		drawPattern = Pattern.compile("b|n|" + moveString + "|" + singleValueString);
+		resetPath();
+
+		scale = 1;
+		penDown = false;
+	}
+
+	private void resetPath() {
 		path = new Path();
-		path.moveTo(x, y);
+		path.moveTo(position.x, position.y);
 	}
 
 	private void updatePaint(int value) {
@@ -82,18 +102,36 @@ public class Turtle {
 		Matcher matcher = drawPattern.matcher(commandLine.toLowerCase());
 		while (matcher.find()) {
 			String command = matcher.group(0);
-			if (command.equals("c")) {
-				updatePaint(Integer.parseInt(matcher.group(1)));
-			} else if (command.equals("b")) {
-				penUp();
-			} else {
-				handleMovementCommand(command);
+			switch (command) {
+				case "c":
+					updatePaint(Integer.parseInt(matcher.group(1)));
+					break;
+				case "b":
+					penUp();
+					break;
+				case "n":
+					markReturnPoint();
+					break;
+				default:
+					handleMovementCommand(command);
+					break;
 			}
 		}
 	}
 
 	public void penUp() {
 		penDown = false;
+	}
+
+	private void markReturnPoint() {
+		returnTo = position;
+	}
+
+	private void returnToPrevious() {
+		if (returnTo != null) {
+			moveTo(returnTo);
+			returnTo = null;
+		}
 	}
 
 	private void handleMovementCommand(String command) {
@@ -108,26 +146,31 @@ public class Turtle {
 				Log.d("Turtle", "Didn't know what to do with " + command);
 			}
 		}
+		returnToPrevious();
 	}
 
 	public void moveTo(int newX, int newY) {
 		if (penDown) {
-			canvas.drawLine(x, y, newX, newY, paint);
-			path.lineTo(newX, newY);
+			canvas.drawLine(position.x, position.y, newX, newY, paint);
 			// Update the fill path
+			path.lineTo(newX, newY);
 		} else {
 			path.reset();
 			path.moveTo(newX, newY);
 		}
-		x = newX;
-		y = newY;
+		position = new Point(newX, newY);
 		penDown = true;
+	}
+
+	private void moveTo(Point newPosition) {
+		moveTo(newPosition.x, newPosition.y);
 	}
 
 	private void handleDirectionMove(String command, int magnitude) {
 		switch (command) {
 			case "c":
 				updatePaint(magnitude);
+				break;
 			case "s":
 				scale = magnitude;
 				break;
@@ -159,14 +202,23 @@ public class Turtle {
 	}
 
 	private void scaledMove(int magnitude, int stepX, int stepY) {
-		moveTo(x + magnitude * stepX * scale, y + magnitude * stepY * scale);
+		moveTo(position.x + magnitude * stepX * scale, position.y + magnitude * stepY * scale);
+	}
+
+	private void fillPath(RgbColor color, boolean redrawOutline) {
+		fillPaint.setColor(color.getColorInt());
+		canvas.drawPath(path, fillPaint);
+
+		if (redrawOutline) {
+			paint.setStyle(Paint.Style.STROKE);
+			canvas.drawPath(path, paint);
+		}
+
+		resetPath();
 	}
 
 	public void fillPath(RgbColor color) {
-		int originalColor = paint.getColor();
-		paint.setColor(color.getColorInt());
-		canvas.drawPath(path, paint);
-		paint.setColor(originalColor);
+		fillPath(color, true);
 	}
 
 	public void setColor(RgbColor color) {
