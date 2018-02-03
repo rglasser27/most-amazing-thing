@@ -1,7 +1,5 @@
 package com.apollowebworks.mostamazingthing.scene.elevator;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.Rect;
@@ -18,8 +16,8 @@ public class ElevatorScene extends Scene {
 
 	private static final String TAG = ElevatorScene.class.getName();
 
-	private static final float SHAFT_CENTER = 147;
-	private static final int ELEVATOR_START_Y = 60;
+	private static final float SHAFT_CENTER = 146;
+	private static final int ELEVATOR_START_Y = 43;
 	private static final float ELEVATOR_SPEED = .5f;
 
 	private boolean moving;
