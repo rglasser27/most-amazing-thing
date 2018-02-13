@@ -1,15 +1,15 @@
-package com.apollowebworks.mostamazingthing.scene.smoke;
+package com.apollowebworks.mostamazingthing.scene.rooms;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
+import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
 
-public class SmokeScene extends Scene {
-	public SmokeScene(SceneController sceneController) {
+public class AuctionScene extends RoomScene {
+	public AuctionScene(SceneController sceneController) {
 		super(sceneController);
+		this.setBackgroundImage(sceneController.getImageManager().getBitmap(ImageManager.AUCTION));
 	}
 
 	@Override
@@ -19,6 +19,6 @@ public class SmokeScene extends Scene {
 
 	@Override
 	public SceneId getId() {
-		return SceneId.SMOKE;
+		return SceneId.AUCTION;
 	}
 }

@@ -9,11 +9,12 @@ import com.apollowebworks.mostamazingthing.scene.SceneFactory;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
 import com.apollowebworks.mostamazingthing.ui.exception.DecrunchException;
 import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
+import com.apollowebworks.mostamazingthing.world.state.GameState;
 
 public class SceneController {
 
 	public static final int FPS = 30;
-	private static final SceneId STARTING_SCENE = SceneId.CAREXT;
+	private static final SceneId STARTING_SCENE = SceneId.SMOKE;
 	private final Paint textPaint;
 
 	private Scene activeScene;
@@ -23,6 +24,8 @@ public class SceneController {
 
 	private Long lastTickTime;
 	private final ImageManager imageManager;
+
+	private GameState gameState;
 
 	public SceneController(Resources resources, View view) {
 		this.resources = resources;
@@ -44,6 +47,8 @@ public class SceneController {
 		textPaint.setAntiAlias(false);
 
 		activateScene(STARTING_SCENE);
+
+		gameState = new GameState();
 	}
 
 	public ImageManager getImageManager() {
@@ -70,6 +75,7 @@ public class SceneController {
 	public void activateScene(SceneId sceneId) {
 		lastTickTime = System.currentTimeMillis();
 		activeScene = SceneFactory.create(sceneId, this);
+		activeScene.init();
 		redraw();
 	}
 
@@ -94,5 +100,10 @@ public class SceneController {
 
 	public Resources getResources() {
 		return resources;
+	}
+
+	public void prepareJetpackGuy(int x, int y, int facing) {
+		gameState.setxCoord(x);
+		gameState.setyCoord(y);
 	}
 }

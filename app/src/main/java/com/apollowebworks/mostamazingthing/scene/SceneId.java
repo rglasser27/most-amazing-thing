@@ -9,5 +9,7 @@ public enum SceneId {
 	CAREXT,
 	CARINT,
 	MAP,
-	SMOKE
+	SMOKE,
+	STORE,
+	AUCTION
 }

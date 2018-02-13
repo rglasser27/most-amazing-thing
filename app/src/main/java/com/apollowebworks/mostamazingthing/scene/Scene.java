@@ -4,8 +4,8 @@ import android.graphics.*;
 import android.util.Log;
 import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
+import com.apollowebworks.mostamazingthing.ui.TextButton;
 import com.apollowebworks.mostamazingthing.ui.Turtle;
-import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +24,7 @@ public abstract class Scene {
 	private Canvas tempCanvas;
 	private Paint textPaint;
 	private List<PointF> moarDots;
+	private List<TextButton> buttons;
 
 	public Scene(SceneController sceneController) {
 		this.sceneController = sceneController;
@@ -31,6 +32,15 @@ public abstract class Scene {
 		drawBlackBackground(new Canvas(backgroundImage));
 		textPaint = sceneController.getTextPaint();
 		moarDots = new ArrayList<>();
+		buttons = new ArrayList<>();
+	}
+
+	public void init() {
+		// Do nothing by default
+	}
+
+	protected void addButton(TextButton button) {
+		buttons.add(button);
 	}
 
 	protected Bitmap createBlankBackground() {
@@ -65,6 +75,9 @@ public abstract class Scene {
 				tempCanvas.drawCircle(moarDot.x, moarDot.y, 1, paint);
 			}
 		}
+		for (TextButton b: buttons) {
+			b.draw(tempCanvas);
+		}
 		canvas.drawBitmap(tempBitmap, new Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), canvas.getClipBounds(), null);
 	}
 
@@ -76,7 +89,11 @@ public abstract class Scene {
 	 * @return true if anything changed and needs to be redrawn
 	 */
 	public boolean onTouch(MotionEvent motionEvent, Rect clipBounds) {
-		// do nothing by default
+		for (TextButton button : buttons) {
+			if (button.onTouch(motionEvent, clipBounds)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -99,6 +116,9 @@ public abstract class Scene {
 			backgroundPaint.setAntiAlias(false);
 			canvas.drawBitmap(backgroundImage, new Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), canvas.getClipBounds(), backgroundPaint);
 		}
+	}
+
+	public void buttonEvent(TextButton button) {
 	}
 
 	private void drawBlackBackground(Canvas canvas) {

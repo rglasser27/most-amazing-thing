@@ -22,8 +22,8 @@ public class IntroScene extends Scene {
 
 	public IntroScene(SceneController sceneController) {
 		super(sceneController);
-		demonstrationButton = new TextButton(10, 4, "Demonstration", sceneController.getTextPaint());
-		playButton = new TextButton(10, 20, "Play game", sceneController.getTextPaint());
+		demonstrationButton = new TextButton(this, 10, 4, "Demonstration", sceneController.getTextPaint());
+		playButton = new TextButton(this, 10, 20, "Play game", sceneController.getTextPaint());
 	}
 
 	@Override
@@ -35,10 +35,10 @@ public class IntroScene extends Scene {
 	protected void drawToBuffer(Canvas canvas) {
 		drawText(6, 1, "Do you want to see a demonstration or");
 		drawText(7, 1, "play a real game?");
-		demonstrationButton.draw(canvas);
-		playButton.draw(canvas);
+		super.draw(canvas);
 	}
 
+	// TODO: Preferably handle this with button pressed actions as in RoomScene
 	@Override
 	public boolean onTouch(MotionEvent event, Rect clipBounds) {
 		switch (event.getAction()) {

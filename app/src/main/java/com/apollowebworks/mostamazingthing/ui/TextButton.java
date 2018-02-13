@@ -1,9 +1,16 @@
 package com.apollowebworks.mostamazingthing.ui;
 
 import android.graphics.*;
+import android.util.Log;
+import android.view.MotionEvent;
+import com.apollowebworks.mostamazingthing.scene.Scene;
+import com.apollowebworks.mostamazingthing.scene.SceneId;
+
+import static com.apollowebworks.mostamazingthing.util.DrawUtil.getVirtualPoint;
 
 public class TextButton {
 	private static final int MARGIN = 4;
+	private static final String TAG = "TextButton";
 
 	private String text;
 	/**
@@ -15,11 +22,14 @@ public class TextButton {
 	private Paint borderPaint;
 	private Paint fillPaint;
 
+	private Scene scene;
+
 	private boolean pressing;
 
-	public TextButton(int y, int x, String text, Paint textPaint) {
+	public TextButton(Scene scene, int y, int x, String text, Paint textPaint) {
 		pressing = false;
 
+		this.scene = scene;
 		this.text = text;
 		this.position = new Point(x, y);
 		this.border = new Rect((x - 1) * 8 - MARGIN,
@@ -63,4 +73,23 @@ public class TextButton {
 		canvas.drawRect(border, borderPaint);
 	}
 
+	public boolean onTouch(MotionEvent event, Rect clipBounds) {
+		switch (event.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+			case MotionEvent.ACTION_MOVE:
+				setPressing(false);
+				PointF point = getVirtualPoint(event.getX(), event.getY(), clipBounds);
+				checkPressing((int) point.x, (int) point.y);
+				break;
+			case MotionEvent.ACTION_UP:
+				point = getVirtualPoint(event.getX(), event.getY(), clipBounds);
+				if (checkPressing((int) point.x, (int) point.y)) {
+					Log.d(TAG, "Clicked leave button");
+					scene.buttonEvent(this);
+				}
+				setPressing(false);
+				break;
+		}
+		return true;
+	}
 }

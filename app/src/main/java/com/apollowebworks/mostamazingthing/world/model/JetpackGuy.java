@@ -28,7 +28,7 @@ public class JetpackGuy extends MoveableObject {
 
 	private static final int MOVING_LEFT = 0;
 	private static final int FACING_LEFT = 1;
-	private static final int FACING_RIGHT = 2;
+	public  static final int FACING_RIGHT = 2;
 	private static final int MOVING_RIGHT = 3;
 
 	private Bitmap[] frames;

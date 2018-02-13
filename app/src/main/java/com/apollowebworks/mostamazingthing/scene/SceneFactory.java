@@ -7,7 +7,9 @@ import com.apollowebworks.mostamazingthing.scene.carint.CarIntScene;
 import com.apollowebworks.mostamazingthing.scene.elevator.ElevatorScene;
 import com.apollowebworks.mostamazingthing.scene.intro.IntroScene;
 import com.apollowebworks.mostamazingthing.scene.misc.MarqueeScene;
-import com.apollowebworks.mostamazingthing.scene.smoke.SmokeScene;
+import com.apollowebworks.mostamazingthing.scene.rooms.AuctionScene;
+import com.apollowebworks.mostamazingthing.scene.rooms.SmokeScene;
+import com.apollowebworks.mostamazingthing.scene.rooms.StoreScene;
 import com.apollowebworks.mostamazingthing.scene.title.TitleScene;
 
 public class SceneFactory {
@@ -22,6 +24,10 @@ public class SceneFactory {
 				return new ElevatorScene(controller);
 			case SMOKE:
 				return new SmokeScene(controller);
+			case STORE:
+				return new StoreScene(controller);
+			case AUCTION:
+				return new AuctionScene(controller);
 			case MARQUEE:
 				return new MarqueeScene(controller);
 			case CAREXT:
