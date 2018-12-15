@@ -4,7 +4,6 @@ import android.graphics.*;
 import android.util.Log;
 import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.scene.Scene;
-import com.apollowebworks.mostamazingthing.scene.SceneId;
 
 import static com.apollowebworks.mostamazingthing.util.DrawUtil.getVirtualPoint;
 
@@ -79,17 +78,16 @@ public class TextButton {
 			case MotionEvent.ACTION_MOVE:
 				setPressing(false);
 				PointF point = getVirtualPoint(event.getX(), event.getY(), clipBounds);
-				checkPressing((int) point.x, (int) point.y);
-				break;
+				return checkPressing((int) point.x, (int) point.y);
 			case MotionEvent.ACTION_UP:
 				point = getVirtualPoint(event.getX(), event.getY(), clipBounds);
 				if (checkPressing((int) point.x, (int) point.y)) {
-					Log.d(TAG, "Clicked leave button");
+					Log.d(TAG, "Clicked button \"" + text + "\"");
 					scene.buttonEvent(this);
+					setPressing(false);
+					return true;
 				}
-				setPressing(false);
-				break;
 		}
-		return true;
+		return false;
 	}
 }

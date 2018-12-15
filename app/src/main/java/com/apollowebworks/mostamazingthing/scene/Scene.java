@@ -4,6 +4,7 @@ import android.graphics.*;
 import android.util.Log;
 import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
+import com.apollowebworks.mostamazingthing.ui.TextAnimation;
 import com.apollowebworks.mostamazingthing.ui.TextButton;
 import com.apollowebworks.mostamazingthing.ui.Turtle;
 
@@ -25,6 +26,7 @@ public abstract class Scene {
 	private Paint textPaint;
 	private List<PointF> moarDots;
 	private List<TextButton> buttons;
+	private TextAnimation textAnimation;
 
 	public Scene(SceneController sceneController) {
 		this.sceneController = sceneController;
@@ -59,7 +61,11 @@ public abstract class Scene {
 	 */
 	public boolean tick(Long msElapsed) {
 		// do nothing by default
-		return false;
+		boolean updated = false;
+		if (textAnimation != null) {
+			updated = textAnimation.tick();
+		}
+		return updated;
 	}
 
 	protected abstract void drawToBuffer(Canvas canvas);
@@ -75,6 +81,9 @@ public abstract class Scene {
 				tempCanvas.drawCircle(moarDot.x, moarDot.y, 1, paint);
 			}
 		}
+		if (textAnimation != null) {
+			textAnimation.draw(tempCanvas);
+		}
 		for (TextButton b: buttons) {
 			b.draw(tempCanvas);
 		}
@@ -89,6 +98,7 @@ public abstract class Scene {
 	 * @return true if anything changed and needs to be redrawn
 	 */
 	public boolean onTouch(MotionEvent motionEvent, Rect clipBounds) {
+//		for (TextButton button : buttons) {
 		for (TextButton button : buttons) {
 			if (button.onTouch(motionEvent, clipBounds)) {
 				return true;
@@ -137,4 +147,9 @@ public abstract class Scene {
 	protected void turtleDraw(String str) {
 		new Turtle(tempCanvas).draw(str);
 	}
+
+	protected void addTextAnimation(String text, int x, int y) {
+		this.textAnimation = new TextAnimation(this, text, y, x, textPaint);
+	}
+
 }
