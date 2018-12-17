@@ -8,14 +8,18 @@ import com.apollowebworks.mostamazingthing.ui.TextButton;
 
 abstract class RoomScene extends Scene {
 
-	RoomScene(SceneController sceneController) {
+	RoomScene(SceneController sceneController, int leaveX, int leaveY) {
 		super(sceneController);
-		TextButton leaveButton = new TextButton(this, 3, 4, "Leave", new Paint());
+		TextButton leaveButton = new TextButton(this, leaveX, leaveY, "Leave", sceneController.getTextPaint());
 		addButton(leaveButton);
+	}
+
+	RoomScene(SceneController sceneController) {
+		this(sceneController, 3, 4);
 	}
 
 	@Override
 	public void buttonEvent(TextButton button) {
-		sceneController.activateScene(SceneId.ELEVATOR);
+		controller.activateScene(SceneId.ELEVATOR);
 	}
 }

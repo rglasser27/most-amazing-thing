@@ -1,7 +1,11 @@
 package com.apollowebworks.mostamazingthing.controller;
 
 import android.content.res.Resources;
-import android.graphics.*;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.View;
 import com.apollowebworks.mostamazingthing.scene.Scene;
@@ -100,6 +104,18 @@ public class SceneController {
 
 	public Resources getResources() {
 		return resources;
+	}
+
+	public String getString(int id) {
+		return resources.getString(id);
+	}
+
+	public String[] getStrings(int id) {
+		return resources.getStringArray(id);
+	}
+
+	public GameState getGameState() {
+		return gameState;
 	}
 
 	public void prepareJetpackGuy(int x, int y, int facing) {

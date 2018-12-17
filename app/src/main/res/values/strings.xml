@@ -1,6 +1,5 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyEllipsis">
 	<string name="app_name">In Search of the Most Amazing Thing</string>
 
-	<string name="dummy_button">Dummy Button</string>
 	<string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

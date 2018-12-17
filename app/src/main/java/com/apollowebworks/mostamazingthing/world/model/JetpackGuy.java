@@ -10,7 +10,6 @@ import static com.apollowebworks.mostamazingthing.util.DrawUtil.subtract;
 
 /**
  * Displaying the jetpack guy on the screen
- * TODO: Add dots for fumes
  */
 public class JetpackGuy extends MoveableObject {
 

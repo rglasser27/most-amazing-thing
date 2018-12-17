@@ -89,14 +89,14 @@ public class ElevatorScene extends Scene {
 			if (wasMoving && !moving) {
 				// Exit to ground level?
 				if (lastTouched.y <= HIGHEST) {
-					sceneController.prepareJetpackGuy(70, 150, FACING_RIGHT);
-					sceneController.activateScene(SceneId.CAREXT);
+					controller.prepareJetpackGuy(70, 150, FACING_RIGHT);
+					controller.activateScene(SceneId.CAREXT);
 				}
 
 				// Landed on a room?
 				for (ElevatorRoom room : rooms) {
 					if (lastTouched.y > room.getTop() && lastTouched.y < room.getBottom()) {
-						sceneController.activateScene(room.getScene());
+						controller.activateScene(room.getScene());
 						return false;
 					}
 				}

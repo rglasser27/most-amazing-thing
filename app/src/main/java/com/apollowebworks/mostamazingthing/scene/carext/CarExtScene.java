@@ -95,11 +95,11 @@ public class CarExtScene extends Scene {
 	private boolean checkHotspots(PointF targetLocation) {
 		if (isScreenAreaSelected(targetLocation, doorArea)) {
 			jetpackGuy.stop();
-			sceneController.activateScene(SceneId.CARINT);
+			controller.activateScene(SceneId.CARINT);
 			return true;
 		} else if (isAtMetallica() && isScreenAreaSelected(targetLocation, entranceArea)) {
 			jetpackGuy.stop();
-			sceneController.activateScene(SceneId.ELEVATOR);
+			controller.activateScene(SceneId.ELEVATOR);
 			return true;
 		}
 		return false;

@@ -90,5 +90,4 @@ public class DosBitmap {
 		Paint paint = DrawUtil.PAINT_MAP.get(pixels[(y * bmWidth) + (x % bmWidth)]);
 		canvas.drawRect(left, top, right, bottom, paint);
 	}
-
 }

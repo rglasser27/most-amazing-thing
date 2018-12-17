@@ -1,7 +1,6 @@
 package com.apollowebworks.mostamazingthing.scene.carint;
 
 import android.graphics.*;
-import android.util.Log;
 import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.scene.Scene;
@@ -38,7 +37,7 @@ public class CarIntScene extends Scene {
 			case MotionEvent.ACTION_DOWN:
 				PointF virtualPoint = getVirtualPoint(event.getX(), event.getY(), clipBounds);
 				if (doorArea.contains(virtualPoint.x, virtualPoint.y)) {
-					sceneController.activateScene(SceneId.CAREXT);
+					controller.activateScene(SceneId.CAREXT);
 				}
 				break;
 			case MotionEvent.ACTION_UP:

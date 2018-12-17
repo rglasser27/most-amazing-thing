@@ -2,7 +2,6 @@ package com.apollowebworks.mostamazingthing.ui.manager;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.ColorSpace;
 import com.apollowebworks.mostamazingthing.R;
 import com.apollowebworks.mostamazingthing.ui.exception.DecrunchException;
 import com.apollowebworks.mostamazingthing.ui.model.DosBitmap;
@@ -22,6 +21,8 @@ public class ImageManager {
 
 	private static final int FIRST_OFFSET = 56;
 	private static final int SECOND_OFFSET = FIRST_OFFSET + SCREEN_WIDTH * SCREEN_HEIGHT + 896;
+
+	private static final int YOFF = 8;
 
 //	private static int SCREEN_WIDTH_2 = 12;
 //	private static int SCREEN_HEIGHT_2 = 17;
@@ -48,13 +49,13 @@ public class ImageManager {
 
 	public void readImages(Resources resources) throws DecrunchException {
 
-		readCrunchImage(AUCTION, resources.openRawResource(R.raw.auction));
-		readCrunchImage(CAREXT, resources.openRawResource(R.raw.carext));
-		readCrunchImage(CARINT, resources.openRawResource(R.raw.carint));
-		readCrunchImage(ELEVPIC, resources.openRawResource(R.raw.elevpic));
-		readCrunchImage(SMOKE, resources.openRawResource(R.raw.smoke));
-		readCrunchImage(STORE, resources.openRawResource(R.raw.store));
-		readCrunchImage(TABLE, resources.openRawResource(R.raw.table));
+		readCrunchImage(AUCTION, resources.openRawResource(R.raw.auction), 0);
+		readCrunchImage(CAREXT, resources.openRawResource(R.raw.carext), 0);
+		readCrunchImage(CARINT, resources.openRawResource(R.raw.carint), 0);
+		readCrunchImage(ELEVPIC, resources.openRawResource(R.raw.elevpic), 0);
+		readCrunchImage(SMOKE, resources.openRawResource(R.raw.smoke), 8);
+		readCrunchImage(STORE, resources.openRawResource(R.raw.store), 0);
+		readCrunchImage(TABLE, resources.openRawResource(R.raw.table), 0);
 
 		readNumbersAsBitmap(JPLEFT_1, resources.openRawResource(R.raw.jpleft1));
 		readNumbersAsBitmap(JPLEFT_2, resources.openRawResource(R.raw.jpleft2));
@@ -80,7 +81,7 @@ public class ImageManager {
 		return bitmap;
 	}
 
-	private void readCrunchImage(String name, InputStream stream) throws DecrunchException {
+	private void readCrunchImage(String name, InputStream stream, int offset) throws DecrunchException {
 		FullScreenBitmap image = new FullScreenBitmap();
 		try {
 			byte[] bytes = new byte[BUFFER_SIZE];
@@ -93,8 +94,24 @@ public class ImageManager {
 		} catch (IOException e) {
 			throw new DecrunchException("IOException caught while reading file");
 		}
+		if (offset != 0) {
+			shiftDown(image, offset);
+		}
 		imageMap.put(name, image);
 		bitmaps.put(name, getImageAsBitmap(image));
+	}
+
+	private void shiftDown(FullScreenBitmap image, int offset) {
+		for (int y = image.getBmHeight() - 1; y >= offset; y --) {
+			for (int x = 0; x < image.getBmWidth(); x ++) {
+				image.setPixel(x, y, image.getPixel(x, y-offset));
+			}
+		}
+		for (int y = 0; y < offset; y ++) {
+			for (int x = 0; x < image.getBmWidth(); x ++) {
+				image.setPixel(x, y, RgbColor.BLACK);
+			}
+		}
 	}
 
 	private void readNumbersAsBitmap(String name, InputStream stream) throws DecrunchException {

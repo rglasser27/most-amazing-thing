@@ -20,7 +20,7 @@ public abstract class Scene {
 	private static final boolean DEBUG_TOUCH = true;
 	private static final String TAG = "Scene";
 
-	protected SceneController sceneController;
+	protected SceneController controller;
 	private Bitmap backgroundImage;
 	private Canvas tempCanvas;
 	private Paint textPaint;
@@ -28,11 +28,11 @@ public abstract class Scene {
 	private List<TextButton> buttons;
 	private TextAnimation textAnimation;
 
-	public Scene(SceneController sceneController) {
-		this.sceneController = sceneController;
+	public Scene(SceneController controller) {
+		this.controller = controller;
 		backgroundImage = Bitmap.createBitmap(SCREEN_WIDTH, SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
 		drawBlackBackground(new Canvas(backgroundImage));
-		textPaint = sceneController.getTextPaint();
+		textPaint = controller.getTextPaint();
 		moarDots = new ArrayList<>();
 		buttons = new ArrayList<>();
 	}

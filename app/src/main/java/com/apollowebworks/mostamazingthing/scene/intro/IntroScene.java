@@ -1,7 +1,5 @@
 package com.apollowebworks.mostamazingthing.scene.intro;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.Rect;
@@ -56,7 +54,7 @@ public class IntroScene extends Scene {
 					Log.d(TAG, "Clicked demonstration button");
 				} else if (playButton.checkPressing((int) point.x, (int) point.y)) {
 					Log.d(TAG, "Clicked play button");
-					sceneController.activateScene(SceneId.CAREXT);
+					controller.activateScene(SceneId.CAREXT);
 				}
 				demonstrationButton.setPressing(false);
 				playButton.setPressing(false);

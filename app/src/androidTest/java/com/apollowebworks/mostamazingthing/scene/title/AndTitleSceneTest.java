@@ -41,7 +41,7 @@ public class AndTitleSceneTest {
 	public void setUp() throws Exception {
 		Context appContext = InstrumentationRegistry.getTargetContext();
 		mainActivity = mActivityRule.getActivity();
-//		SceneController sceneController =
+//		SceneController controller =
 //				assertEquals("hello", appContext.getResources());
 //		canvas = new Canvas.class);
 //		drawable = mock(Drawable.class);
@@ -60,7 +60,7 @@ public class AndTitleSceneTest {
 		canvas = new Canvas(bitmap);
 
 		sceneController = mainActivity.getSceneController();
-//		titleScene = sceneController.activateScene(SceneId.TITLE);
+//		titleScene = controller.activateScene(SceneId.TITLE);
 		view = mainActivity.findViewById(R.id.fullscreen_content);
 	}
 

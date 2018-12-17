@@ -1,7 +1,5 @@
 package com.apollowebworks.mostamazingthing.scene.title;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.*;
 import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
@@ -39,7 +37,7 @@ public class TitleScene extends Scene {
 	}
 
 	public boolean onTouch(MotionEvent motionEvent, Rect clipBounds) {
-		sceneController.activateScene(SceneId.ELEVATOR);
+		controller.activateScene(SceneId.ELEVATOR);
 		return true;
 	}
 
