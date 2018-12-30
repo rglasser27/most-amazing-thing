@@ -13,6 +13,12 @@ public class ElevatorRoom {
 		this.scene = scene;
 	}
 
+	ElevatorRoom(int center, SceneId scene) {
+		this.top = center - 5;
+		this.bottom = center + 5;
+		this.scene = scene;
+	}
+
 	public int getTop() {
 		return top;
 	}

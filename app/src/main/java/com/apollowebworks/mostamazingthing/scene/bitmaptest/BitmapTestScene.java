@@ -3,18 +3,11 @@ package com.apollowebworks.mostamazingthing.scene.bitmaptest;
 import android.graphics.*;
 import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
-import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
-import com.apollowebworks.mostamazingthing.ui.model.DosBitmap;
-import com.apollowebworks.mostamazingthing.ui.model.FullScreenBitmap;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.apollowebworks.mostamazingthing.util.DrawUtil.RELATIVE_HEIGHT;
 import static com.apollowebworks.mostamazingthing.util.DrawUtil.adjustToScreen;
-import static com.apollowebworks.mostamazingthing.util.DrawUtil.getVirtualPoint;
 
 public class BitmapTestScene extends Scene {
 
@@ -44,10 +37,5 @@ public class BitmapTestScene extends Scene {
 									   newWidth / 2.f,
 									   -newHeight / 2.f);
 		return adjustToScreen(relativeSize, canvas);
-	}
-
-	@Override
-	public boolean onTouch(MotionEvent event, Rect clipBounds) {
-		return true;
 	}
 }

@@ -6,8 +6,7 @@ import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
 import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
-
-import static com.apollowebworks.mostamazingthing.util.DrawUtil.getVirtualPoint;
+import com.apollowebworks.mostamazingthing.util.DrawUtil;
 
 public class CarIntScene extends Scene {
 
@@ -18,7 +17,6 @@ public class CarIntScene extends Scene {
 		super(sceneController);
 		this.setBackgroundImage(sceneController.getImageManager().getBitmap(ImageManager.CARINT));
 		doorArea = new RectF(252, 119, 270, 155);
-
 	}
 
 	@Override
@@ -31,17 +29,9 @@ public class CarIntScene extends Scene {
 	}
 
 	@Override
-	public boolean onTouch(MotionEvent event, Rect clipBounds) {
-		addDot(event, clipBounds);
-		switch (event.getAction()) {
-			case MotionEvent.ACTION_DOWN:
-				PointF virtualPoint = getVirtualPoint(event.getX(), event.getY(), clipBounds);
-				if (doorArea.contains(virtualPoint.x, virtualPoint.y)) {
-					controller.activateScene(SceneId.CAREXT);
-				}
-				break;
-			case MotionEvent.ACTION_UP:
-				break;
+	public boolean onDownTouch(PointF point) {
+		if (doorArea.contains(point.x, point.y)) {
+			controller.activateScene(SceneId.CAREXT);
 		}
 		return true;
 	}

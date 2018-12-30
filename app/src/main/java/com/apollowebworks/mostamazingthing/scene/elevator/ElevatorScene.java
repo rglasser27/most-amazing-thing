@@ -2,18 +2,21 @@ package com.apollowebworks.mostamazingthing.scene.elevator;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
-import android.graphics.Rect;
-import android.util.Log;
-import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
 import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
 import com.apollowebworks.mostamazingthing.world.model.Elevator;
 
-import static com.apollowebworks.mostamazingthing.util.DrawUtil.getVirtualPoint;
 import static com.apollowebworks.mostamazingthing.world.model.JetpackGuy.FACING_RIGHT;
 
+/**
+ * Elevator positions from elev.bas.txt lines 1150-1180
+ * 1150 IF OY=29 THEN CLS:LOCATE 10,12:PRINT"Stepping outside...":BRANCH=2:GOSUB 25550:RUN"ground.bas
+ * 1160 IF OY>47 AND OY<51 THEN GOTO 5000
+ * 1170 IF OY>67 AND OY<71 THEN GOTO 4000
+ * 1180 IF OY>132 AND OY<136 THEN GOTO 6000
+ */
 public class ElevatorScene extends Scene {
 
 	private static final String TAG = ElevatorScene.class.getName();
@@ -23,6 +26,11 @@ public class ElevatorScene extends Scene {
 	private static final float ELEVATOR_SPEED = .5f;
 	private static final float HIGHEST = 36;
 	private static final float LOWEST = 160;
+
+	private static final int TOP_Y = 29;
+	private static final int SMOKE_Y = 56;
+	private static final int STORE_Y = 76;
+	private static final int AUCTION_Y = 134;
 
 	private boolean moving;
 	private PointF lastTouched;
@@ -37,9 +45,12 @@ public class ElevatorScene extends Scene {
 		this.setBackgroundImage(sceneController.getImageManager().getBitmap(ImageManager.ELEVPIC));
 		rooms = new ElevatorRoom[3];
 		// TODO: Define these as constants; make the user click the rooms instead of anywhere on X
-		rooms[0] = new ElevatorRoom(45, 65, SceneId.SMOKE);
-		rooms[1] = new ElevatorRoom(70, 90, SceneId.STORE);
-		rooms[2] = new ElevatorRoom(120, 140, SceneId.AUCTION);
+		rooms[0] = new ElevatorRoom(SMOKE_Y, SceneId.SMOKE);
+		rooms[1] = new ElevatorRoom(STORE_Y, SceneId.STORE);
+		rooms[2] = new ElevatorRoom(AUCTION_Y, SceneId.AUCTION);
+
+		addDot(new PointF(SHAFT_CENTER, SMOKE_Y));
+
 		moving = false;
 	}
 
@@ -59,22 +70,14 @@ public class ElevatorScene extends Scene {
 	}
 
 	@Override
-	public boolean onTouch(MotionEvent event, Rect clipBounds) {
-		switch (event.getAction()) {
-			case MotionEvent.ACTION_DOWN:
-				moving = true;
-				lastTouched = getVirtualPoint(event.getX(), event.getY(), clipBounds);
-				if (lastTouched.y > LOWEST) {
-					lastTouched.y = LOWEST;
-				}
-				if (lastTouched.y < HIGHEST) {
-					lastTouched.y = HIGHEST;
-				}
-				Log.d(TAG, "Touched a point on the screen (" +
-						event.getX() + ", " + event.getY() + ")");
-				break;
-			case MotionEvent.ACTION_UP:
-				break;
+	protected boolean onDownTouch(PointF point) {
+		moving = true;
+		lastTouched = point;
+		if (lastTouched.y > LOWEST) {
+			lastTouched.y = LOWEST;
+		}
+		if (lastTouched.y < HIGHEST) {
+			lastTouched.y = HIGHEST;
 		}
 		return true;
 	}

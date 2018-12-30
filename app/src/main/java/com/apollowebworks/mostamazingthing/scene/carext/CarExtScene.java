@@ -1,18 +1,23 @@
 package com.apollowebworks.mostamazingthing.scene.carext;
 
-import android.graphics.*;
-import android.view.MotionEvent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PointF;
+import android.graphics.RectF;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
 import com.apollowebworks.mostamazingthing.ui.Turtle;
 import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
-import com.apollowebworks.mostamazingthing.world.model.*;
+import com.apollowebworks.mostamazingthing.world.model.JetpackGuy;
+import com.apollowebworks.mostamazingthing.world.model.MetallicaEntrance;
+import com.apollowebworks.mostamazingthing.world.model.NightRock;
+import com.apollowebworks.mostamazingthing.world.model.PopberryTree;
+import com.apollowebworks.mostamazingthing.world.model.WorldObject;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static com.apollowebworks.mostamazingthing.util.DrawUtil.getVirtualPoint;
 
 public class CarExtScene extends Scene {
 
@@ -74,22 +79,14 @@ public class CarExtScene extends Scene {
 	}
 
 	@Override
-	public boolean onTouch(MotionEvent event, Rect clipBounds) {
-		switch (event.getAction()) {
-			case MotionEvent.ACTION_DOWN:
-				PointF targetLocation = getVirtualPoint(event.getX(), event.getY(), clipBounds);
-				if (distanceFromCar == 0) {
-					boolean handled = checkHotspots(targetLocation);
-					if (handled) {
-						return true;
-					}
-				}
-
-				return jetpackGuy.handleTouch(targetLocation);
-			case MotionEvent.ACTION_UP:
-				break;
+	protected boolean onDownTouch(PointF point) {
+		if (distanceFromCar == 0) {
+			boolean handled = checkHotspots(point);
+			if (handled) {
+				return true;
+			}
 		}
-		return true;
+		return jetpackGuy.handleTouch(point);
 	}
 
 	private boolean checkHotspots(PointF targetLocation) {

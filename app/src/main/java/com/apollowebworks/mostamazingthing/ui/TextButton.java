@@ -1,11 +1,14 @@
 package com.apollowebworks.mostamazingthing.ui;
 
-import android.graphics.*;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.PointF;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.scene.Scene;
-
-import static com.apollowebworks.mostamazingthing.util.DrawUtil.getVirtualPoint;
 
 public class TextButton {
 	private static final int MARGIN = 4;
@@ -47,8 +50,8 @@ public class TextButton {
 		fillPaint.setStyle(Paint.Style.FILL);
 	}
 
-	public boolean checkPressing(int x, int y) {
-		if (border.contains(x, y)) {
+	public boolean checkPressing(PointF point) {
+		if (border.contains((int) point.x, (int) point.y)) {
 			pressing = true;
 			return true;
 		}
@@ -72,16 +75,14 @@ public class TextButton {
 		canvas.drawRect(border, borderPaint);
 	}
 
-	public boolean onTouch(MotionEvent event, Rect clipBounds) {
-		switch (event.getAction()) {
+	public boolean onTouch(int action, PointF virtualPoint) {
+		switch (action) {
 			case MotionEvent.ACTION_DOWN:
 			case MotionEvent.ACTION_MOVE:
 				setPressing(false);
-				PointF point = getVirtualPoint(event.getX(), event.getY(), clipBounds);
-				return checkPressing((int) point.x, (int) point.y);
+				return checkPressing(virtualPoint);
 			case MotionEvent.ACTION_UP:
-				point = getVirtualPoint(event.getX(), event.getY(), clipBounds);
-				if (checkPressing((int) point.x, (int) point.y)) {
+				if (checkPressing(virtualPoint)) {
 					Log.d(TAG, "Clicked button \"" + text + "\"");
 					scene.buttonEvent(this);
 					setPressing(false);

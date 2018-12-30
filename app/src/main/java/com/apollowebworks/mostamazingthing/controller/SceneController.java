@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.view.MotionEvent;
@@ -13,12 +14,14 @@ import com.apollowebworks.mostamazingthing.scene.SceneFactory;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
 import com.apollowebworks.mostamazingthing.ui.exception.DecrunchException;
 import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
+import com.apollowebworks.mostamazingthing.util.DrawUtil;
 import com.apollowebworks.mostamazingthing.world.state.GameState;
 
 public class SceneController {
 
 	public static final int FPS = 30;
-	private static final SceneId STARTING_SCENE = SceneId.SMOKE;
+//	private static final SceneId STARTING_SCENE = SceneId.SMOKE;
+	private static final SceneId STARTING_SCENE = SceneId.AUCTION;
 	private final Paint textPaint;
 
 	private Scene activeScene;
@@ -53,6 +56,7 @@ public class SceneController {
 		activateScene(STARTING_SCENE);
 
 		gameState = new GameState();
+		gameState.setItem(1);
 	}
 
 	public ImageManager getImageManager() {
@@ -69,9 +73,12 @@ public class SceneController {
 	}
 
 	public boolean onTouch(MotionEvent motionEvent) {
-		if (clipBounds != null && activeScene.onTouch(motionEvent, clipBounds)) {
-			redraw();
-			return true;
+		if (clipBounds != null) {
+			PointF virtualPoint = DrawUtil.getVirtualPoint(motionEvent.getX(), motionEvent.getY(), clipBounds);
+			if (activeScene.onTouch(motionEvent.getAction(), virtualPoint)) {
+				redraw();
+				return true;
+			}
 		}
 		return false;
 	}

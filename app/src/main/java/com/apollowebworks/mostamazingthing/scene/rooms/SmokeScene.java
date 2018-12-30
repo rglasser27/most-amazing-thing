@@ -1,25 +1,19 @@
 package com.apollowebworks.mostamazingthing.scene.rooms;
 
 import android.graphics.Canvas;
-import android.graphics.Rect;
+import android.graphics.PointF;
 import android.util.Log;
-import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.R;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
 import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class SmokeScene extends RoomScene {
 	private static final String TAG = "SmokeScene";
 	private static final int FULL_NAP = 1200;
 
-	private final String lineRepeat;
-	private final String lineAuction;
-	private final String lineHasItem;
-	private final String lineAngry;
 	private final String[] smokeAdvice;
 	private final String[] smokeChat;
 	private final String[] items;
@@ -44,10 +38,6 @@ public class SmokeScene extends RoomScene {
 //		addButton(wakeButton);
 		setBackgroundImage(sceneController.getImageManager().getBitmap(ImageManager.SMOKE));
 
-		lineRepeat = controller.getString(R.string.smoke_repeat);
-		lineAuction = controller.getString(R.string.smoke_auction);
-		lineHasItem = controller.getString(R.string.smoke_hasitem);
-		lineAngry = controller.getString(R.string.smoke_angry);
 		smokeAdvice = controller.getStrings(R.array.smoke_advice);
 //		smokeAdvice = Arrays.copyOfRange(controller.getStrings(R.array.smoke_advice), 0, 3);
 		smokeChat = controller.getStrings(R.array.smoke_chat);
@@ -80,14 +70,8 @@ public class SmokeScene extends RoomScene {
 		super.draw(canvas);
 	}
 
-	@Override
-	public boolean onTouch(MotionEvent event, Rect clipBounds) {
-		if (!super.onTouch(event, clipBounds)) {
-			switch (event.getAction()) {
-				case MotionEvent.ACTION_DOWN:
-					wakeSmoke();
-			}
-		}
+	public boolean onDownTouch(PointF point) {
+		wakeSmoke();
 		return true;
 	}
 

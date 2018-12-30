@@ -2,15 +2,11 @@ package com.apollowebworks.mostamazingthing.scene.intro;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.util.Log;
-import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
 import com.apollowebworks.mostamazingthing.ui.TextButton;
-
-import static com.apollowebworks.mostamazingthing.util.DrawUtil.getVirtualPoint;
 
 public class IntroScene extends Scene {
 	private static final String TAG = "IntroScene";
@@ -36,30 +32,19 @@ public class IntroScene extends Scene {
 		super.draw(canvas);
 	}
 
-	// TODO: Preferably handle this with button pressed actions as in RoomScene
 	@Override
-	public boolean onTouch(MotionEvent event, Rect clipBounds) {
-		switch (event.getAction()) {
-			case MotionEvent.ACTION_DOWN:
-			case MotionEvent.ACTION_MOVE:
-				demonstrationButton.setPressing(false);
-				playButton.setPressing(false);
-				PointF point = getVirtualPoint(event.getX(), event.getY(), clipBounds);
-				demonstrationButton.checkPressing((int) point.x, (int) point.y);
-				playButton.checkPressing((int) point.x, (int) point.y);
-				break;
-			case MotionEvent.ACTION_UP:
-				point = getVirtualPoint(event.getX(), event.getY(), clipBounds);
-				if (demonstrationButton.checkPressing((int) point.x, (int) point.y)) {
-					Log.d(TAG, "Clicked demonstration button");
-				} else if (playButton.checkPressing((int) point.x, (int) point.y)) {
-					Log.d(TAG, "Clicked play button");
-					controller.activateScene(SceneId.CAREXT);
-				}
-				demonstrationButton.setPressing(false);
-				playButton.setPressing(false);
-				break;
+	public void buttonEvent(TextButton button) {
+		if (demonstrationButton == button) {
+			if (playButton == demonstrationButton) {
+				Log.d(TAG, "The demo isn't working yet.");
+			} else {
+				controller.activateScene(SceneId.CAREXT);
+			}
 		}
-		return true;
+	}
+
+	@Override
+	protected boolean onMoveTouch(PointF point) {
+		return super.onMoveTouch(point) || onDownTouch(point);
 	}
 }

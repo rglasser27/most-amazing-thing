@@ -36,7 +36,7 @@ public class TitleScene extends Scene {
 		titleImage.draw(canvas);
 	}
 
-	public boolean onTouch(MotionEvent motionEvent, Rect clipBounds) {
+	public boolean onTouch(MotionEvent motionEvent, Rect clipBounds, int action) {
 		controller.activateScene(SceneId.ELEVATOR);
 		return true;
 	}

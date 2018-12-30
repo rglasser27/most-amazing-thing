@@ -1,5 +1,8 @@
 package com.apollowebworks.mostamazingthing.world.state;
 
+/**
+ * See basic files line 25460
+ */
 public class GameState {
 	private int hungry;
 	private int sleep;
