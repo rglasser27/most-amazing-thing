@@ -1,112 +1,147 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyEllipsis">
-	<string name="app_name">In Search of the Most Amazing Thing</string>
+    <string name="app_name">In Search of the Most Amazing Thing</string>
 
-	<string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
-	<string-array name="smoke_chat">
-		<item>I have a;little somethin\';for you ...</item>
-		<item>You\'ll need;plenty of chips;at the store.</item>
-		<item>You\'re gonna;need more chips;to buy things;for the B-liner.</item>
-	</string-array>
+    <string-array name="smoke_chat">
+        <item>I have a;little somethin\';for you ...</item>
+        <item>You\'ll need;plenty of chips;at the store.</item>
+        <item>You\'re gonna;need more chips;to buy things;for the B-liner.</item>
+    </string-array>
 
-	<string-array name="smoke_advice">
-		<item>My old trunk;is full of stuff;from my travels.</item>
-		<item>The robots like;to steal your items;at the auction.</item>
-		<item>The robots like;to steal your items;at the auction.</item>
-		<item>After you buy;everything;for your balloon;go outside.</item>
-		<item>Try to figure out;how to sell;to those finicky robots.</item>
-		<item>Out there;are many huts;where the Traders live.</item>
-		<item>There are 25;different cultures.;Each one is different.</item>
-		<item>Traders will;sell you;Amazing Thing clues;for chips.</item>
-		<item>In some cultures;a red chip is worth;4 green chips.</item>
-		<item>In some cultures;a yellow chip;could equal 2;red chips.</item>
-		<item>The value of chips;is different;in every culture.</item>
-		<item>Going to;the right cultures;you can collect;a lot of chips.</item>
-		<item>Traders will not;talk to you;if you ever;give a bad answer.</item>
-		<item>If a Trader;won\'t talk;give him a Musix;to soothe him.</item>
-		<item>If a clue;costs too much;trade chips;with other cultures.</item>
-		<item>Return to a culture;to buy a clue;when you have the chips.</item>
-		<item>Lines on the Mire;will help you;navigate;when driving.</item>
-		<item>Look out for;those Bunchmarks;on the ground.;They\'re soft.</item>
-		<item>Some cultures;love complex Musix.;Some hate complex Musix.</item>
-		<item>Don\'t ever;waste a Musix;with a Trader.;You may need it.</item>
-		<item>Most of those;rusty Metallicans;have never been outside.</item>
-		<item>You\'ll need food;out there.;Shake a Popberry tree;for food.</item>
-		<item>Popberries that have popped;sink into the tar;very quickly.</item>
-		<item>A Mire Crab attack;is not fatal;unless....</item>
-		<item>The Software;in the Galactic Store;must be bought.</item>
-		<item>The AUTOP can;save your life.;But it takes;a lot of time.</item>
-		<item>Mire People use;3 kinds of CHIPS.;RED YELLOW and GREEN.</item>
-		<item>Those Mire Crabs;may be the answer;to your problems.</item>
-		<item>Mire People are;always very shy.;You\'ll never;really see one</item>
-		<item>Mire People;talk with;their antennae.;Learn their words.</item>
-		<item>You must tell;Mire People often;that you are;their friend.</item>
-		<item>Bunchmarks are;the biggest mystery;on this planet.</item>
-		<item>Tar around the Bunchmarks;is very soft.;Be careful.</item>
-		<item>There are dangerous;Mire Crabs out there.;Look like rocks.</item>
-		<item>The faster you go;the more you will;attract Mire Crabs.</item>
-		<item>Storms are not worth;fooling around with.;Land.</item>
-		<item>The B-liner car;has a Solar Battery;for driving.</item>
-		<item>The B-Liner balloon;needs a lot of fuel.;Drill for it!</item>
-		<item>The higher you fly;the faster the wind blows.</item>
-		<item>I hope you\'ll;remember exactly;how to get home;without Autop</item>
-		<item>Take the B-liner up;or down \'til;you find a good wind.</item>
-		<item>Getting back;to me may be;the most important goal.</item>
-		<item>Those Mire Crabs;can never leave;their zone.;You\'ll see.</item>
-		<item>Once a Mire crab;finds you;it will send;for many Mire Crabs.</item>
-		<item>Some Mire Crabs;will steal your fuel;or put you to sleep.</item>
-	</string-array>
+    <string-array name="smoke_advice">
+        <item>My old trunk;is full of stuff;from my travels.</item>
+        <item>The robots like;to steal your items;at the auction.</item>
+        <item>After you buy;everything;for your balloon;go outside.</item>
+        <item>Try to figure out;how to sell;to those finicky robots.</item>
+        <item>Out there;are many huts;where the Traders live.</item>
+        <item>There are 25;different cultures.;Each one is different.</item>
+        <item>Traders will;sell you;Amazing Thing clues;for chips.</item>
+        <item>In some cultures;a red chip is worth;4 green chips.</item>
+        <item>In some cultures;a yellow chip;could equal 2;red chips.</item>
+        <item>The value of chips;is different;in every culture.</item>
+        <item>Going to;the right cultures;you can collect;a lot of chips.</item>
+        <item>Traders will not;talk to you;if you ever;give a bad answer.</item>
+        <item>If a Trader;won\'t talk;give him a Musix;to soothe him.</item>
+        <item>If a clue;costs too much;trade chips;with other cultures.</item>
+        <item>Return to a culture;to buy a clue;when you have the chips.</item>
+        <item>Lines on the Mire;will help you;navigate;when driving.</item>
+        <item>Look out for;those Bunchmarks;on the ground.;They\'re soft.</item>
+        <item>Some cultures;love complex Musix.;Some hate complex Musix.</item>
+        <item>Don\'t ever;waste a Musix;with a Trader.;You may need it.</item>
+        <item>Most of those;rusty Metallicans;have never been outside.</item>
+        <item>You\'ll need food;out there.;Shake a Popberry tree;for food.</item>
+        <item>Popberries that have popped;sink into the tar;very quickly.</item>
+        <item>A Mire Crab attack;is not fatal;unless....</item>
+        <item>The Software;in the Galactic Store;must be bought.</item>
+        <item>The AUTOP can;save your life.;But it takes;a lot of time.</item>
+        <item>Mire People use;3 kinds of CHIPS.;RED YELLOW and GREEN.</item>
+        <item>Those Mire Crabs;may be the answer;to your problems.</item>
+        <item>Mire People are;always very shy.;You\'ll never;really see one</item>
+        <item>Mire People;talk with;their antennae.;Learn their words.</item>
+        <item>You must tell;Mire People often;that you are;their friend.</item>
+        <item>Bunchmarks are;the biggest mystery;on this planet.</item>
+        <item>Tar around the Bunchmarks;is very soft.;Be careful.</item>
+        <item>There are dangerous;Mire Crabs out there.;Look like rocks.</item>
+        <item>The faster you go;the more you will;attract Mire Crabs.</item>
+        <item>Storms are not worth;fooling around with.;Land.</item>
+        <item>The B-liner car;has a Solar Battery;for driving.</item>
+        <item>The B-Liner balloon;needs a lot of fuel.;Drill for it!</item>
+        <item>The higher you fly;the faster the wind blows.</item>
+        <item>I hope you\'ll;remember exactly;how to get home;without Autop</item>
+        <item>Take the B-liner up;or down \'til;you find a good wind.</item>
+        <item>Getting back;to me may be;the most important goal.</item>
+        <item>Those Mire Crabs;can never leave;their zone.;You\'ll see.</item>
+        <item>Once a Mire crab;finds you;it will send;for many Mire Crabs.</item>
+        <item>Some Mire Crabs;will steal your fuel;or put you to sleep.</item>
+    </string-array>
 
-	<string-array name="smoke_items">
-		<item>chunk of Night Rock</item>
-		<item>Popberry tree bark</item>
-		<item>wicker basket;from the A-Liner</item>
-		<item>glass fragment;from the Glass Mountains</item>
-		<item>Gaxonfrax tail feather</item>
-		<item>white rubber snow</item>
-		<item>silver hair;from the Being</item>
-		<item>jar of red smoke;from the Being\'s fire</item>
-		<item>rare pink chip;found in the Otbrak</item>
-		<item>piece of nylon;from the A-Liner balloon</item>
-		<item>zirconium baby rattle;from ZyZy</item>
-		<item>Jave gerbil fur</item>
-		<item>petrified tar beetle;from Fondef</item>
-		<item>hailstorm photo;from Camawhy</item>
-		<item>jar of Popberry rind;from Hogaan</item>
-		<item>colored sand from Odask</item>
-		<item>Laska snakeskin</item>
-		<item>Popberry branch basket</item>
-		<item>rug made by Muffijians</item>
-		<item>Beribey Trutix shell</item>
-		<item>Mire Crab photo;from Logretch</item>
-		<item>Nutrile chip bracelet</item>
-		<item>Gaxonfrax egg</item>
-		<item>dried Muhill mushroom</item>
-		<item>rare Bunchmark photo</item>
-		<item>braided belt;made by a Fastak trader</item>
-		<item>petrified clamshell;from a Treliss bog</item>
-		<item>bent fork;from a Kartoff family</item>
-		<item>ant from Sloping mire</item>
-		<item>ancient Fongole book</item>
-		<item>tape recording;of a Jave trading session</item>
-		<item>umbrella;made in Paelasia</item>
-		<item>original A-Liner plan</item>
-		<item>earmuff;woven from Popberry bark</item>
-		<item>book bag;used by Thomizek children</item>
-		<item>candle;made by Watersi traders</item>
-		<item>fossil;of ancient Solvaque fish</item>
-		<item>teacup;used by a Maxaze family</item>
-		<item>photo of a nest;of a Gaxonfrax</item>
-		<item>Otbrak soil sample</item>
-		<item>gravity fuel gauge;from the A-Liner</item>
-		<item>take-off photo;of A-Liner\'s first flight</item>
-		<item>Odask diary;bought from head trader</item>
-		<item>Mire Crab crust</item>
-	</string-array>
+    <string-array name="smoke_items">
+        <item>chunk of Night Rock</item>
+        <item>Popberry tree bark</item>
+        <item>wicker basket;from the A-Liner</item>
+        <item>glass fragment;from the Glass Mountains</item>
+        <item>Gaxonfrax tail feather</item>
+        <item>white rubber snow</item>
+        <item>silver hair;from the Being</item>
+        <item>jar of red smoke;from the Being\'s fire</item>
+        <item>rare pink chip;found in the Otbrak</item>
+        <item>piece of nylon;from the A-Liner balloon</item>
+        <item>zirconium baby rattle;from ZyZy</item>
+        <item>Jave gerbil fur</item>
+        <item>petrified tar beetle;from Fondef</item>
+        <item>hailstorm photo;from Camawhy</item>
+        <item>jar of Popberry rind;from Hogaan</item>
+        <item>colored sand from Odask</item>
+        <item>Laska snakeskin</item>
+        <item>Popberry branch basket</item>
+        <item>rug made by Muffijians</item>
+        <item>Beribey Trutix shell</item>
+        <item>Mire Crab photo;from Logretch</item>
+        <item>Nutrile chip bracelet</item>
+        <item>Gaxonfrax egg</item>
+        <item>dried Muhill mushroom</item>
+        <item>rare Bunchmark photo</item>
+        <item>braided belt;made by a Fastak trader</item>
+        <item>petrified clamshell;from a Treliss bog</item>
+        <item>bent fork;from a Kartoff family</item>
+        <item>ant from Sloping mire</item>
+        <item>ancient Fongole book</item>
+        <item>tape recording;of a Jave trading session</item>
+        <item>umbrella;made in Paelasia</item>
+        <item>original A-Liner plan</item>
+        <item>earmuff;woven from Popberry bark</item>
+        <item>book bag;used by Thomizek children</item>
+        <item>candle;made by Watersi traders</item>
+        <item>fossil;of ancient Solvaque fish</item>
+        <item>teacup;used by a Maxaze family</item>
+        <item>photo of a nest;of a Gaxonfrax</item>
+        <item>Otbrak soil sample</item>
+        <item>gravity fuel gauge;from the A-Liner</item>
+        <item>take-off photo;of A-Liner\'s first flight</item>
+        <item>Odask diary;bought from head trader</item>
+        <item>Mire Crab crust</item>
+    </string-array>
 
-	<string name="smoke_hey">Hey, Smoke!</string>
-	<string name="smoke_repeat">Sorry to be;repeatin\' myself;but...</string>
-	<string name="smoke_auction">Go auction;this </string>
-	<string name="smoke_hasitem">Until you sell that;thing I gave you,;I don\'t want to;do much talkin\'.</string>
-	<string name="smoke_angry">Now you went too far;tryin\' to wake me.;Next time;don\'t push so hard.</string>
+    <string-array name="auction_reactions">
+        <item>Terrible price.Too high! That\'s a lot! Way too much! Ridiculous!</item>
+        <item>Looks average..A fair deal.. I\'m not sure.. Good enough.. Seems O.K.</item>
+        <item>Hey, not bad.. Good stuff... Pretty good.. I like that.. That looks good</item>
+        <item>Truly superb! Excellent!! What a deal! Great price! Fantastic!</item>
+    </string-array>
+
+    <string-array name="victory_screen">
+        <item>There is no doubt now that the ultimate</item>
+        <item>Secret of the Universe is YOU! Yes, YOU</item>
+        <item>are The Most Amazing Thing. Your search</item>
+        <item>has taken a lot of skill and patience.</item>
+        <item>You\'ve made many decisions and have come</item>
+        <item>up with some creative solutions. You\'ve</item>
+        <item>had to think in new ways and learn from</item>
+        <item>your mistakes. You\'ve discovered that</item>
+        <item>YOU possess many amazing powers. And</item>
+        <item>the best part of all is that in time you</item>
+        <item>will discover many more amazing things</item>
+        <item>about yourself.</item>
+    </string-array>
+
+    <string name="smoke_hey">Hey, Smoke!</string>
+    <string name="smoke_repeat">Sorry to be;repeatin\' myself;but...</string>
+    <string name="smoke_auction">Go auction;this</string>
+    <string name="smoke_hasitem">Until you sell that;thing I gave you,;I don\'t want to;do much talkin\'.</string>
+    <string name="smoke_angry">Now you went too far;tryin\' to wake me.;Next time;don\'t push so hard.</string>
+
+    <string name="auction_no_item">Nothing to sell!</string>
+    <string name="auction_for_sale">For sale from Smoke\'s travels:</string>
+    <string name="auction_get_reaction">Get crowd reaction</string>
+    <string name="auction_final_price">Set final price</string>
+    <string name="auction_greeting">Fellow Metallicans!</string>
+    <string name="auction_offer_query">How do you like this price: {0} CHIPS?</string>
+    <string name="auction_offer_final">My final selling price is {0} chips.</string>
+    <string name="auction_response_considering">Fizpa wizh?</string>
+    <string name="auction_response_accept">I\'ll take it!</string>
+    <string name="auction_profit_1">You just made</string>
+    <string name="auction_profit_2">green chips.</string>
+    <string name="auction_response_reject">No deal..</string>
+
 </resources>

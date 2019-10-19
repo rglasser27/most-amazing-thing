@@ -50,7 +50,7 @@ public class TextButton {
 		fillPaint.setStyle(Paint.Style.FILL);
 	}
 
-	public boolean checkPressing(PointF point) {
+	private boolean checkPressing(PointF point) {
 		if (border.contains((int) point.x, (int) point.y)) {
 			pressing = true;
 			return true;
@@ -90,5 +90,9 @@ public class TextButton {
 				}
 		}
 		return false;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 }

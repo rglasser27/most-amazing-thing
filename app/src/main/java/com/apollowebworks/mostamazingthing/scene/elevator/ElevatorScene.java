@@ -2,11 +2,15 @@ package com.apollowebworks.mostamazingthing.scene.elevator;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
+import android.util.Log;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
 import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
 import com.apollowebworks.mostamazingthing.world.model.Elevator;
+
+import java.util.Arrays;
+import java.util.Optional;
 
 import static com.apollowebworks.mostamazingthing.world.model.JetpackGuy.FACING_RIGHT;
 
@@ -79,6 +83,7 @@ public class ElevatorScene extends Scene {
 		if (lastTouched.y < HIGHEST) {
 			lastTouched.y = HIGHEST;
 		}
+		Log.d(TAG, "The elevator is now moving to height " + lastTouched.y);
 		return true;
 	}
 
@@ -96,15 +101,20 @@ public class ElevatorScene extends Scene {
 					controller.activateScene(SceneId.CAREXT);
 				}
 
-				// Landed on a room?
-				for (ElevatorRoom room : rooms) {
-					if (lastTouched.y > room.getTop() && lastTouched.y < room.getBottom()) {
-						controller.activateScene(room.getScene());
-						return false;
-					}
-				}
+				Optional<ElevatorRoom> room = reachedRoom();
+				room.ifPresent(r -> controller.activateScene(r.getScene()));
+				return room.isPresent();
 			}
 		}
 		return wasMoving;
+	}
+
+	/**
+	 * @return true if the elevator is currently touched a room
+	 */
+	private Optional<ElevatorRoom> reachedRoom() {
+		return Arrays.stream(rooms)
+				.filter(room -> lastTouched.y > room.getTop() && lastTouched.y < room.getBottom())
+				.findFirst();
 	}
 }

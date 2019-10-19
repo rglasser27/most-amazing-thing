@@ -14,6 +14,7 @@ import com.apollowebworks.mostamazingthing.ui.TextButton;
 import com.apollowebworks.mostamazingthing.ui.Turtle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.apollowebworks.mostamazingthing.ui.model.FullScreenBitmap.SCREEN_HEIGHT;
@@ -48,6 +49,10 @@ public abstract class Scene {
 
 	protected void addButton(TextButton button) {
 		buttons.add(button);
+	}
+
+	protected void addButtons(TextButton... button) {
+		Arrays.stream(button).forEach(this::addButton);
 	}
 
 	protected Bitmap createBlankBackground() {
@@ -123,14 +128,14 @@ public abstract class Scene {
 	/**
 	 * Override this method to make this do something when a touch is started in the scene
 	 */
-	protected boolean onUpTouch(PointF point) {
+	protected boolean onDownTouch(PointF point) {
 		return false;
 	}
 
 	/**
 	 * Override this method to make this do something when a touch is released in the scene
 	 */
-	protected boolean onDownTouch(PointF point) {
+	protected boolean onUpTouch(PointF point) {
 		return false;
 	}
 

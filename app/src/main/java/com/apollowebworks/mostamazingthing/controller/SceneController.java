@@ -1,12 +1,8 @@
 package com.apollowebworks.mostamazingthing.controller;
 
 import android.content.res.Resources;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PointF;
-import android.graphics.Rect;
-import android.graphics.Typeface;
+import android.graphics.*;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import com.apollowebworks.mostamazingthing.scene.Scene;
@@ -19,8 +15,10 @@ import com.apollowebworks.mostamazingthing.world.state.GameState;
 
 public class SceneController {
 
+	public static final String TAG = SceneController.class.getName();
 	public static final int FPS = 30;
-//	private static final SceneId STARTING_SCENE = SceneId.SMOKE;
+
+	//	private static final SceneId STARTING_SCENE = SceneId.SMOKE;
 	private static final SceneId STARTING_SCENE = SceneId.AUCTION;
 	private final Paint textPaint;
 
@@ -84,6 +82,7 @@ public class SceneController {
 	}
 
 	public void activateScene(SceneId sceneId) {
+		Log.d(TAG, "Activating scene " + sceneId.name());
 		lastTickTime = System.currentTimeMillis();
 		activeScene = SceneFactory.create(sceneId, this);
 		activeScene.init();
@@ -127,6 +126,10 @@ public class SceneController {
 
 	public void prepareJetpackGuy(int x, int y, int facing) {
 		gameState.setxCoord(x);
+		gameState.setyCoord(y);
+	}
+
+	public void prepareElevator(int y) {
 		gameState.setyCoord(y);
 	}
 }

@@ -26,7 +26,7 @@ public abstract class BaseAnimation implements Animation {
 	public void draw(Canvas canvas) {
 	}
 
-	protected long getElapsedTimeMs() {
+	long getElapsedTimeMs() {
 		return clock.instant().toEpochMilli() - startTime.toEpochMilli();
 	}
 
