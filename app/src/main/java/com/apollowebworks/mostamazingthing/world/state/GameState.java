@@ -16,6 +16,7 @@ public class GameState {
 	private int xc;
 	private int weight;
 	private int item;
+	private int itemValue;
 	private int advice;
 	private int branch;
 	// Booleans for ship?
@@ -131,6 +132,14 @@ public class GameState {
 
 	public void setItem(int item) {
 		this.item = item;
+	}
+
+	public int getItemValue() {
+		return itemValue;
+	}
+
+	public void setItemValue(int itemValue) {
+		this.itemValue = itemValue;
 	}
 
 	public int getAdvice() {

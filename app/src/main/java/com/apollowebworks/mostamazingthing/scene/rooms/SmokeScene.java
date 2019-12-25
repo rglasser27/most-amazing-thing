@@ -7,6 +7,7 @@ import com.apollowebworks.mostamazingthing.R;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
 import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
+import com.apollowebworks.mostamazingthing.world.state.GameState;
 
 import java.util.Random;
 
@@ -88,15 +89,16 @@ public class SmokeScene extends RoomScene {
 		String[] lines = null;
 		String line = null;
 		Log.d(TAG, "Smoke is awake. Transitioning from state " + nap.name());
+		GameState state = controller.getGameState();
 		switch (nap) {
 			case ASLEEP:
 				line = smokeAdvice[random.nextInt(smokeAdvice.length)];
-				int adviceCount = controller.getGameState().getAdvice() + 1;
-				controller.getGameState().setAdvice(adviceCount);
+				int adviceCount = state.getAdvice() + 1;
+				state.setAdvice(adviceCount);
 				if (adviceCount > smokeAdvice.length) {
 					line = controller.getString(R.string.smoke_repeat) + ";" + line;
 				}
-				int item = controller.getGameState().getItem();
+				int item = state.getItem();
 
 				if (item > 0) {
 					Log.d(TAG, "Skipping a step because player already has item [" + items[item - 1] + "]");
@@ -111,9 +113,11 @@ public class SmokeScene extends RoomScene {
 				break;
 			case ITEM:
 				int newItem = random.nextInt(items.length);
-				controller.getGameState().setItem(newItem + 1);
+				state.setItem(newItem + 1);
+				int itemValue = random.nextInt(8) + 1;
+				state.setItemValue(itemValue);
 				String itemName = items[newItem];
-				Log.d(TAG, "Player now has new item [" + itemName + "]");
+				Log.d(TAG, "Player now has new item [" + itemName + "], worth [" + itemValue + "]");
 				line = controller.getString(R.string.smoke_auction) + " " + itemName + ".";
 				nap = NapValue.HAS_ITEM;
 				break;

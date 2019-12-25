@@ -14,6 +14,7 @@ public class TextButton {
 	private static final int MARGIN = 4;
 	private static final String TAG = "TextButton";
 
+	private final int id;
 	private String text;
 	/**
 	 * This is the x/y of the button in text terms (80x25)
@@ -28,7 +29,8 @@ public class TextButton {
 
 	private boolean pressing;
 
-	public TextButton(Scene scene, int y, int x, String text, Paint textPaint) {
+	public TextButton(int id, Scene scene, int y, int x, String text, Paint textPaint) {
+		this.id = id;
 		pressing = false;
 
 		this.scene = scene;
@@ -50,16 +52,20 @@ public class TextButton {
 		fillPaint.setStyle(Paint.Style.FILL);
 	}
 
+	public TextButton(Scene scene, int y, int x, String text, Paint textPaint) {
+		this (0, scene, y, x, text, textPaint);
+	}
+
+	public int getId() {
+		return id;
+	}
+
 	private boolean checkPressing(PointF point) {
 		if (border.contains((int) point.x, (int) point.y)) {
 			pressing = true;
 			return true;
 		}
 		return false;
-	}
-
-	public void setPressing(boolean pressing) {
-		this.pressing = pressing;
 	}
 
 	public void draw(Canvas canvas) {
@@ -79,13 +85,13 @@ public class TextButton {
 		switch (action) {
 			case MotionEvent.ACTION_DOWN:
 			case MotionEvent.ACTION_MOVE:
-				setPressing(false);
+				pressing = false;
 				return checkPressing(virtualPoint);
 			case MotionEvent.ACTION_UP:
 				if (checkPressing(virtualPoint)) {
 					Log.d(TAG, "Clicked button \"" + text + "\"");
 					scene.buttonEvent(this);
-					setPressing(false);
+					pressing = false;
 					return true;
 				}
 		}

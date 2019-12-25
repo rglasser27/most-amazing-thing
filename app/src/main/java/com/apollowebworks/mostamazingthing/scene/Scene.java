@@ -8,6 +8,8 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
+import com.apollowebworks.mostamazingthing.animation.Animation;
+import com.apollowebworks.mostamazingthing.animation.AnimationChain;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.animation.TextAnimation;
 import com.apollowebworks.mostamazingthing.ui.TextButton;
@@ -31,6 +33,7 @@ public abstract class Scene {
 	private List<PointF> moarDots;
 	private List<TextButton> buttons;
 	private TextAnimation textAnimation;
+	private AnimationChain animations;
 	private boolean debugTouch;
 
 	public Scene(SceneController controller) {
@@ -207,6 +210,9 @@ public abstract class Scene {
 
 	protected void addTextAnimation(String text, int x, int y) {
 		this.textAnimation = new TextAnimation(this, text, y, x, textPaint);
+	}
+
+	protected void addAnimation(Animation animation) {
 	}
 
 	public void setDebugTouch(boolean debugTouch) {

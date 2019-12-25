@@ -3,7 +3,7 @@ package com.apollowebworks.mostamazingthing.animation;
 import android.graphics.Canvas;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 
-interface Animation {
+public interface Animation {
 	Scene getScene();
 
 	/**

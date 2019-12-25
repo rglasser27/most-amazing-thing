@@ -8,6 +8,7 @@ import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
 import com.apollowebworks.mostamazingthing.ui.TextButton;
 import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
+import com.apollowebworks.mostamazingthing.util.StringUtil;
 
 /**
  * 6050 LOCATE 23,2:PRINT"For sale from from Smoke's travels:";:P=13:GOSUB 25070:LOCATE 25,10:PRINT LEFT$(B$,X-1);:P=43:GOSUB 25070
@@ -16,11 +17,14 @@ import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
  */
 public class AuctionScene extends RoomScene {
 	private static final String TAG = "RoomScene";
-	private final TextButton buttonLeft;
-	private final TextButton buttonRight;
+
+	private static final int LEFT = 1;
+	private static final int CURRENT = 2;
+	private static final int RIGHT = 3;
+	private static final int REACTION = 4;
+	private static final int FINAL = 5;
+
 	private final TextButton buttonCurrentPrice;
-	private final TextButton buttonReaction;
-	private final TextButton buttonFinalPrice;
 
 	enum State {
 		ENTER,
@@ -38,14 +42,12 @@ public class AuctionScene extends RoomScene {
 		Paint paint = controller.getTextPaint();
 		price = 0;
 
-		buttonLeft = new TextButton(this, 23, 8, "<", paint);
-		buttonCurrentPrice = new TextButton(this, 23, 10, "0", paint);
-		buttonRight = new TextButton(this, 23, 12, ">", paint);
-		buttonReaction = new TextButton(this, 23, 15, controller.getString(R.string.auction_get_reaction), paint);
-		buttonFinalPrice = new TextButton(this, 23, 15, controller.getString(R.string.auction_final_price), paint);
-//		addButtons(buttonLeft, buttonRight, buttonReaction, buttonFinalPrice);
-		addButtons(buttonLeft, buttonRight, buttonCurrentPrice);
-
+		TextButton buttonLeft = new TextButton(LEFT, this, 23, 6, "<", paint);
+		buttonCurrentPrice = new TextButton(CURRENT, this, 23, 8, "0", paint);
+		TextButton buttonRight = new TextButton(RIGHT, this, 23, 10, ">", paint);
+		TextButton buttonReaction = new TextButton(REACTION, this, 23, 13, controller.getString(R.string.auction_get_reaction_short), paint);
+		TextButton buttonFinalPrice = new TextButton(FINAL, this, 23, 27, controller.getString(R.string.auction_final_price_short), paint);
+		addButtons(buttonLeft, buttonRight, buttonCurrentPrice, buttonReaction, buttonFinalPrice);
 	}
 
 	@Override
@@ -60,16 +62,22 @@ public class AuctionScene extends RoomScene {
 
 	@Override
 	public void buttonEvent(TextButton button) {
-		if (button == buttonLeft) {
-			updatePrice(Math.max (0, price - 1));
-		} else if (button == buttonRight) {
-			updatePrice(Math.min(9, price + 1));
-		} else if (button == buttonCurrentPrice) {
-			suggestPrice();
-		} else if (button == buttonReaction) {
-			suggestPrice();
-		} else if (button == buttonFinalPrice){
-			setFinalPrice();
+		switch (button.getId()) {
+			case LEFT:
+				updatePrice(Math.max(0, price - 1));
+				break;
+			case RIGHT:
+				updatePrice(Math.min(9, price + 1));
+				break;
+			case CURRENT:
+			case REACTION:
+				suggestPrice();
+				break;
+			case FINAL:
+				setFinalPrice();
+				break;
+			default:
+				super.buttonEvent(button);
 		}
 	}
 
@@ -79,11 +87,12 @@ public class AuctionScene extends RoomScene {
 	}
 
 	private void suggestPrice() {
-		Log.d(TAG, controller.getString(R.string.auction_offer_query));
+		String offer = StringUtil.substitute(controller.getString(R.string.auction_offer_query), price.toString());
+		Log.d(TAG, offer);
 	}
 
 	private void setFinalPrice() {
-
+		String offer = StringUtil.substitute(controller.getString(R.string.auction_offer_final), price.toString());
+		Log.d(TAG, offer);
 	}
-
 }

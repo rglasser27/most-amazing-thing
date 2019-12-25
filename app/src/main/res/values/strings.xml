@@ -133,8 +133,10 @@
 
     <string name="auction_no_item">Nothing to sell!</string>
     <string name="auction_for_sale">For sale from Smoke\'s travels:</string>
-    <string name="auction_get_reaction">Get crowd reaction</string>
-    <string name="auction_final_price">Set final price</string>
+    <!--<string name="auction_get_reaction">Get crowd reaction</string>-->
+    <!--<string name="auction_final_price">Set final price</string>-->
+    <string name="auction_get_reaction_short">Get reaction</string>
+    <string name="auction_final_price_short">Final price</string>
     <string name="auction_greeting">Fellow Metallicans!</string>
     <string name="auction_offer_query">How do you like this price: {0} CHIPS?</string>
     <string name="auction_offer_final">My final selling price is {0} chips.</string>
