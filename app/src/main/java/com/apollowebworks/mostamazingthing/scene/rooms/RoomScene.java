@@ -1,10 +1,9 @@
 package com.apollowebworks.mostamazingthing.scene.rooms;
 
-import android.graphics.Paint;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
-import com.apollowebworks.mostamazingthing.ui.TextButton;
+import com.apollowebworks.mostamazingthing.ui.components.TextButton;
 
 abstract class RoomScene extends Scene {
 

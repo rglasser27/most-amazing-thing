@@ -1,7 +1,7 @@
 package com.apollowebworks.mostamazingthing.world.model;
 
 import android.graphics.*;
-import com.apollowebworks.mostamazingthing.ui.Turtle;
+import com.apollowebworks.mostamazingthing.ui.components.Turtle;
 import com.apollowebworks.mostamazingthing.ui.model.RgbColor;
 
 public class PopberryTree implements WorldObject {

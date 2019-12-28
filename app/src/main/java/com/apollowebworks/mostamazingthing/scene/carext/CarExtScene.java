@@ -8,7 +8,7 @@ import android.graphics.RectF;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
-import com.apollowebworks.mostamazingthing.ui.Turtle;
+import com.apollowebworks.mostamazingthing.ui.components.Turtle;
 import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
 import com.apollowebworks.mostamazingthing.world.model.JetpackGuy;
 import com.apollowebworks.mostamazingthing.world.model.MetallicaEntrance;

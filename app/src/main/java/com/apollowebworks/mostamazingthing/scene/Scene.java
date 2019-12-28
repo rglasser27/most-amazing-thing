@@ -12,8 +12,8 @@ import com.apollowebworks.mostamazingthing.animation.Animation;
 import com.apollowebworks.mostamazingthing.animation.AnimationChain;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.animation.TextAnimation;
-import com.apollowebworks.mostamazingthing.ui.TextButton;
-import com.apollowebworks.mostamazingthing.ui.Turtle;
+import com.apollowebworks.mostamazingthing.ui.components.TextButton;
+import com.apollowebworks.mostamazingthing.ui.components.Turtle;
 
 import java.util.ArrayList;
 import java.util.Arrays;

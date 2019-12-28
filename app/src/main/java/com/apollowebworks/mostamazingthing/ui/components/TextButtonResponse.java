@@ -1,4 +1,4 @@
-package com.apollowebworks.mostamazingthing.ui;
+package com.apollowebworks.mostamazingthing.ui.components;
 
 public class TextButtonResponse {
 	private boolean pressed;

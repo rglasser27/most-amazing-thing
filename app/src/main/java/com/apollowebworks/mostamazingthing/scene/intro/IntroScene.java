@@ -6,7 +6,7 @@ import android.util.Log;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
-import com.apollowebworks.mostamazingthing.ui.TextButton;
+import com.apollowebworks.mostamazingthing.ui.components.TextButton;
 
 public class IntroScene extends Scene {
 	private static final String TAG = "IntroScene";

@@ -1,4 +1,4 @@
-package com.apollowebworks.mostamazingthing.ui;
+package com.apollowebworks.mostamazingthing.ui.components;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

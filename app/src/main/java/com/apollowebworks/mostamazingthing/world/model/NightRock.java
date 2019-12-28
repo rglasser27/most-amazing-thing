@@ -1,8 +1,7 @@
 package com.apollowebworks.mostamazingthing.world.model;
 
 import android.graphics.Canvas;
-import android.graphics.RectF;
-import com.apollowebworks.mostamazingthing.ui.Turtle;
+import com.apollowebworks.mostamazingthing.ui.components.Turtle;
 import com.apollowebworks.mostamazingthing.ui.model.RgbColor;
 
 public class NightRock implements WorldObject {

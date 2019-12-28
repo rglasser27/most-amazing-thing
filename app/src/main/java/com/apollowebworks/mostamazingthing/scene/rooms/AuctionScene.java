@@ -6,7 +6,7 @@ import android.util.Log;
 import com.apollowebworks.mostamazingthing.R;
 import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.scene.SceneId;
-import com.apollowebworks.mostamazingthing.ui.TextButton;
+import com.apollowebworks.mostamazingthing.ui.components.TextButton;
 import com.apollowebworks.mostamazingthing.ui.manager.ImageManager;
 import com.apollowebworks.mostamazingthing.util.StringUtil;
 
