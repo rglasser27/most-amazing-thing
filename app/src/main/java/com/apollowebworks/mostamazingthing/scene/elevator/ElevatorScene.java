@@ -53,7 +53,7 @@ public class ElevatorScene extends Scene {
 		rooms[1] = new ElevatorRoom(STORE_Y, SceneId.STORE);
 		rooms[2] = new ElevatorRoom(AUCTION_Y, SceneId.AUCTION);
 
-		addDot(new PointF(SHAFT_CENTER, SMOKE_Y));
+//		addDot(new PointF(SHAFT_CENTER, SMOKE_Y));
 
 		moving = false;
 	}

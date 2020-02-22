@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.scene.Scene;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TextButton {
 	private static final int MARGIN = 4;
 	private static final String TAG = "TextButton";
@@ -28,6 +31,8 @@ public class TextButton {
 	private Scene scene;
 
 	private boolean pressing;
+
+	private List<ButtonHandler> handlers;
 
 	public TextButton(int id, Scene scene, int y, int x, String text, Paint textPaint) {
 		this.id = id;
@@ -50,10 +55,12 @@ public class TextButton {
 		fillPaint = new Paint();
 		fillPaint.setColor(Color.CYAN);
 		fillPaint.setStyle(Paint.Style.FILL);
+
+		handlers = new ArrayList<>();
 	}
 
 	public TextButton(Scene scene, int y, int x, String text, Paint textPaint) {
-		this (0, scene, y, x, text, textPaint);
+		this(0, scene, y, x, text, textPaint);
 	}
 
 	public int getId() {
@@ -100,5 +107,19 @@ public class TextButton {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public void addHandler(ButtonHandler handler) {
+		handlers.add(handler);
+	}
+
+	public boolean handle(int action, PointF point) {
+		if (this.onTouch(action, point)) {
+			for (ButtonHandler handler : handlers) {
+				handler.handleButton(action, point);
+			}
+			return true;
+		}
+		return false;
 	}
 }

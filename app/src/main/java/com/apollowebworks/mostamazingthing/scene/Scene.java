@@ -1,17 +1,13 @@
 package com.apollowebworks.mostamazingthing.scene;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PointF;
-import android.graphics.Rect;
+import android.graphics.*;
 import android.util.Log;
 import android.view.MotionEvent;
 import com.apollowebworks.mostamazingthing.animation.Animation;
 import com.apollowebworks.mostamazingthing.animation.AnimationChain;
-import com.apollowebworks.mostamazingthing.controller.SceneController;
 import com.apollowebworks.mostamazingthing.animation.TextAnimation;
+import com.apollowebworks.mostamazingthing.controller.SceneController;
+import com.apollowebworks.mostamazingthing.ui.components.GraphicsLayer;
 import com.apollowebworks.mostamazingthing.ui.components.TextButton;
 import com.apollowebworks.mostamazingthing.ui.components.Turtle;
 
@@ -29,8 +25,9 @@ public abstract class Scene {
 	protected SceneController controller;
 	private Bitmap backgroundImage;
 	private Canvas tempCanvas;
+	private GraphicsLayer mainLayer;
+
 	private Paint textPaint;
-	private List<PointF> moarDots;
 	private List<TextButton> buttons;
 	private TextAnimation textAnimation;
 	private AnimationChain animations;
@@ -40,8 +37,9 @@ public abstract class Scene {
 		this.controller = controller;
 		backgroundImage = Bitmap.createBitmap(SCREEN_WIDTH, SCREEN_HEIGHT, Bitmap.Config.ARGB_8888);
 		drawBlackBackground(new Canvas(backgroundImage));
+		mainLayer = new GraphicsLayer(controller);
+
 		textPaint = controller.getTextPaint();
-		moarDots = new ArrayList<>();
 		buttons = new ArrayList<>();
 		debugTouch = false;
 	}
@@ -51,11 +49,13 @@ public abstract class Scene {
 	}
 
 	protected void addButton(TextButton button) {
-		buttons.add(button);
+		mainLayer.addButton(button);
+//		buttons.add(button);
 	}
 
-	protected void addButtons(TextButton... button) {
-		Arrays.stream(button).forEach(this::addButton);
+	protected void addButtons(TextButton... buttons) {
+//		Arrays.stream(button).forEach(this::addButton);
+		mainLayer.addButtons(buttons);
 	}
 
 	protected Bitmap createBlankBackground() {
@@ -87,19 +87,7 @@ public abstract class Scene {
 		Bitmap tempBitmap = backgroundImage.copy(backgroundImage.getConfig(), true);
 		tempCanvas = new Canvas(tempBitmap);
 		drawToBuffer(tempCanvas);
-		if (debugTouch) {
-			for (PointF moarDot : moarDots) {
-				Paint paint = new Paint();
-				paint.setColor(Color.WHITE);
-				tempCanvas.drawCircle(moarDot.x, moarDot.y, 1, paint);
-			}
-		}
-		if (textAnimation != null) {
-			textAnimation.draw(tempCanvas);
-		}
-		for (TextButton b : buttons) {
-			b.draw(tempCanvas);
-		}
+		mainLayer.draw(tempCanvas);
 		canvas.drawBitmap(tempBitmap, new Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), canvas.getClipBounds(), null);
 	}
 
@@ -111,8 +99,8 @@ public abstract class Scene {
 	 * @return true if anything changed and needs to be redrawn
 	 */
 	public final boolean onTouch(int action, PointF point) {
-		debugTouch(action, point);
-		if (handleButtons(action, point)) {
+		if (mainLayer.onTouch(action, point)) {
+			Log.d(TAG, "you touched a button?");
 			return true;
 		}
 
@@ -156,27 +144,6 @@ public abstract class Scene {
 			}
 		}
 		return false;
-	}
-
-	private void debugTouch(int action, PointF point) {
-		if (action == MotionEvent.ACTION_DOWN) {
-			Log.d(TAG, "Touched a point on the screen (" + point.x + ", " + point.y + ")");
-			debugTouchDown(point);
-		}
-	}
-
-	protected void addDot(PointF location) {
-		moarDots.add(location);
-		if (moarDots.size() > 10) {
-			moarDots.remove(0);
-		}
-	}
-
-	protected void debugTouchDown(PointF point) {
-		moarDots.add(new PointF(point.x, point.y));
-		if (moarDots.size() > 10) {
-			moarDots.remove(0);
-		}
 	}
 
 	protected void drawBackground(Canvas canvas) {
